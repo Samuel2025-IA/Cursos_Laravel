@@ -1,0 +1,321 @@
+/* Estilos específicos para la vista de bienvenida */
+
+/* Colores personalizados para la vista welcome */
+:root {
+    --welcome-bg-light: #FDFDFC;
+    --welcome-bg-dark: #0a0a0a;
+    --welcome-text-primary: #1b1b18;
+    --welcome-text-secondary: #706f6c;
+    --welcome-text-dark: #EDEDEC;
+    --welcome-text-muted-dark: #A1A09A;
+    --welcome-accent: #f53003;
+}
+
+/* Estilos del body específicos para welcome */
+.welcome-body {
+    background-color: white; /* Fondo blanco siempre */
+    color: var(--welcome-text-primary);
+    display: flex;
+    padding: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+/* Modo oscuro deshabilitado para mantener fondo blanco */
+@media (prefers-color-scheme: dark) {
+    .welcome-body {
+        background-color: white; /* Mantener blanco incluso en modo oscuro */
+        color: var(--welcome-text-primary); /* Texto oscuro sobre fondo blanco */
+    }
+}
+
+/* Header de navegación */
+.welcome-header {
+    width: 100%;
+    max-width: 335px;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .welcome-header {
+        max-width: 56rem;
+    }
+    
+    .welcome-body {
+        padding: 2rem;
+    }
+}
+
+/* Contenedor principal */
+.welcome-main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: opacity 0.75s;
+    opacity: 1;
+    flex-grow: 1;
+}
+
+.welcome-main {
+    display: flex;
+    max-width: 335px;
+    width: 100%;
+    flex-direction: column-reverse;
+}
+
+@media (min-width: 1024px) {
+    .welcome-main {
+        max-width: 56rem;
+        flex-direction: row;
+    }
+}
+
+/* Contenedor de texto */
+.welcome-text-container {
+    font-size: 16px; /* Aumentado de 13px a 16px */
+    line-height: 24px; /* Aumentado de 20px a 24px */
+    flex: 1;
+    padding: 1.5rem;
+    padding-bottom: 3rem;
+    background-color: white;
+    box-shadow: inset 0px 0px 0px 1px rgba(26, 26, 0, 0.16);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    .welcome-text-container {
+        background-color: white; /* Mantener fondo blanco */
+        color: var(--welcome-text-primary); /* Texto oscuro sobre fondo blanco */
+        box-shadow: inset 0px 0px 0px 1px rgba(26, 26, 0, 0.16); /* Sombra consistente */
+    }
+}
+
+@media (min-width: 1024px) {
+    .welcome-text-container {
+        padding: 5rem;
+        border-top-left-radius: 0.5rem;
+        border-bottom-right-radius: 0;
+    }
+}
+
+/* Títulos y texto */
+.welcome-title {
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--welcome-text-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+    .welcome-title {
+        color: var(--welcome-text-dark);
+    }
+}
+
+.welcome-description {
+    margin-bottom: 0.5rem;
+    color: var(--welcome-text-secondary);
+    font-size: 18px; /* Aumentar tamaño del texto descriptivo */
+    line-height: 28px; /* Mejor espaciado de línea */
+}
+
+@media (prefers-color-scheme: dark) {
+    .welcome-description {
+        color: var(--welcome-text-secondary); /* Mantener texto oscuro sobre fondo blanco */
+    }
+}
+
+/* Lista de características */
+.welcome-features-list {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .welcome-features-list {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.welcome-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    position: relative;
+    font-size: 17px; /* Aumentar tamaño de los puntos de acción */
+    line-height: 26px; /* Mejor espaciado */
+}
+
+.welcome-feature-item::before {
+    content: '';
+    position: absolute;
+    left: 0.4rem;
+    top: 50%;
+    bottom: 0;
+    border-left: 1px solid #e3e3e0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .welcome-feature-item::before {
+        border-color: #3E3E3A;
+    }
+}
+
+.welcome-feature-item:last-child::before {
+    bottom: 50%;
+    top: 0;
+}
+
+/* Iconos de características */
+.welcome-feature-icon-container {
+    position: relative;
+    padding: 0.25rem 0;
+    background-color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    .welcome-feature-icon-container {
+        background-color: #161615;
+    }
+}
+
+.welcome-feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #FDFDFC;
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.03), 0px 1px 2px 0px rgba(0, 0, 0, 0.06);
+    width: 0.875rem;
+    height: 0.875rem;
+    border: 1px solid #e3e3e0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .welcome-feature-icon {
+        background-color: #161615;
+        border-color: #3E3E3A;
+    }
+}
+
+.welcome-feature-dot {
+    border-radius: 50%;
+    background-color: #dbdbd7;
+    width: 0.375rem;
+    height: 0.375rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    .welcome-feature-dot {
+        background-color: #3E3E3A;
+    }
+}
+
+/* Botones */
+.welcome-cta-container {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 1.125rem; /* Aumentado para botones más grandes */
+    line-height: 1.6;
+}
+
+.welcome-cta-button {
+    display: inline-block;
+    padding: 0.75rem 2rem; /* Aumentado padding para botón más grande */
+    background-color: #1b1b18;
+    border-radius: 0.375rem; /* Bordes más redondeados */
+    border: 1px solid black;
+    color: white;
+    font-size: 1.125rem; /* Aumentado de 0.875rem a 1.125rem */
+    line-height: 1.6;
+    text-decoration: none;
+    transition: all 0.3s ease; /* Transición más suave */
+    font-weight: 600; /* Texto más bold */
+}
+
+.welcome-cta-button:hover {
+    background-color: black;
+    border-color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+    .welcome-cta-button {
+        background-color: #eeeeec;
+        border-color: #eeeeec;
+        color: #1C1C1A;
+    }
+    
+    .welcome-cta-button:hover {
+        background-color: white;
+        border-color: white;
+    }
+}
+
+/* Enlaces de navegación */
+.welcome-nav-link {
+    display: inline-block;
+    padding: 0.375rem 1.25rem;
+    color: var(--welcome-text-primary);
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.welcome-nav-link:hover {
+    border-color: rgba(25, 20, 0, 0.21);
+}
+
+.welcome-nav-link.bordered {
+    border-color: rgba(25, 20, 0, 0.21);
+}
+
+.welcome-nav-link.bordered:hover {
+    border-color: rgba(25, 20, 0, 0.29);
+}
+
+@media (prefers-color-scheme: dark) {
+    .welcome-nav-link {
+        color: var(--welcome-text-primary); /* Mantener texto oscuro */
+    }
+    
+    .welcome-nav-link:hover {
+        border-color: rgba(25, 20, 0, 0.21); /* Consistente con modo claro */
+    }
+    
+    .welcome-nav-link.bordered {
+        border-color: rgba(25, 20, 0, 0.21); /* Consistente con modo claro */
+    }
+    
+    .welcome-nav-link.bordered:hover {
+        border-color: rgba(25, 20, 0, 0.29); /* Consistente con modo claro */
+    }
+}
+
+/* Responsive adjustments */
+@media (min-width: 1024px) {
+    .welcome-body {
+        justify-content: center;
+    }
+}
+
+/* Espaciado adicional para el footer */
+.welcome-footer-spacer {
+    height: 3.625rem;
+    display: none;
+}
+
+@media (min-width: 1024px) {
+    .welcome-footer-spacer {
+        display: block;
+    }
+}
