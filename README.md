@@ -1,32 +1,32 @@
-# 🎓 Sistema de Cursos - Diócesis de Apartadó
+# Sistema de Cursos - Diócesis de Apartadó
 
 Sistema web desarrollado en Laravel para la gestión de cursos y capacitaciones de la Diócesis de Apartadó.
 
-## ✨ Características Principales
+## Características Principales
 
-- 🔐 **Sistema de Autenticación Completo**
+- **Sistema de Autenticación Completo**
   - Login/Logout de usuarios
   - Recuperación de contraseñas
   - Gestión de perfiles
   - Validación de seguridad para cuentas eliminadas
   - **Sistema de Verificación de Email Mejorado** con tokens de un solo uso
 
-- 👥 **Gestión de Usuarios**
+- **Gestión de Usuarios**
   - Creación y edición de perfiles
   - Sistema de roles y permisos
   - Perfiles de solo lectura
 
-- 📚 **Gestión de Cursos**
+- **Gestión de Cursos**
   - Registro de cursos
   - Sistema de códigos de verificación
   - Dashboard administrativo
 
-- 🎨 **Interfaz Moderna**
+- **Interfaz Moderna**
   - Diseño responsive con TailwindCSS
   - Componentes elegantes y profesionales
   - Alertas interactivas con SweetAlert2
 
-## 🚀 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 - **Backend**: Laravel 10.x
 - **Frontend**: Blade Templates + TailwindCSS
@@ -34,14 +34,14 @@ Sistema web desarrollado en Laravel para la gestión de cursos y capacitaciones 
 - **JavaScript**: Vanilla JS + SweetAlert2
 - **CSS**: TailwindCSS + CSS Personalizado
 
-## 📋 Requisitos del Sistema
+## Requisitos del Sistema
 
 - PHP >= 8.1
 - Composer
 - Node.js & NPM
 - XAMPP/WAMP/LAMP (para desarrollo local)
 
-## 🛠️ Instalación
+## Instalación
 
 ### 1. Clonar el Repositorio
 ```bash
@@ -94,7 +94,7 @@ php artisan serve
 
 El sistema estará disponible en: `http://localhost:8000`
 
-## 🔧 Configuración Adicional
+## Configuración Adicional
 
 ### Configuración de Correo
 Para el sistema de recuperación de contraseñas y verificación de email, configurar en `.env`:
@@ -124,7 +124,7 @@ DB_USERNAME=usuario
 DB_PASSWORD=password
 ```
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 cursos/
@@ -144,7 +144,7 @@ cursos/
 └── storage/               # Archivos de almacenamiento
 ```
 
-## 🔐 Seguridad
+## Seguridad
 
 - **Variables de Entorno**: Todas las configuraciones sensibles están en `.env`
 - **Validación**: Sistema robusto de validación en formularios
@@ -153,13 +153,13 @@ cursos/
 - **SQL Injection**: Protegido con Eloquent ORM
 - **Verificación de Email**: Sistema de tokens seguros con expiración temporal
 
-## 📚 Documentación Adicional
+## Documentación Adicional
 
 - [Sistema de Verificación de Email](VERIFICATION_SYSTEM.md)
 - [Sistema de Códigos de Verificación](README_SISTEMA_CODIGOS.md)
 - [Configuración de Correo](CONFIGURACION_CORREO.md)
 
-## 🚀 Características Avanzadas
+## Características Avanzadas
 
 ### Sistema de Verificación de Email
 - Tokens de un solo uso con expiración configurable
@@ -172,7 +172,7 @@ cursos/
 - Validación de códigos en tiempo real
 - Sistema de auditoría completo
 
-## 🤝 Contribución
+## Contribución
 
 1. Fork el proyecto
 2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
@@ -180,14 +180,14 @@ cursos/
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto es desarrollado para la Diócesis de Apartadó. Todos los derechos reservados.
 
-## 📞 Contacto
+## Contacto
 
 Para soporte técnico o consultas sobre el proyecto, contactar al equipo de desarrollo.
 
 ---
 
-**Desarrollado con ❤️ para la Diócesis de Apartadó**
+**Desarrollado con amor para la Diócesis de Apartadó**
