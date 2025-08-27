@@ -1,61 +1,193 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎓 Sistema de Cursos - Diócesis de Apartadó
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema web desarrollado en Laravel para la gestión de cursos y capacitaciones de la Diócesis de Apartadó.
 
-## About Laravel
+## ✨ Características Principales
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 🔐 **Sistema de Autenticación Completo**
+  - Login/Logout de usuarios
+  - Recuperación de contraseñas
+  - Gestión de perfiles
+  - Validación de seguridad para cuentas eliminadas
+  - **Sistema de Verificación de Email Mejorado** con tokens de un solo uso
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 👥 **Gestión de Usuarios**
+  - Creación y edición de perfiles
+  - Sistema de roles y permisos
+  - Perfiles de solo lectura
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- 📚 **Gestión de Cursos**
+  - Registro de cursos
+  - Sistema de códigos de verificación
+  - Dashboard administrativo
 
-## Learning Laravel
+- 🎨 **Interfaz Moderna**
+  - Diseño responsive con TailwindCSS
+  - Componentes elegantes y profesionales
+  - Alertas interactivas con SweetAlert2
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🚀 Tecnologías Utilizadas
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Backend**: Laravel 10.x
+- **Frontend**: Blade Templates + TailwindCSS
+- **Base de Datos**: SQLite (configurable para MySQL/PostgreSQL)
+- **JavaScript**: Vanilla JS + SweetAlert2
+- **CSS**: TailwindCSS + CSS Personalizado
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📋 Requisitos del Sistema
 
-## Laravel Sponsors
+- PHP >= 8.1
+- Composer
+- Node.js & NPM
+- XAMPP/WAMP/LAMP (para desarrollo local)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🛠️ Instalación
 
-### Premium Partners
+### 1. Clonar el Repositorio
+```bash
+git clone [URL_DEL_REPOSITORIO]
+cd cursos
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2. Instalar Dependencias PHP
+```bash
+composer install
+```
 
-## Contributing
+### 3. Instalar Dependencias Node.js
+```bash
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Configuración del Entorno
+```bash
+# Copiar archivo de configuración
+cp env.example .env
 
-## Code of Conduct
+# Generar clave de aplicación
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Configuración de Base de Datos
+```bash
+# Crear base de datos SQLite
+touch database/database.sqlite
 
-## Security Vulnerabilities
+# Ejecutar migraciones
+php artisan migrate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Ejecutar seeders (opcional)
+php artisan db:seed
+```
 
-## License
+### 6. Compilar Assets
+```bash
+npm run dev
+# o para producción
+npm run build
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 7. Iniciar Servidor
+```bash
+php artisan serve
+```
+
+El sistema estará disponible en: `http://localhost:8000`
+
+## 🔧 Configuración Adicional
+
+### Configuración de Correo
+Para el sistema de recuperación de contraseñas y verificación de email, configurar en `.env`:
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=tu_servidor_smtp
+MAIL_PORT=587
+MAIL_USERNAME=tu_email
+MAIL_PASSWORD=tu_password
+MAIL_ENCRYPTION=tls
+
+# Configuración específica para Gmail (opcional)
+GMAIL_USERNAME=tu_email@gmail.com
+GMAIL_PASSWORD=tu_app_password
+GMAIL_FROM_ADDRESS=tu_email@gmail.com
+GMAIL_FROM_NAME="Sistema de Cursos"
+```
+
+### Configuración de Base de Datos
+Para cambiar a MySQL/PostgreSQL, modificar en `.env`:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nombre_base_datos
+DB_USERNAME=usuario
+DB_PASSWORD=password
+```
+
+## 📁 Estructura del Proyecto
+
+```
+cursos/
+├── app/                    # Lógica de la aplicación
+│   ├── Http/Controllers/  # Controladores
+│   ├── Models/            # Modelos Eloquent
+│   ├── Notifications/     # Notificaciones de email
+│   └── Providers/         # Proveedores de servicios
+├── config/                # Archivos de configuración
+├── database/              # Migraciones y seeders
+├── public/                # Archivos públicos
+├── resources/             # Vistas y assets
+│   ├── views/            # Templates Blade
+│   ├── css/              # Estilos CSS
+│   └── js/               # JavaScript
+├── routes/                # Definición de rutas
+└── storage/               # Archivos de almacenamiento
+```
+
+## 🔐 Seguridad
+
+- **Variables de Entorno**: Todas las configuraciones sensibles están en `.env`
+- **Validación**: Sistema robusto de validación en formularios
+- **Autenticación**: Sistema de autenticación nativo de Laravel
+- **CSRF Protection**: Protección automática contra ataques CSRF
+- **SQL Injection**: Protegido con Eloquent ORM
+- **Verificación de Email**: Sistema de tokens seguros con expiración temporal
+
+## 📚 Documentación Adicional
+
+- [Sistema de Verificación de Email](VERIFICATION_SYSTEM.md)
+- [Sistema de Códigos de Verificación](README_SISTEMA_CODIGOS.md)
+- [Configuración de Correo](CONFIGURACION_CORREO.md)
+
+## 🚀 Características Avanzadas
+
+### Sistema de Verificación de Email
+- Tokens de un solo uso con expiración configurable
+- Validación de seguridad contra reutilización
+- Limpieza automática de tokens expirados
+- Comandos Artisan para mantenimiento
+
+### Sistema de Códigos de Verificación
+- Generación automática de códigos únicos
+- Validación de códigos en tiempo real
+- Sistema de auditoría completo
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto es desarrollado para la Diócesis de Apartadó. Todos los derechos reservados.
+
+## 📞 Contacto
+
+Para soporte técnico o consultas sobre el proyecto, contactar al equipo de desarrollo.
+
+---
+
+**Desarrollado con ❤️ para la Diócesis de Apartadó**

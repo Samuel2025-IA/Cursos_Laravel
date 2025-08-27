@@ -65,13 +65,6 @@ return [
         ],
     ],
 
-    'verification' => [
-        'title' => 'Verificar Correo Electrónico',
-        'message' => 'Gracias por registrarte. Antes de comenzar, ¿podrías verificar tu dirección de correo electrónico haciendo clic en el enlace que acabamos de enviarte? Si no recibiste el correo, con gusto te enviaremos otro.',
-        'resend' => 'Reenviar correo de verificación',
-        'logout' => 'Cerrar Sesión',
-    ],
-
     'profile' => [
         'title' => 'Perfil',
         'information' => 'Información del Perfil',
@@ -91,8 +84,6 @@ return [
         'register_success' => 'Tu cuenta ha sido creada exitosamente.',
         'password_reset_sent' => 'Hemos enviado por correo electrónico el enlace para restablecer tu contraseña.',
         'password_reset_success' => 'Tu contraseña ha sido restablecida exitosamente.',
-        'email_verification_sent' => 'Se ha enviado un nuevo enlace de verificación a tu dirección de correo electrónico.',
-        'email_verification_success' => 'Tu correo electrónico ha sido verificado exitosamente.',
         'profile_updated' => 'Tu perfil ha sido actualizado exitosamente.',
         'password_updated' => 'Tu contraseña ha sido actualizada exitosamente.',
         'account_deleted' => 'Tu cuenta ha sido eliminada exitosamente.',
@@ -102,12 +93,12 @@ return [
         'invalid_credentials' => 'Las credenciales proporcionadas son incorrectas.',
         'account_not_found' => 'No se encontró una cuenta con ese correo electrónico.',
         'password_incorrect' => 'La contraseña proporcionada es incorrecta.',
-        'email_not_verified' => 'Tu correo electrónico no ha sido verificado.',
         'account_disabled' => 'Tu cuenta ha sido deshabilitada.',
         'too_many_attempts' => 'Demasiados intentos de acceso. Por favor intente nuevamente más tarde.',
         'session_expired' => 'Tu sesión ha expirado. Por favor inicia sesión nuevamente.',
     ],
 
 ];
+
 
 

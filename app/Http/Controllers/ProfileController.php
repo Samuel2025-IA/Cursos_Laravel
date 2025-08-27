@@ -53,6 +53,7 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        // Redirigir a la vista de login con mensaje de confirmación
+        return Redirect::route('login')->with('info', 'Tu cuenta ha sido eliminada con éxito. Esperamos volver a verte pronto. ¡Que Dios te bendiga!');
     }
 }

@@ -18,8 +18,8 @@ Este sistema implementa la recuperación de contraseña mediante códigos de ver
 ### 1. Configurar el Archivo .env
 
 ```env
-MAIL_MAILER=smtp
-MAIL_HOST=smtp.gmail.com
+MAIL_MAILER=log
+MAIL_HOST=log.gmail.com
 MAIL_PORT=587
 MAIL_USERNAME=tu-correo@gmail.com
 MAIL_PASSWORD=tu-contraseña-de-aplicacion

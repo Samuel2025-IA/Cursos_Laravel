@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Models\User;
 
 class LoginRequest extends FormRequest
 {
@@ -41,11 +42,28 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        $email = $this->string('email');
+        $password = $this->string('password');
+
+        // Verificar si el usuario existe
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            // Si el email no existe, mostrar error en el campo email
+            RateLimiter::hit($this->throttleKey());
+            
+            throw ValidationException::withMessages([
+                'email' => 'No encontramos una cuenta con este correo electrónico.',
+            ]);
+        }
+
+        // Si el usuario existe, intentar autenticar
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            // Si la autenticación falla (contraseña incorrecta), mostrar error en el campo password
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'password' => 'La contraseña es incorrecta. Por favor, inténtalo de nuevo.',
             ]);
         }
 

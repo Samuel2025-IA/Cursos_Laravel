@@ -3,7 +3,8 @@
     position: relative;
     overflow: hidden;
     height: auto; /* Altura automática para adaptarse al contenedor de texto */
-    min-height: 100%; /* Asegurar que tome toda la altura del contenedor padre */
+    max-height: 500px; /* Limitar altura máxima para evitar que tape el header */
+    min-height: 300px; /* Altura mínima razonable */
     display: flex;
     align-items: stretch;
     flex: 1; /* Expandir para ocupar todo el espacio disponible */
@@ -65,7 +66,8 @@
 @media (min-width: 1025px) {
     .catedral-image-container {
         height: auto; /* Altura automática para igualar el contenedor de texto */
-        min-height: 100%; /* Ocupar toda la altura disponible */
+        max-height: 600px; /* Altura máxima mayor en desktop */
+        min-height: 400px; /* Altura mínima mayor en desktop */
     }
     
     .catedral-image {

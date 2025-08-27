@@ -1,8 +1,11 @@
+# Laravel
 *.log
 .DS_Store
 .env
 .env.backup
 .env.production
+.env.local
+.env.testing
 .phpactor.json
 .phpunit.result.cache
 /.fleet
@@ -21,4 +24,65 @@
 /vendor
 Homestead.json
 Homestead.yaml
+
+# Base de datos local
+database/database.sqlite
+database/database.sqlite-journal
+
+# Archivos de desarrollo
+*.bat
+*.ps1
+*.exe
+*.msi
+
+# Archivos temporales
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Archivos de sistema
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Archivos de configuración local
+config/local.php
+config/production.php
+
+# Logs de aplicación
+storage/logs/*.log
+storage/logs/laravel.log
+
+# Cache
+bootstrap/cache/*
+!bootstrap/cache/.gitkeep
+
+# Archivos de sesión
+storage/framework/sessions/*
+!storage/framework/sessions/.gitkeep
+
+# Archivos de vistas compiladas
+storage/framework/views/*
+!storage/framework/views/.gitkeep
+
+# Archivos de testing
+.phpunit.cache/
+coverage/
+tests/coverage/
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos de sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db

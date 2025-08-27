@@ -13,39 +13,124 @@
 
 /* Estilos del body específicos para welcome */
 .welcome-body {
-    background-color: white; /* Fondo blanco siempre */
-    color: var(--welcome-text-primary);
-    display: flex;
-    padding: 1.5rem;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    flex-direction: column;
-}
-
-/* Modo oscuro deshabilitado para mantener fondo blanco */
-@media (prefers-color-scheme: dark) {
-    .welcome-body {
-        background-color: white; /* Mantener blanco incluso en modo oscuro */
-        color: var(--welcome-text-primary); /* Texto oscuro sobre fondo blanco */
-    }
+    background: linear-gradient(135deg, #a8c8ec 0%, #b8d4f1 25%, #c5dff5 50%, #d2eaf8 75%, #e0f4fb 100%); /* Fondo de cielo azul suave */
+    color: #2c3e50; /* Texto oscuro para contraste con fondo claro */
+    padding: 1.5rem; /* Padding normal en todos los lados */
+    margin: 0; /* Asegurar que no hay márgenes */
+    overflow-x: hidden; /* Evitar scroll horizontal */
+    line-height: 1.6;
+    min-height: 100vh; /* Asegurar que cubra toda la pantalla */
 }
 
 /* Header de navegación */
 .welcome-header {
-    width: 100%;
+    width: 100vw; /* Ocupar todo el ancho de la ventana */
+    background-color: white;
+    padding: 1rem 0; /* Sin padding lateral, se maneja en el contenedor interno */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin-bottom: 2rem;
+    margin-top: -1.5rem; /* Extender hacia arriba */
+    margin-left: -1.5rem; /* Extender hacia la izquierda */
+    margin-right: -1.5rem; /* Extender hacia la derecha */
+    flex-shrink: 0;
+    z-index: 1000;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Contenedor interno del header */
+.welcome-header-container {
     max-width: 335px;
-    font-size: 0.875rem;
-    margin-bottom: 1.5rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo del header */
+.welcome-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.header-logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.header-logo-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1f2937;
+    white-space: nowrap;
+}
+
+/* Responsive para móviles pequeños */
+@media (max-width: 480px) {
+    .header-logo-text {
+        display: none; /* Ocultar texto en móviles muy pequeños */
+    }
+    
+    .welcome-header {
+        padding: 0.75rem 0;
+    }
+    
+    .welcome-header-container {
+        padding: 0 1rem;
+    }
+    
+    .welcome-header-nav {
+        gap: 0.5rem;
+    }
+    
+    .welcome-nav-link {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Navegación del header */
+.welcome-header-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 @media (min-width: 1024px) {
     .welcome-header {
-        max-width: 56rem;
+        margin-bottom: 2.5rem; /* Más espacio en desktop */
+        margin-top: -2rem; /* Extender más hacia arriba en desktop */
+        margin-left: -2rem; /* Extender más hacia la izquierda en desktop */
+        margin-right: -2rem; /* Extender más hacia la derecha en desktop */
+        padding: 1.25rem 0; /* Más padding vertical */
+    }
+    
+    .welcome-header-container {
+        max-width: 56rem; /* Contenedor más ancho en desktop */
+        padding: 0 2rem;
     }
     
     .welcome-body {
-        padding: 2rem;
+        padding: 2rem; /* Padding normal en todos los lados */
+    }
+    
+    .header-logo-img {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .header-logo-text {
+        font-size: 1rem;
+    }
+    
+    .welcome-header-nav {
+        gap: 1rem;
     }
 }
 
@@ -57,7 +142,7 @@
     width: 100%;
     transition: opacity 0.75s;
     opacity: 1;
-    flex-grow: 1;
+    margin-bottom: 2rem; /* Espacio antes del footer */
 }
 
 .welcome-main {
@@ -81,18 +166,11 @@
     flex: 1;
     padding: 1.5rem;
     padding-bottom: 3rem;
-    background-color: white;
-    box-shadow: inset 0px 0px 0px 1px rgba(26, 26, 0, 0.16);
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-}
-
-@media (prefers-color-scheme: dark) {
-    .welcome-text-container {
-        background-color: white; /* Mantener fondo blanco */
-        color: var(--welcome-text-primary); /* Texto oscuro sobre fondo blanco */
-        box-shadow: inset 0px 0px 0px 1px rgba(26, 26, 0, 0.16); /* Sombra consistente */
-    }
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+    color: #2c3e50; /* Texto oscuro */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 0.75rem; /* Bordes redondeados */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque de fondo */
 }
 
 @media (min-width: 1024px) {
@@ -108,26 +186,14 @@
     margin-bottom: 0.75rem;
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--welcome-text-primary);
-}
-
-@media (prefers-color-scheme: dark) {
-    .welcome-title {
-        color: var(--welcome-text-dark);
-    }
+    color: #1a202c; /* Título oscuro para fondo claro */
 }
 
 .welcome-description {
     margin-bottom: 0.5rem;
-    color: var(--welcome-text-secondary);
+    color: #4a5568; /* Texto descriptivo en gris medio */
     font-size: 18px; /* Aumentar tamaño del texto descriptivo */
     line-height: 28px; /* Mejor espaciado de línea */
-}
-
-@media (prefers-color-scheme: dark) {
-    .welcome-description {
-        color: var(--welcome-text-secondary); /* Mantener texto oscuro sobre fondo blanco */
-    }
 }
 
 /* Lista de características */
@@ -159,13 +225,7 @@
     left: 0.4rem;
     top: 50%;
     bottom: 0;
-    border-left: 1px solid #e3e3e0;
-}
-
-@media (prefers-color-scheme: dark) {
-    .welcome-feature-item::before {
-        border-color: #3E3E3A;
-    }
+    border-left: 1px solid #cbd5e0; /* Borde claro para fondo claro */
 }
 
 .welcome-feature-item:last-child::before {
@@ -177,13 +237,7 @@
 .welcome-feature-icon-container {
     position: relative;
     padding: 0.25rem 0;
-    background-color: white;
-}
-
-@media (prefers-color-scheme: dark) {
-    .welcome-feature-icon-container {
-        background-color: #161615;
-    }
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo claro */
 }
 
 .welcome-feature-icon {
@@ -191,31 +245,18 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: #FDFDFC;
-    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.03), 0px 1px 2px 0px rgba(0, 0, 0, 0.06);
+    background-color: white; /* Fondo blanco */
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px 0px rgba(0, 0, 0, 0.05); /* Sombra oscura para fondo claro */
     width: 0.875rem;
     height: 0.875rem;
-    border: 1px solid #e3e3e0;
-}
-
-@media (prefers-color-scheme: dark) {
-    .welcome-feature-icon {
-        background-color: #161615;
-        border-color: #3E3E3A;
-    }
+    border: 1px solid #e2e8f0; /* Borde claro */
 }
 
 .welcome-feature-dot {
     border-radius: 50%;
-    background-color: #dbdbd7;
+    background-color: #3B4A8C; /* Punto azul de la diócesis */
     width: 0.375rem;
     height: 0.375rem;
-}
-
-@media (prefers-color-scheme: dark) {
-    .welcome-feature-dot {
-        background-color: #3E3E3A;
-    }
 }
 
 /* Botones */
@@ -229,10 +270,10 @@
 .welcome-cta-button {
     display: inline-block;
     padding: 0.75rem 2rem; /* Aumentado padding para botón más grande */
-    background-color: #1b1b18;
+    background-color: #3B4A8C; /* Botón azul de la diócesis */
     border-radius: 0.375rem; /* Bordes más redondeados */
-    border: 1px solid black;
-    color: white;
+    border: 1px solid #3B4A8C;
+    color: white; /* Texto blanco en botón azul */
     font-size: 1.125rem; /* Aumentado de 0.875rem a 1.125rem */
     line-height: 1.6;
     text-decoration: none;
@@ -241,64 +282,64 @@
 }
 
 .welcome-cta-button:hover {
-    background-color: black;
-    border-color: black;
-}
-
-@media (prefers-color-scheme: dark) {
-    .welcome-cta-button {
-        background-color: #eeeeec;
-        border-color: #eeeeec;
-        color: #1C1C1A;
-    }
-    
-    .welcome-cta-button:hover {
-        background-color: white;
-        border-color: white;
-    }
+    background-color: #2d3a73;
+    border-color: #2d3a73;
+    transform: translateY(-2px); /* Efecto de elevación al hover */
+    box-shadow: 0 4px 8px rgba(59, 74, 140, 0.3);
 }
 
 /* Enlaces de navegación */
 .welcome-nav-link {
     display: inline-block;
-    padding: 0.375rem 1.25rem;
-    color: var(--welcome-text-primary);
-    border: 1px solid transparent;
-    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
     font-size: 0.875rem;
+    font-weight: 500;
     line-height: 1.5;
     text-decoration: none;
-    transition: all 0.2s;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
 }
 
-.welcome-nav-link:hover {
-    border-color: rgba(25, 20, 0, 0.21);
+/* Botón de Iniciar Sesión */
+.welcome-nav-link.login-link {
+    color: #374151;
+    background-color: transparent;
+    border-color: #d1d5db;
 }
 
-.welcome-nav-link.bordered {
-    border-color: rgba(25, 20, 0, 0.21);
+.welcome-nav-link.login-link:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+    color: #111827;
 }
 
-.welcome-nav-link.bordered:hover {
-    border-color: rgba(25, 20, 0, 0.29);
+/* Botón de Registrarse */
+.welcome-nav-link.register-link {
+    color: white;
+    background-color: #3B4A8C;
+    border-color: #3B4A8C;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-@media (prefers-color-scheme: dark) {
-    .welcome-nav-link {
-        color: var(--welcome-text-primary); /* Mantener texto oscuro */
-    }
-    
-    .welcome-nav-link:hover {
-        border-color: rgba(25, 20, 0, 0.21); /* Consistente con modo claro */
-    }
-    
-    .welcome-nav-link.bordered {
-        border-color: rgba(25, 20, 0, 0.21); /* Consistente con modo claro */
-    }
-    
-    .welcome-nav-link.bordered:hover {
-        border-color: rgba(25, 20, 0, 0.29); /* Consistente con modo claro */
-    }
+.welcome-nav-link.register-link:hover {
+    background-color: #2d3a73;
+    border-color: #2d3a73;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Botón de Dashboard */
+.welcome-nav-link.dashboard-link {
+    color: #059669;
+    background-color: #ecfdf5;
+    border-color: #a7f3d0;
+}
+
+.welcome-nav-link.dashboard-link:hover {
+    background-color: #d1fae5;
+    border-color: #6ee7b7;
+    color: #047857;
 }
 
 /* Responsive adjustments */
@@ -308,14 +349,398 @@
     }
 }
 
-/* Espaciado adicional para el footer */
+/* Footer de la Diócesis */
+.diocesis-footer {
+    background-color: #3B4A8C; /* Color azul de la imagen */
+    color: white;
+    padding: 4rem 0; /* Padding normal */
+    margin-top: 4rem; /* Separación del contenido principal */
+    margin-left: calc(-50vw + 50%); /* Técnica para ancho completo */
+    margin-right: calc(-50vw + 50%);
+    width: 100vw;
+    font-family: Arial, sans-serif;
+}
+
+.diocesis-footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem; /* Agregar padding interno para el contenido */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .diocesis-footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+}
+
+/* Logo y nombre de la diócesis */
+.diocesis-logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.diocesis-logo-section img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+}
+
+.diocesis-name {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.diocesis-social {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.diocesis-social a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.diocesis-social a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para texto de iconos */
+.social-icon-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Estilos específicos para cada red social */
+.social-facebook {
+    background-color: #1877f2;
+    font-family: Arial, sans-serif;
+    font-size: 1.6rem !important;
+}
+
+.social-facebook:hover {
+    background-color: #166fe5;
+}
+
+.social-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.social-instagram:hover {
+    background: linear-gradient(45deg, #e08429 0%, #d55d32 25%, #d11d39 50%, #c2195c 75%, #b2147e 100%);
+}
+
+/* Icono personalizado de Instagram */
+.instagram-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.instagram-camera {
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 6px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.instagram-lens {
+    width: 8px;
+    height: 8px;
+    border: 2px solid white;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.instagram-dot {
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+.social-twitter {
+    background-color: #000000;
+    font-size: 1.2rem !important;
+}
+
+.social-twitter:hover {
+    background-color: #333333;
+}
+
+.social-youtube {
+    background-color: #ff0000;
+    font-size: 1.3rem !important;
+}
+
+.social-youtube:hover {
+    background-color: #e60000;
+}
+
+.social-tiktok {
+    background: #000000; /* Fondo negro como el logo oficial */
+}
+
+.social-tiktok:hover {
+    background: #1a1a1a;
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Logo oficial de TikTok recreado en CSS */
+.tiktok-logo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.tiktok-shape {
+    position: absolute;
+    width: 20px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+}
+
+.tiktok-shape::before {
+    content: '♪';
+    display: block;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.tiktok-cyan {
+    color: #25F4EE;
+    z-index: 3;
+    transform: translate(-1px, -1px);
+}
+
+.tiktok-red {
+    color: #FE2C55;
+    z-index: 2;
+    transform: translate(1px, 1px);
+}
+
+.tiktok-white {
+    color: #FFFFFF;
+    z-index: 1;
+    transform: translate(0, 0);
+}
+
+/* Información de contacto */
+.diocesis-contact {
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.diocesis-contact h4 {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    color: #FFD700; /* Color dorado para títulos */
+}
+
+.diocesis-contact p {
+    margin-bottom: 0.5rem;
+    color: #E8E8E8;
+}
+
+.diocesis-contact a {
+    color: #87CEEB; /* Color celeste para enlaces */
+    text-decoration: none;
+}
+
+.diocesis-contact a:hover {
+    text-decoration: underline;
+}
+
+/* Extensiones */
+.diocesis-extensions {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #E8E8E8;
+}
+
+.diocesis-extensions h4 {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    color: #FFD700;
+}
+
+.diocesis-extensions p {
+    margin-bottom: 0.3rem;
+}
+
+/* Horarios y políticas */
+.diocesis-info h4 {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    color: #FFD700;
+}
+
+.diocesis-info p {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    color: #E8E8E8;
+    line-height: 1.5;
+}
+
+.diocesis-info a {
+    color: #87CEEB;
+    text-decoration: none;
+}
+
+.diocesis-info a:hover {
+    text-decoration: underline;
+}
+
+/* Copyright */
+.diocesis-copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #B8B8B8;
+}
+
+.diocesis-copyright a {
+    color: #87CEEB;
+    text-decoration: none;
+}
+
+.diocesis-copyright a:hover {
+    text-decoration: underline;
+}
+
+/* Espaciado adicional para el footer - Ya no necesario */
 .welcome-footer-spacer {
-    height: 3.625rem;
     display: none;
 }
 
+/* Mensaje de cuenta eliminada */
+.account-deleted-message {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    padding: 0 1.5rem;
+    animation: slideDown 0.5s ease-out;
+}
+
+.account-deleted-content {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3), 0 4px 6px -2px rgba(16, 185, 129, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.account-deleted-icon {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-deleted-icon svg {
+    color: white;
+}
+
+.account-deleted-text {
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+    font-weight: 500;
+}
+
+.account-deleted-close {
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.account-deleted-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.account-deleted-close svg {
+    color: white;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @media (min-width: 1024px) {
-    .welcome-footer-spacer {
-        display: block;
+    .account-deleted-message {
+        max-width: 56rem;
     }
 }

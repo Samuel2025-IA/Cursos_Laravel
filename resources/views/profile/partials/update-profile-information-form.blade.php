@@ -1,45 +1,58 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <h2 class="text-lg font-medium text-gray-900">
             {{ __('Información del Perfil') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __("Información de tu cuenta. El nombre y correo electrónico no se pueden modificar por seguridad.") }}
+        <p class="mt-1 text-sm text-gray-600">
+            {{ __("Información de tu cuenta. El nombre, apellido y correo electrónico no se pueden modificar por seguridad.") }}
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
-
     <div class="mt-6 space-y-6">
-        <x-readonly-field 
-            :label="__('Nombre')" 
-            :value="$user->name" 
-        />
+        <!-- Información Personal -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-md font-medium text-gray-900 mb-3">Información Personal</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <x-readonly-field 
+                    :label="__('Primer Nombre')" 
+                    :value="$user->primer_nombre" 
+                />
 
-        <x-readonly-field 
-            :label="__('Correo Electrónico')" 
-            :value="$user->email" 
-        />
-
-        @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-            <div class="mt-6">
-                <p class="text-sm text-gray-800 dark:text-gray-200">
-                    {{ __('Tu dirección de correo electrónico no está verificada.') }}
-
-                    <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                        {{ __('Haz clic aquí para reenviar el correo de verificación.') }}
-                    </button>
-                </p>
-
-                @if (session('status') === 'verification-link-sent')
-                    <p class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                        {{ __('Se ha enviado un nuevo enlace de verificación a tu dirección de correo electrónico.') }}
-                    </p>
-                @endif
+                <x-readonly-field 
+                    :label="__('Segundo Nombre')" 
+                    :value="$user->segundo_nombre ?: 'No especificado'" 
+                />
             </div>
-        @endif
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <x-readonly-field 
+                    :label="__('Primer Apellido')" 
+                    :value="$user->primer_apellido" 
+                />
+
+                <x-readonly-field 
+                    :label="__('Segundo Apellido')" 
+                    :value="$user->segundo_apellido" 
+                />
+            </div>
+        </div>
+
+        <!-- Información de Contacto -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-md font-medium text-gray-900 mb-3">Información de Contacto</h3>
+            
+            <x-readonly-field 
+                :label="__('Correo Electrónico')" 
+                :value="$user->email" 
+            />
+
+            <x-readonly-field 
+                :label="__('Entidad')" 
+                :value="ucfirst(str_replace('_', ' ', $user->entidad))" 
+                class="mt-4"
+            />
+        </div>
     </div>
 </section>
