@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Registro de usuarios
+// Registro de usuarios - Requiere código de invitación válido
 Route::get('register', [RegisteredUserController::class, 'create'])
+    ->middleware('invitation.verified')
     ->name('register');
-Route::post('register', [RegisteredUserController::class, 'store']);
+Route::post('register', [RegisteredUserController::class, 'store'])
+    ->middleware('invitation.verified');
 
 // Inicio de sesión
 Route::get('login', [AuthenticatedSessionController::class, 'create'])

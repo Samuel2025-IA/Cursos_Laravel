@@ -1,0 +1,192 @@
+.admin-fixed-sidebar{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 76px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-right: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    z-index: 40;
+    overflow: hidden;
+    transition: width .25s ease;
+}
+.admin-fixed-sidebar.expanded{
+    width: 280px;
+}
+.admin-fixed-sidebar .brand{
+    padding: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    position: relative;
+    min-height: 60px;
+    overflow: hidden;
+    justify-content: center;
+}
+.admin-fixed-sidebar .brand .logo{
+    width: 40px;
+    height: 40px;
+    fill: white;
+    flex-shrink: 0;
+}
+.admin-fixed-sidebar .brand .title{
+    font-weight: 800;
+    color: #fff;
+    font-size: 1rem;
+    font-family: 'Arsenal', sans-serif;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity .2s ease;
+    margin: 0;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.8);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+}
+.admin-fixed-sidebar.expanded .brand{
+    justify-content: flex-start;
+}
+.admin-fixed-sidebar.expanded .brand .title{
+    position: static;
+    transform: none;
+    background: transparent;
+    padding: 0;
+    z-index: auto;
+    pointer-events: auto;
+    opacity: 1;
+}
+.admin-fixed-sidebar nav a{
+    display: flex;
+    align-items: center;
+    color: #e5e7eb;
+    text-decoration: none;
+    padding: 1rem;
+    border-radius: .5rem;
+    margin: .25rem .5rem;
+    transition: all .2s;
+    justify-content: center;
+    min-height: 50px;
+}
+.admin-fixed-sidebar nav a:hover{
+    background: rgba(255,255,255,.12);
+    color: #fff;
+}
+.admin-fixed-sidebar nav a .label{
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+.admin-fixed-sidebar.expanded nav a{
+    justify-content: flex-start;
+    gap: 0.75rem;
+}
+.admin-fixed-sidebar.expanded nav a .label{
+    opacity: 1;
+}
+.admin-fixed-sidebar nav a .ico{
+    width: 24px;
+    height: 24px;
+    color: #e5e7eb;
+    stroke-width: 2;
+    flex-shrink: 0;
+}
+.dashboard-content{
+    margin-left: 76px;
+    transition: margin-left .25s ease;
+}
+.admin-fixed-sidebar.expanded ~ .dashboard-content{
+    margin-left: 280px;
+}
+.main-content-wrapper{
+    transition: margin-left .25s ease;
+}
+.main-content-wrapper.sidebar-expanded{
+    margin-left: 244px;
+}
+/* Asegurar que el header también se mueva */
+header{
+    margin-left: 76px;
+    transition: margin-left .25s ease;
+}
+.sidebar-expanded header{
+    margin-left: 280px;
+}
+/* Mover la barra de navegación */
+nav{
+    margin-left: 76px;
+    transition: margin-left .25s ease;
+}
+.sidebar-expanded nav{
+    margin-left: 280px;
+}
+
+/* Asegurar que el contenido principal se mueva correctamente */
+.min-h-screen {
+    transition: margin-left .25s ease;
+}
+.min-h-screen.sidebar-expanded {
+    margin-left: 0;
+}
+@media (max-width: 768px) {
+    .admin-fixed-sidebar{
+        transform: translateX(-100%);
+        width: 260px;
+    }
+    .dashboard-content{
+        margin-left: 0;
+    }
+    .admin-fixed-sidebar.mobile-open{
+        transform: translateX(0);
+    }
+    /* En móvil, quitar márgenes del header y nav */
+    header{
+        margin-left: 0 !important;
+    }
+    nav{
+        margin-left: 0 !important;
+    }
+    .sidebar-expanded header{
+        margin-left: 0 !important;
+    }
+    .sidebar-expanded nav{
+        margin-left: 0 !important;
+    }
+}
+
+/* Overlay para móvil */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 35;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Asegurar que el sidebar sea siempre visible para admins */
+/* Reemplazado :has() por una clase en body para mejor compatibilidad */
+body.admin-has-fixed-sidebar {
+    padding-left: 0;
+}
+
+/* Mejorar la visibilidad del sidebar */
+.admin-fixed-sidebar {
+    display: block !important;
+}

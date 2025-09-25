@@ -1,0 +1,772 @@
+/* Estilos del footer para la vista de bienvenida */
+
+/* Footer de la Diócesis */
+.diocesis-footer {
+    background-color: #1f2937; /* Color del header */
+    color: white;
+    padding: 2rem 0; /* Reducido de 4rem a 2rem */
+    margin-top: 2rem; /* Reducido de 4rem a 2rem */
+    margin-left: calc(-50vw + 50%); /* Técnica para ancho completo */
+    margin-right: calc(-50vw + 50%);
+    width: 100vw;
+    overflow: hidden; /* evita que elementos floten fuera del contenedor */
+    font-family: Arial, sans-serif;
+}
+
+.diocesis-footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem; /* Agregar padding interno para el contenido */
+    width: 100%; /* Asegurar ocupación completa del ancho disponible */
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem; /* Reducido de 2rem a 1.5rem */
+    align-items: start;
+}
+
+/* Breakpoint para tablets grandes */
+@media (max-width: 1024px) {
+    .diocesis-footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        padding: 0 1.5rem;
+    }
+    
+    .diocesis-logo-section {
+        grid-column: 1 / -1;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Breakpoint para tablets medianas */
+@media (max-width: 768px) {
+    .diocesis-footer-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        text-align: center;
+        padding: 0 1rem;
+    }
+    
+    .diocesis-logo-section {
+        grid-column: 1;
+        margin-bottom: 0;
+    }
+}
+
+/* Breakpoint para móviles grandes */
+@media (max-width: 480px) {
+    .diocesis-footer {
+        padding: 1.5rem 0;
+    }
+    
+    .diocesis-footer-container {
+        padding: 0 0.75rem;
+        gap: 1.25rem;
+        justify-items: start; /* alinear a la izquierda en móviles */
+    }
+}
+
+/* Breakpoint para móviles pequeños */
+@media (max-width: 360px) {
+    .diocesis-footer {
+        padding: 1rem 0;
+    }
+    
+    .diocesis-footer-container {
+        padding: 0 0.5rem;
+        gap: 1rem;
+    }
+}
+
+/* Logo y nombre de la diócesis */
+.diocesis-logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    margin-top: 1.5rem; /* Reducido de 3rem a 1.5rem */
+    justify-content: center;
+    height: 100%;
+    justify-self: start; /* alinear a la izquierda por defecto */
+}
+
+@media (min-width: 1024px) {
+    .diocesis-logo-section {
+        align-items: center; /* centrar escudo con los iconos */
+        text-align: center;
+        justify-self: center; /* centrar dentro del grid */
+    }
+    .diocesis-social {
+        justify-content: center !important; /* centrar fila de redes en desktop */
+        align-items: center;
+    }
+}
+
+.diocesis-logo-section img {
+    width: 110px; /* Más grande */
+    height: 110px; /* Más grande */
+    margin-bottom: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain; /* Mantiene las proporciones */
+}
+
+.diocesis-name {
+    font-family: 'Arsenal', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700; /* Arsenal Bold */
+    color: white;
+    margin-bottom: 0.75rem;
+    margin-top: 0.5rem; /* Espaciado superior para mejor proporción */
+}
+
+.diocesis-social {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-start;
+    margin-top: 1rem; /* Reducido de 1.5rem a 1rem */
+}
+
+@media (min-width: 1024px) {
+    .diocesis-social {
+        justify-content: flex-start !important; /* alinear a la izquierda en desktop */
+        align-items: center; /* centrado vertical */
+    }
+}
+
+.diocesis-social a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.4rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px; /* Tamaño original */
+    height: 48px; /* Tamaño original */
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.diocesis-social a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para texto de iconos */
+.social-icon-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Estilos específicos para cada red social */
+.social-facebook {
+    background-color: #1877f2;
+    font-family: Arial, sans-serif;
+    font-size: 1.4rem !important;
+}
+
+.social-facebook:hover {
+    background-color: #166fe5;
+}
+
+.social-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    border-radius: 12px !important; /* Esquinas redondeadas como el logo oficial */
+}
+
+.social-instagram:hover {
+    background: linear-gradient(45deg, #e08429 0%, #d55d32 25%, #d11d39 50%, #c2195c 75%, #b2147e 100%);
+}
+
+/* Icono personalizado de Instagram */
+.instagram-icon {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.instagram-camera {
+    width: 32px !important; /* Tamaño cuadrado como el logo oficial */
+    height: 32px !important; /* Cuadrado perfecto */
+    border: 2px solid white !important; /* Borde más fino y elegante */
+    border-radius: 6px !important; /* Esquinas redondeadas como el logo */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.instagram-lens {
+    width: 14px !important;
+    height: 14px !important; /* Círculo perfecto proporcional */
+    border: 2px solid white !important; /* Borde consistente con el cuadrado */
+    border-radius: 50%;
+    background: transparent;
+}
+
+.instagram-dot {
+    width: 4px !important;
+    height: 4px !important;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px !important;
+    right: 4px !important; /* Posición proporcional */
+}
+
+.social-twitter {
+    background-color: #000000;
+    font-size: 1.1rem !important;
+}
+
+.social-twitter:hover {
+    background-color: #333333;
+}
+
+.social-youtube {
+    background-color: #ff0000;
+    font-size: 1.2rem !important;
+}
+
+.social-youtube:hover {
+    background-color: #e60000;
+}
+
+.social-tiktok {
+    background: #000000; /* Fondo negro como el logo oficial */
+    border-radius: 8px !important; /* Esquinas redondeadas como el logo oficial */
+}
+
+.social-tiktok:hover {
+    background: #1a1a1a;
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Logo oficial de TikTok recreado en CSS */
+.tiktok-logo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.tiktok-shape {
+    position: absolute;
+    width: 24px; /* Tamaño simple */
+    height: 28px; /* Tamaño simple */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+}
+
+.tiktok-shape::before {
+    content: '♪';
+    display: block;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.tiktok-cyan {
+    color: #25F4EE;
+    z-index: 3;
+    transform: translate(-1px, -1px);
+}
+
+.tiktok-red {
+    color: #FE2C55;
+    z-index: 2;
+    transform: translate(1px, 1px);
+}
+
+.tiktok-white {
+    color: #FFFFFF;
+    z-index: 1;
+    transform: translate(0, 0);
+}
+
+/* Información de contacto */
+.diocesis-contact {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    width: 100%; /* Asegurar ancho completo */
+    box-sizing: border-box;
+}
+
+.contact-section-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem; /* Reducido de 0.75rem a 0.5rem */
+    color: white; /* Cambiado a blanco */
+}
+
+.contact-info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Reducido de 1rem a 0.75rem */
+    width: 100%; /* Asegurar ancho completo */
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%; /* Asegurar ancho completo del contenedor padre */
+}
+
+.contact-icon {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: white; /* Cambiado a blanco */
+    margin-top: 0.125rem;
+}
+
+/* Contenedores para los campos de texto */
+.contact-text {
+    background-color: rgba(59, 74, 140, 0.8); /* Fondo azul claro como en la imagen */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem; /* Reducido de 0.75rem a 0.5rem */
+    flex: 1;
+    width: 100%; /* Asegurar ancho completo */
+    min-width: 0; /* Permitir que se contraiga si es necesario */
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.contact-text:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-text p {
+    margin: 0;
+    color: #E8E8E8;
+}
+
+.contact-text a {
+    color: #87CEEB; /* Color celeste para enlaces */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-text a:hover {
+    color: #B0E0E6;
+    text-decoration: underline;
+}
+
+/* Extensiones */
+.contact-extensions {
+    margin-top: 1rem; /* Reducido de 1.5rem a 1rem */
+}
+
+.contact-extensions h4 {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem; /* Reducido de 0.75rem a 0.5rem */
+    color: white; /* Cambiado a blanco */
+}
+
+.extensions-container {
+    background-color: rgba(59, 74, 140, 0.8); /* Fondo azul claro como en la imagen */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.75rem; /* Reducido de 1rem a 0.75rem */
+    width: 100%; /* Asegurar ancho completo */
+    box-sizing: border-box;
+}
+
+.extensions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+}
+
+.extension-item {
+    background-color: rgba(59, 74, 140, 0.8); /* Fondo azul claro como en la imagen */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.extension-item:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateX(2px);
+}
+
+.extension-item p {
+    margin: 0;
+    color: #E8E8E8;
+    font-size: 0.8rem;
+}
+
+/* Horarios y políticas */
+.diocesis-info {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    width: 100%; /* Asegurar ancho completo */
+    box-sizing: border-box;
+}
+
+.info-section-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem; /* Reducido de 0.75rem a 0.5rem */
+    color: white; /* Cambiado a blanco */
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem; /* Reducido de 1rem a 0.75rem */
+    width: 100%; /* Asegurar ancho completo del contenedor padre */
+}
+
+.info-icon {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: white; /* Cambiado a blanco */
+    margin-top: 0.125rem;
+}
+
+/* Contenedores para la información */
+.info-text {
+    background-color: rgba(59, 74, 140, 0.8); /* Fondo azul claro como en la imagen */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem; /* Reducido de 0.75rem a 0.5rem */
+    flex: 1;
+    width: 100%; /* Asegurar ancho completo */
+    min-width: 0; /* Permitir que se contraiga si es necesario */
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.info-text:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.info-text h4 {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 0 0 0.5rem 0;
+    color: white; /* Cambiado a blanco */
+}
+
+.info-text p {
+    font-size: 0.85rem;
+    margin: 0 0 0.5rem 0;
+    color: #E8E8E8;
+    line-height: 1.5;
+}
+
+.info-text a {
+    color: #87CEEB;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.info-text a:hover {
+    color: #B0E0E6;
+    text-decoration: underline;
+}
+
+/* Copyright */
+.diocesis-copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 1.5rem; /* Reducido de 2rem a 1.5rem */
+    padding-top: 1rem; /* Reducido de 1.5rem a 1rem */
+    text-align: center;
+    font-size: 0.8rem;
+    color: #B8B8B8;
+}
+
+.diocesis-copyright a {
+    color: #87CEEB;
+    text-decoration: none;
+}
+
+.diocesis-copyright a:hover {
+    text-decoration: underline;
+}
+
+/* WhatsApp flotante */
+.whatsapp-float {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.whatsapp-float a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: #2f9f37;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(47, 159, 55, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: pulse 2s infinite;
+}
+
+.whatsapp-float a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-float svg {
+    color: white;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 4px 20px rgba(47, 159, 55, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.6), 0 0 0 10px rgba(37, 211, 102, 0.1);
+    }
+    100% {
+        box-shadow: 0 4px 20px rgba(47, 159, 55, 0.4);
+    }
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .diocesis-footer {
+        padding: 1.5rem 0; /* Reducido de 2rem a 1.5rem */
+    }
+    
+    .diocesis-footer-container {
+        padding: 0 1rem;
+        justify-items: start; /* alinear items del grid a la izquierda */
+    }
+    
+    .extensions-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-text,
+    .info-text {
+        padding: 0.5rem;
+    }
+    
+    .whatsapp-float {
+        bottom: 1.5rem;
+        right: 1.5rem;
+    }
+    
+    .whatsapp-float a {
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .whatsapp-float svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+    
+    /* Centrar redes en móvil/tablet */
+    .diocesis-social {
+        justify-content: center !important;
+        align-items: center;
+    }
+
+    .diocesis-logo-section {
+        align-items: center;
+        text-align: center;
+        justify-self: center;
+    }
+
+    /* Ajustar Instagram para tablets manteniendo proporciones */
+    .instagram-camera {
+        width: 28px !important; /* Proporcional para tablets */
+        height: 28px !important;
+        border: 2px solid white !important;
+        border-radius: 5px !important;
+    }
+    
+    .instagram-lens {
+        width: 12px !important;
+        height: 12px !important;
+        border: 2px solid white !important;
+    }
+    
+    .instagram-dot {
+        width: 4px !important;
+        height: 4px !important;
+        top: 4px !important;
+        right: 4px !important;
+    }
+}
+
+/* Mejoras adicionales para dispositivos muy pequeños */
+@media (max-width: 480px) {
+    .diocesis-logo-section img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .diocesis-name {
+        font-size: 0.8rem;
+    }
+    
+    .diocesis-social {
+        gap: 0.5rem;
+    }
+    
+    .diocesis-social a {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+    
+    /* Centrar redes en móvil */
+    .diocesis-social {
+        justify-content: center !important;
+        align-items: center;
+    }
+
+    .diocesis-logo-section {
+        align-items: center;
+        text-align: center;
+        justify-self: center;
+    }
+
+    /* Ajustar Instagram para móvil manteniendo proporciones */
+    .instagram-camera {
+        width: 24px !important; /* Proporcional al contenedor de 40px */
+        height: 24px !important;
+        border: 2px solid white !important;
+        border-radius: 4px !important;
+    }
+    
+    .instagram-lens {
+        width: 10px !important;
+        height: 10px !important;
+        border: 2px solid white !important;
+    }
+    
+    .instagram-dot {
+        width: 3px !important;
+        height: 3px !important;
+        top: 3px !important;
+        right: 3px !important;
+    }
+    
+    .contact-section-title,
+    .info-section-title {
+        font-size: 0.85rem;
+    }
+    
+    .contact-text,
+    .info-text {
+        font-size: 0.8rem;
+        padding: 0.4rem;
+    }
+    
+    .extensions-grid {
+        gap: 0.4rem;
+    }
+    
+    .extension-item {
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .extension-item p {
+        font-size: 0.75rem;
+    }
+}
+
+/* Optimización para orientación landscape en móviles */
+@media (max-width: 768px) and (orientation: landscape) {
+    .diocesis-footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .diocesis-logo-section {
+        grid-column: 1;
+        margin-bottom: 0;
+    }
+}
+
+/* Mejoras para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .diocesis-social a {
+        border: 0.5px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .contact-text,
+    .info-text {
+        border-width: 0.5px;
+    }
+}
+
+/* Soporte para modo oscuro del sistema */
+@media (prefers-color-scheme: dark) {
+    .diocesis-footer {
+        background-color: #2a3658;
+    }
+    
+    .contact-text,
+    .info-text {
+        background-color: rgba(255, 255, 255, 0.08);
+    }
+}
+
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .diocesis-social a:hover {
+        transform: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .contact-text:hover,
+    .info-text:hover {
+        transform: none;
+    }
+    
+    .extension-item:hover {
+        transform: none;
+    }
+    
+    /* Aumentar área táctil */
+    .diocesis-social a {
+        min-width: 48px;
+        min-height: 48px;
+    }
+    
+    .contact-text,
+    .info-text {
+        min-height: 44px;
+    }
+}

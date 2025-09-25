@@ -1,5 +1,6 @@
 # Laravel
 *.log
+
 .DS_Store
 .env
 .env.backup

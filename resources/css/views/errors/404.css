@@ -1,0 +1,92 @@
+/* ========================================
+   VISTA 404 - ESTILOS PERSONALIZADOS
+   ======================================== */
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Contenedor principal */
+.error-404-body {
+    background: #ffffff;
+    color: #000000;
+    font-family: 'Instrument Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Logo de la Diócesis */
+.error-404-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 2rem;
+}
+
+/* Título principal */
+.error-404-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #000000;
+    letter-spacing: -0.02em;
+}
+
+/* Descripción del error */
+.error-404-description {
+    font-size: 1.25rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    max-width: 400px;
+}
+
+/* Botón de inicio */
+.error-404-home-button {
+    background: #3B4A8C;
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 500px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.125rem;
+    transition: all 0.2s ease;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(59, 74, 140, 0.3);
+}
+
+.error-404-home-button:hover {
+    background: #2a3658;
+    transform: scale(1.04);
+    color: #ffffff;
+    box-shadow: 0 8px 25px rgba(59, 74, 140, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .error-404-title {
+        font-size: 2.5rem;
+        letter-spacing: -0.02em;
+    }
+    
+    .error-404-description {
+        font-size: 1.125rem;
+    }
+    
+    .error-404-home-button {
+        font-size: 1rem;
+        padding: 14px 28px;
+    }
+    
+    .error-404-logo {
+        width: 80px;
+        height: 80px;
+    }
+}

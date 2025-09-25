@@ -28,8 +28,22 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:6'],
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Por favor, ingresa un correo electrónico válido.',
+            'email.max' => 'El correo electrónico no puede tener más de 255 caracteres.',
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
         ];
     }
 
@@ -53,7 +67,16 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
             
             throw ValidationException::withMessages([
-                'email' => 'No encontramos una cuenta con este correo electrónico.',
+                'email' => 'No encontramos una cuenta con este correo electrónico. Verifica que esté escrito correctamente.',
+            ]);
+        }
+
+        // Verificar si la cuenta está activa (si tienes un campo de estado)
+        if (isset($user->estado) && $user->estado !== 'activo') {
+            RateLimiter::hit($this->throttleKey());
+            
+            throw ValidationException::withMessages([
+                'email' => 'Tu cuenta está desactivada. Contacta al administrador para más información.',
             ]);
         }
 

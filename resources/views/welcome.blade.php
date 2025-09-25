@@ -13,17 +13,30 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Arsenal:wght@400;700&display=swap" rel="stylesheet">
 
-        <!-- Styles / Scripts -->
-        @vite(['resources/css/app.css', 'resources/css/catedral-image.css', 'resources/css/welcome.css', 'resources/js/app.js'])
-        <style>
-            /* Asegurar que no hay márgenes o padding que interfieran */
-            * { box-sizing: border-box; }
-            html, body { margin: 0; padding: 0; height: 100%; }
-        </style>
+        <!-- Styles / Scripts - CSS unificado -->
+        <link rel="stylesheet" href="{{ asset('css/all-styles.css') }}">
+        
+        <!-- CSS de respaldo -->
+        <link rel="stylesheet" href="{{ asset('css/fallback.css') }}">
+        
+        <!-- JavaScript de welcome -->
+        <script src="{{ asset('build/assets/welcome-BjK2c7iW.js') }}"></script>
+        
+        <!-- SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
-    <body class="welcome-body">
-                <header class="welcome-header sticky top-0 z-50">
+    <body class ="welcome-body">
+        <!-- Meta tag para mensaje de despedida - solo cuando es logout exitoso -->
+        @if(session('logout_success') && session('goodbye'))
+            <meta name="goodbye-message" content="{{ session('goodbye') }}">
+            <meta name="is-logout-redirect" content="true">
+            @php
+                session()->forget(['goodbye', 'logout_success']);
+            @endphp
+        @endif
+                <header class="welcome-header">
             <div class="welcome-header-container">
                 <!-- Logo de la Diócesis -->
                 <div class="welcome-header-logo">
@@ -32,26 +45,80 @@
                 </div>
                 
                 @if (Route::has('login'))
-                    <nav class="welcome-header-nav">
-                        @auth
-                            <a href="{{ url('/dashboard') }}" class="welcome-nav-link dashboard-link">
-                                Dashboard
-                            </a>
-                        @else
-                            <a href="{{ url('/login') }}" class="welcome-nav-link login-link" onclick="console.log('Login link clicked, href: /login')">
-                                Iniciar Sesión
-                            </a>
+                    <nav class="welcome-header-nav" id="headerNav">
+                        <a href="{{ url('/login') }}" class="welcome-nav-link login-link" id="loginBtn" onclick="showLoading('loginBtn', 'Iniciando sesión...')">
+                            <span class="btn-text">Iniciar Sesión</span>
+                            <span class="btn-loading" style="display: none;">
+                                <svg class="loading-spinner" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" stroke-dasharray="31.416" stroke-dashoffset="31.416">
+                                        <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+                                        <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
+                                    </circle>
+                                </svg>
+                                <span class="loading-text">Iniciando sesión...</span>
+                            </span>
+                        </a>
 
-                            @if (Route::has('register'))
-                                <a href="{{ url('/register') }}" class="welcome-nav-link register-link" onclick="console.log('Register link clicked, href: /register')">
-                                   Registrarse
-                                </a>
-                            @endif
-                        @endauth
+                        @if (Route::has('register'))
+                            @php
+                                // Verificar si hay una verificación de código válida
+                                $hasValidVerification = session('invitation_email') && 
+                                                      session('invitation_code_id') && 
+                                                      session('invitation_status') === 'verified';
+                                
+                                // Debug temporal - remover después
+                                if (config('app.debug')) {
+                                    \Log::info('Welcome page - Session check', [
+                                        'invitation_email' => session('invitation_email'),
+                                        'invitation_code_id' => session('invitation_code_id'),
+                                        'invitation_status' => session('invitation_status'),
+                                        'has_valid_verification' => $hasValidVerification,
+                                        'register_url' => $hasValidVerification ? 'register' : 'verify-invitation'
+                                    ]);
+                                }
+                                
+                                // Si tiene verificación válida, ir directo a registro
+                                $registerUrl = $hasValidVerification 
+                                    ? route('register') 
+                                    : url('/verify-invitation');
+                                    
+                                $loadingText = $hasValidVerification 
+                                    ? 'Cargando registro...' 
+                                    : 'Verificando...';
+                            @endphp
+                            <a href="{{ $registerUrl }}" class="welcome-nav-link register-link" id="registerBtn" onclick="event.preventDefault(); showLoading('registerBtn', '{{ $loadingText }}')" 
+                               @if($hasValidVerification) title="Código ya verificado - Ir directo al registro" @endif>
+                                <span class="btn-text">
+                                    @if($hasValidVerification)
+                                        ✓ Registrarse
+                                    @else
+                                        Registrarse
+                                    @endif
+                                </span>
+                                <span class="btn-loading" style="display: none;">
+                                    <svg class="loading-spinner" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" stroke-dasharray="31.416" stroke-dashoffset="31.416">
+                                            <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+                                        </svg>
+                                        <span class="loading-text">Registrando...</span>
+                                    </span>
+                                </span>
+                            </a>
+                        @endif
                     </nav>
                 @endif
+                
+                <!-- Botón de menú hamburguesa -->
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </header>
+        
+        <!-- Overlay para cerrar menú móvil -->
+        <div class="nav-overlay" id="navOverlay"></div>
         
         <!-- Mensaje de cuenta eliminada -->
         @if (session('account_deleted'))
@@ -80,31 +147,13 @@
                     <p class="welcome-description">Aprende, crece y comparte conocimiento.<br>Aquí encontrarás cursos en línea completamente gratuitos, diseñados para fortalecer tus habilidades y abrirte nuevas oportunidades.</p>
                     
                     <ul class="welcome-features-list">
-                        <li class="welcome-feature-item">
-                            <span class="welcome-feature-icon-container">
-                                <span class="welcome-feature-icon">
-                                    <span class="welcome-feature-dot"></span>
-                                </span>
-                            </span>
-                            <span>
-                                Explora nuestro catálogo de cursos.
-                            </span>
-                        </li>
-                        <li class="welcome-feature-item">
-                            <span class="welcome-feature-icon-container">
-                                <span class="welcome-feature-icon">
-                                    <span class="welcome-feature-dot"></span>
-                                </span>
-                            </span>
-                            <span>
-                                Inscríbete y comienza hoy mismo.
-                            </span>
-                        </li>
+                        <li>Explora nuestro catálogo de cursos.</li>
+                        <li>Inscríbete y comienza hoy mismo.</li>
                     </ul>
                     
                     <ul class="welcome-cta-container">
                         <li>
-                            <a href="{{ url('/register') }}" class="welcome-cta-button">
+                            <a href="{{ url('/verify-invitation') }}" class="welcome-cta-button">
                                 Comenzar ahora
                             </a>
                         </li>
@@ -159,112 +208,321 @@
 
                 <!-- Información de contacto -->
                 <div class="diocesis-contact">
-                    <h3 class="contact-section-title">Información de Contacto</h3>
+                    <h3 class="contact-section-title" style="margin-bottom: 1.5rem;">Información de Contacto</h3>
                     
-                    <div class="contact-info-grid">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </div>
-                            <div class="contact-text">
-                    <p>Calle 100 N° 94A - 109. Apartadó, Antioquia</p>
-                            </div>
+                    <!-- Dirección -->
+                    <div class="contact-item" style="margin-bottom: 1.5rem;">
+                        <div class="contact-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
                         </div>
-
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <div class="contact-text">
-                                <p><a href="mailto:dioaartadocuria@gmail.com">dioaartadocuria@gmail.com</a></p>
-                                <p><a href="mailto:curia@diocesisdeapartado.org">curia@diocesisdeapartado.org</a></p>
-                            </div>
+                        <div class="contact-text">
+                            <h4>Dirección</h4>
+                            <p>Calle 100 N° 94A - 109. Apartadó, Antioquia</p>
                         </div>
+                    </div>
 
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                </svg>
-                            </div>
-                            <div class="contact-text">
-                                <p>Tel. 320 6829530 - WhatsApp 320 6829530</p>
-                            </div>
+                    <!-- Correos electrónicos -->
+                    <div class="contact-item" style="margin-bottom: 1.5rem;">
+                        <div class="contact-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Correos electrónicos</h4>
+                            <p><a href="mailto:dioaartadocuria@gmail.com">dioaartadocuria@gmail.com</a></p>
+                            <p><a href="mailto:curia@diocesisdeapartado.org">curia@diocesisdeapartado.org</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Teléfonos -->
+                    <div class="contact-item" style="margin-bottom: 1.5rem;">
+                        <div class="contact-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Teléfonos</h4>
+                            <p>Tel. 320 6829530</p>
                         </div>
                     </div>
                     
-                    <div class="contact-extensions">
-                        <h4>Extensiones:</h4>
-                        <div class="extensions-container">
-                            <div class="extensions-grid">
-                        <p>Recepción: 320 6829530</p>
-                        <p>Contabilidad: 310 3676593</p>
-                        <p>Talento Humano: 301 5161847</p>
-                        <p>Tesorería: 318 8694729</p>
-                        <p>Tribunal Eclesiástico: 317 6590491</p>
-                        <p>Funerales: 321 8346471</p>
-                        <p>Administración Cementerios: 313 2906270</p>
-                            </div>
+                    <!-- Extensiones -->
+                    <div class="contact-item" style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                        <div class="contact-icon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <h4>Extensiones</h4>
+                            <p>Recepción: 320 6829530</p>
+                            <p>Contabilidad: 310 3676593</p>
+                            <p>Talento Humano: 301 5161847</p>
+                            <p>Tesorería: 318 8694729</p>
+                            <p>Tribunal Eclesiástico: 317 6590491</p>
+                            <p>Funerales: 321 8346471</p>
+                            <p>Administración Cementerios: 313 2906270</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Horarios y políticas -->
                 <div class="diocesis-info">
-                    <h3 class="info-section-title">Información Adicional</h3>
+                    <h3 class="info-section-title" style="margin-bottom: 1.5rem;">Información Adicional</h3>
                     
-                    <div class="info-item">
+                    <!-- Horarios de atención -->
+                    <div class="info-item" style="margin-bottom: 1.5rem;">
                         <div class="info-icon">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
                         <div class="info-text">
-                    <h4>Horarios de atención:</h4>
-                    <p>Lunes a Viernes<br>8:00 a.m. a 12:00 p.m. - 1:00 p.m. a 4:40 p.m.</p>
+                            <h4>Horarios de atención</h4>
+                            <p>Lunes a Viernes<br>8:00 a.m. a 12:00 p.m. - 1:00 p.m. a 4:40 p.m.</p>
                         </div>
                     </div>
                     
-                    <div class="info-item">
+                    <!-- Política de Protección de datos -->
+                    <div class="info-item" style="margin-bottom: 1.5rem;">
                         <div class="info-icon">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
                         </div>
                         <div class="info-text">
-                    <h4>Política de Protección de datos</h4>
+                            <h4>Política de Protección de datos</h4>
                         </div>
                     </div>
                     
-                    <div class="info-item">
+                    <!-- Notificación de Procesos Judiciales -->
+                    <div class="info-item" style="margin-bottom: 1.5rem;">
                         <div class="info-icon">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
                         </div>
                         <div class="info-text">
-                    <h4>Notificación de Procesos Judiciales</h4>
-                    <p>De la Diócesis de Apartadó notificar al correo electrónico <a href="mailto:juridica@reidc.co">juridica@reidc.co</a> <a href="mailto:juridica@diocesisdeapartado.org">juridica@diocesisdeapartado.org</a></p>
+                            <h4>Notificación de Procesos Judiciales</h4>
+                            <p>De la Diócesis de Apartadó notificar al correo electrónico <a href="mailto:juridica@reidc.co">juridica@reidc.co</a> <a href="mailto:juridica@diocesisdeapartado.org">juridica@diocesisdeapartado.org</a></p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Copyright -->
-            <div class="diocesis-copyright">
-                <p>Diseñado por <a href="#">Diócesis de Apartadó</a> | 2021 | © Todos los derechos reservados</p>
+            <div class="diocesis-copyright text-center">
+                <p>Diseñado por <a href="#">Diócesis de Apartadó</a> | 2025 | © Todos los derechos reservados</p>
             </div>
         </footer>
+
+        <!-- WhatsApp flotante -->
+        <div class="whatsapp-float">
+            <a href="https://wa.me/3206829530" target="_blank" title="Contactar por WhatsApp">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                </svg>
+            </a>
+        </div>
 
         @if (Route::has('login'))
             <div class="welcome-footer-spacer"></div>
         @endif
 
 
+        <!-- Script para alerta de despedida -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar si hay mensaje de despedida (solo para logout exitoso)
+            const goodbyeMeta = document.querySelector('meta[name="goodbye-message"]');
+            const logoutRedirectMeta = document.querySelector('meta[name="is-logout-redirect"]');
+            
+            if (goodbyeMeta && logoutRedirectMeta && typeof Swal !== 'undefined') {
+                const message = goodbyeMeta.getAttribute('content');
+                if (message && message.trim() !== '') {
+                    // Verificar si la página se cargó por navegación del navegador
+                    const navigationEntries = performance.getEntriesByType('navigation');
+                    const isBackForwardNavigation = navigationEntries.length > 0 && 
+                        navigationEntries[0].type === 'back_forward';
+                    
+                    // Verificar si viene desde páginas de login o verify-invitation
+                    const referrer = document.referrer;
+                    const isFromAuthPages = referrer.includes('/login') || 
+                                          referrer.includes('/verify-invitation') || 
+                                          referrer.includes('/register');
+                    
+                    // Verificar si es un logout legítimo
+                    const isLegitimateLogout = localStorage.getItem('legitimate_logout');
+                    
+                    // Solo mostrar si es un logout legítimo Y NO es navegación hacia atrás/adelante Y NO viene de páginas de auth
+                    if (isLegitimateLogout && !isBackForwardNavigation && !isFromAuthPages) {
+                        // Verificar que no se haya mostrado ya
+                        const alreadyShown = sessionStorage.getItem('logout_farewell_shown');
+                        if (!alreadyShown) {
+                            // Marcar como mostrado para evitar duplicados
+                            sessionStorage.setItem('logout_farewell_shown', 'true');
+                            
+                            // Mostrar alerta de despedida
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Hasta pronto!',
+                                text: message,
+                                confirmButtonText: 'Entendido',
+                                confirmButtonColor: '#2563eb',
+                                background: '#ffffff',
+                                timer: 4000,
+                                timerProgressBar: true,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            }).then(() => {
+                                // Limpiar el storage después de cerrar la alerta
+                                sessionStorage.removeItem('logout_farewell_shown');
+                                localStorage.removeItem('legitimate_logout');
+                            });
+                        }
+                    } else {
+                        // Si es navegación no permitida, limpiar inmediatamente
+                        if (isBackForwardNavigation) {
+                            console.log('Navegación hacia atrás/adelante detectada. Omitiendo alerta de despedida.');
+                        }
+                        if (isFromAuthPages) {
+                            console.log('Navegación desde páginas de autenticación detectada. Omitiendo alerta de despedida.');
+                            console.log('Referrer:', referrer);
+                        }
+                        if (!isLegitimateLogout) {
+                            console.log('No es un logout legítimo. Omitiendo alerta de despedida.');
+                        }
+                        
+                        // Limpiar localStorage si no es logout legítimo
+                        if (!isLegitimateLogout || isFromAuthPages || isBackForwardNavigation) {
+                            localStorage.removeItem('legitimate_logout');
+                        }
+                    }
+                    
+                    // Limpiar los meta tags después de procesar
+                    goodbyeMeta.remove();
+                    logoutRedirectMeta.remove();
+                }
+            }
+        });
+        </script>
+        
+        <!-- Script simplificado para el menú hamburguesa -->
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Inicializando menú hamburguesa...');
+            
+            const menuToggle = document.getElementById('menuToggle');
+            const headerNav = document.getElementById('headerNav');
+            const navOverlay = document.getElementById('navOverlay');
+            
+            if (!menuToggle || !headerNav || !navOverlay) {
+                console.error('Elementos del menú no encontrados:', {
+                    menuToggle: !!menuToggle,
+                    headerNav: !!headerNav,
+                    navOverlay: !!navOverlay
+                });
+                return;
+            }
+            
+            console.log('Elementos del menú encontrados correctamente');
+            
+            // Función para verificar si debe mostrar menú móvil
+            function shouldShowMobileMenu() {
+                return window.innerWidth <= 900;
+            }
+            
+            // Función para cerrar menú
+            function closeMenu() {
+                menuToggle.classList.remove('active');
+                headerNav.classList.remove('active');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+                console.log('Menú cerrado');
+            }
+            
+            // Función para abrir/cerrar menú
+            function toggleMenu(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                
+                console.log('Toggle menú - Ancho pantalla:', window.innerWidth);
+                
+                if (!shouldShowMobileMenu()) {
+                    closeMenu();
+                    return;
+                }
+                
+                const isActive = headerNav.classList.contains('active');
+                
+                if (isActive) {
+                    closeMenu();
+                } else {
+                    menuToggle.classList.add('active');
+                    headerNav.classList.add('active');
+                    navOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    console.log('Menú abierto');
+                }
+            }
+            
+            // Mostrar/ocultar botón hamburguesa
+            function updateMenuVisibility() {
+                const shouldShow = shouldShowMobileMenu();
+                console.log('Actualizando visibilidad - Debe mostrar:', shouldShow);
+                
+                if (shouldShow) {
+                    menuToggle.style.display = 'flex';
+                    menuToggle.style.visibility = 'visible';
+                    menuToggle.style.opacity = '1';
+                } else {
+                    menuToggle.style.display = 'none';
+                    menuToggle.style.visibility = 'hidden';
+                    menuToggle.style.opacity = '0';
+                    closeMenu();
+                }
+            }
+            
+            // Event listeners
+            menuToggle.addEventListener('click', toggleMenu);
+            
+            navOverlay.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeMenu();
+            });
+            
+            // Cerrar al hacer click en enlaces
+            const navLinks = headerNav.querySelectorAll('.welcome-nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (shouldShowMobileMenu()) {
+                        closeMenu();
+                    }
+                });
+            });
+            
+            // Redimensionar ventana
+            window.addEventListener('resize', function() {
+                updateMenuVisibility();
+                if (!shouldShowMobileMenu()) {
+                    closeMenu();
+                }
+            });
+            
+            // Inicializar
+            updateMenuVisibility();
+            console.log('Menú hamburguesa inicializado correctamente');
+        });
+        </script>
+
     </body>
 </html>
+

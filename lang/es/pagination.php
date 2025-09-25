@@ -15,6 +15,16 @@ return [
 
     'previous' => '&laquo; Anterior',
     'next' => 'Siguiente &raquo;',
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Pagination View Language Lines
+    |--------------------------------------------------------------------------
+    */
+    'showing' => 'Mostrando',
+    'to' => 'a',
+    'of' => 'de',
+    'results' => 'resultados',
 
 ];
 

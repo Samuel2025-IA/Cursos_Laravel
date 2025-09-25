@@ -1,0 +1,373 @@
+/* Estilos optimizados para el formulario de registro - Solo layout */
+
+/* Centrar perfectamente el contenedor sin scroll */
+body.register-page {
+    height: 100vh !important;
+    overflow: hidden !important;
+}
+
+body.register-page .register-container {
+    height: 100vh !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+body.register-page .register-container > div:last-child {
+    margin: 0 !important;
+    padding: 1rem !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+    max-width: 60rem !important;
+}
+
+/* Logo del escudo - subido y optimizado */
+body.register-page .mb-6.pt-6 {
+    margin-bottom: 1rem !important;
+    padding-top: 0.5rem !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Logo tamaño igual que login (w-28 h-28 = 7rem) */
+body.register-page .mb-6.pt-6 img,
+body.register-page .mb-6.pt-6 svg {
+    width: 7rem !important;
+    height: 7rem !important;
+    margin: 0 auto !important;
+    display: block !important;
+    max-width: 7rem !important;
+    max-height: 7rem !important;
+}
+
+body.register-page .mb-6.pt-6 span:first-of-type {
+    font-size: 1.25rem !important;
+    margin-top: 0.75rem !important;
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+body.register-page .mb-6.pt-6 span:last-of-type {
+    font-size: 1rem !important;
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+/* Texto de ayuda más visible */
+.register-form .text-gray-500 {
+    font-size: 0.875rem !important; /* 14px - más grande */
+    color: #6b7280 !important; /* Color más visible */
+    margin-top: 0.25rem !important;
+}
+
+/* Botones de acción */
+.register-form .flex.items-center.justify-between {
+    flex-wrap: wrap;
+    gap: 1rem;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-form .flex.items-center.justify-between button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+/* Móvil: estilos básicos - Forzar aplicación con selectores específicos */
+@media screen and (max-width: 768px) {
+    /* Permitir scroll en móvil */
+    body.register-page {
+        height: auto !important;
+        min-height: 100vh !important;
+        overflow: auto !important;
+    }
+    
+    body.register-page .register-container {
+        height: auto !important;
+        min-height: 100vh !important;
+        padding: 1rem !important;
+        align-items: flex-start !important;
+    }
+    
+    body.register-page .register-container > div:last-child {
+        max-height: none !important;
+        overflow-y: visible !important;
+        margin: 1rem 0 !important;
+        padding: 1.5rem !important;
+        max-width: 100% !important;
+    }
+    
+    .register-form .grid {
+        gap: 0.75rem; /* Espacio adecuado en móvil */
+    }
+    
+    /* Botones de acción optimizados para móvil */
+    .register-form .flex.items-center.justify-between {
+        flex-direction: column;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center;
+        gap: 1rem;
+        margin-top: 1.5rem !important;
+        width: 100% !important;
+    }
+    
+    .register-form .flex.items-center.justify-between a {
+        order: 2;
+        margin-top: 0.5rem;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    .register-form .flex.items-center.justify-between button {
+        order: 1;
+        width: 100% !important;
+        padding: 0.75rem 1.5rem !important;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+    }
+    
+    /* Logo más pequeño en móvil - perfectamente centrado */
+    body.register-page .mb-6.pt-6 {
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }
+    
+    body.register-page .mb-6.pt-6 img,
+    body.register-page .mb-6.pt-6 svg {
+        width: 5rem !important;  /* Un poco más grande en móvil para consistencia */
+        height: 5rem !important;
+        margin: 0 auto !important;
+        display: block !important;
+        max-width: 5rem !important;
+        max-height: 5rem !important;
+    }
+    
+    body.register-page .mb-6.pt-6 span:first-of-type {
+        font-size: 1.1rem !important;
+        margin-top: 0.5rem !important;
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    body.register-page .mb-6.pt-6 span:last-of-type {
+        font-size: 0.9rem !important;
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    /* Texto de ayuda en móvil */
+    .register-form .text-gray-500 {
+        font-size: 0.8rem !important; /* 13px en móvil - legible */
+    }
+    
+    /* Asegurar que todos los inputs sean visibles */
+    .register-form .block {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* Espaciado entre secciones */
+    .register-form > div:not(:last-child) {
+        margin-bottom: 1rem !important;
+    }
+}
+
+/* Dispositivos muy pequeños (teléfonos en orientación vertical) - Forzar aplicación */
+@media screen and (max-width: 480px) {
+    body.register-page .register-container > div:last-child {
+        padding: 1rem !important;
+        margin: 0.5rem 0 !important;
+    }
+    
+    /* Logo aún más pequeño en pantallas muy pequeñas - perfectamente centrado */
+    body.register-page .mb-6.pt-6 {
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+    }
+    
+    body.register-page .mb-6.pt-6 img,
+    body.register-page .mb-6.pt-6 svg {
+        width: 4rem !important;  /* Más consistente con el login */
+        height: 4rem !important;
+        margin: 0 auto !important;
+        display: block !important;
+        max-width: 4rem !important;
+        max-height: 4rem !important;
+    }
+    
+    body.register-page .mb-6.pt-6 span:first-of-type {
+        font-size: 1rem !important;
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    body.register-page .mb-6.pt-6 span:last-of-type {
+        font-size: 0.85rem !important;
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    /* Botón más visible en pantallas pequeñas - perfectamente centrado */
+    .register-form .flex.items-center.justify-between {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    .register-form .flex.items-center.justify-between button {
+        padding: 1rem 2rem !important;
+        font-size: 1.1rem !important;
+        margin: 0 auto 1rem auto !important;
+        border-radius: 0.5rem !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    
+    /* Campos de entrada más grandes en móvil */
+    .register-form input[type="text"],
+    .register-form input[type="email"],
+    .register-form input[type="password"],
+    .register-form select {
+        padding: 0.75rem !important;
+        font-size: 1rem !important;
+        border-radius: 0.375rem !important;
+    }
+    
+    /* Grid de una sola columna en pantallas muy pequeñas */
+    .register-form .grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    /* Texto de ayuda más legible */
+    .register-form .text-gray-500 {
+        font-size: 0.875rem !important;
+        line-height: 1.4 !important;
+    }
+}
+
+/* Asegurar visibilidad del botón en todos los móviles */
+@media (max-width: 768px) and (max-height: 1024px) {
+    /* Contenedor principal con scroll seguro */
+    body.register-page {
+        position: relative !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+    }
+    
+    /* Asegurar que el formulario tenga espacio suficiente */
+    .register-form {
+        padding-bottom: 2rem !important;
+    }
+    
+    /* Botón siempre visible - perfectamente centrado */
+    .register-form .flex.items-center.justify-between {
+        position: relative !important;
+        z-index: 10 !important;
+        background: white !important;
+        padding: 1rem 0 !important;
+        margin-top: 2rem !important;
+        border-top: 1px solid #e5e7eb !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    .register-form .flex.items-center.justify-between button {
+        background: #2f9f37 !important;
+        color: white !important;
+        border: none !important;
+        transition: all 0.2s ease !important;
+        min-height: 48px !important; /* Altura mínima para touch */
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+    }
+    
+    .register-form .flex.items-center.justify-between a {
+        text-align: center !important;
+        width: 100% !important;
+        display: block !important;
+        margin-top: 0.5rem !important;
+    }
+    
+    .register-form .flex.items-center.justify-between button:hover {
+        background: #2f9f37dd !important;
+        transform: translateY(-1px) !important;
+    }
+}
+
+/* Reglas adicionales para forzar aplicación del logo en móvil */
+@media screen and (max-width: 768px) {
+    /* Selector más específico para el logo en móvil */
+    html body.register-page div.min-h-screen div.mb-6.pt-6 a img,
+    html body.register-page div.min-h-screen div.mb-6.pt-6 a svg,
+    html body.register-page .mb-6 img,
+    html body.register-page .mb-6 svg,
+    html body[data-route="register"] .mb-6 img,
+    html body[data-route="register"] .mb-6 svg {
+        width: 5rem !important;
+        height: 5rem !important;
+        min-width: 5rem !important;
+        min-height: 5rem !important;
+        max-width: 5rem !important;
+        max-height: 5rem !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Selector más específico para pantallas muy pequeñas */
+    html body.register-page div.min-h-screen div.mb-6.pt-6 a img,
+    html body.register-page div.min-h-screen div.mb-6.pt-6 a svg,
+    html body.register-page .mb-6 img,
+    html body.register-page .mb-6 svg,
+    html body[data-route="register"] .mb-6 img,
+    html body[data-route="register"] .mb-6 svg {
+        width: 4rem !important;
+        height: 4rem !important;
+        min-width: 4rem !important;
+        min-height: 4rem !important;
+        max-width: 4rem !important;
+        max-height: 4rem !important;
+    }
+}

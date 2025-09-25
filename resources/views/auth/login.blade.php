@@ -8,8 +8,9 @@
     <!-- <x-auth-session-status class="mb-4" :status="session('status')" /> -->
 
     <!-- Validation Errors -->
+    <!-- <x-auth-session-status class="mb-4" :status="session('status')" /> -->
 
-    <form method="POST" action="{{ route('login') }}" id="login-form">
+    <form method="POST" action="{{ route('login') }}" id="login-form" class="login-form">
         @csrf
 
         <!-- Email Address -->
@@ -48,14 +49,14 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-emerald-600 shadow-sm focus:ring-emerald-500" name="remember">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-[#2f9f37] shadow-sm focus:ring-[#2f9f37]" name="remember">
                 <span class="ms-2 text-sm text-gray-600">{{ __('Recordarme') }}</span>
             </label>
         </div>
 
         <div class="flex items-center justify-between mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-emerald-600 hover:text-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" href="{{ route('password.request') }}">
+                <a class="underline text-sm text-[#2f9f37] hover:text-[#2f9f37]/80 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2f9f37]" href="{{ route('password.request') }}">
                     {{ __('¿Olvidaste tu contraseña?') }}
                 </a>
             @endif
@@ -66,57 +67,17 @@
         </div>
     </form>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('login-form');
-            
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    console.log('🎯 Formulario de login enviado!');
-                    
-                    // Mostrar Loading Overlay
-                    showLoading('login-loading', 'Iniciando sesión...');
-                    
-                    // Verificar errores de validación
-                    const errors = document.querySelectorAll('.text-red-600');
-                    if (errors.length > 0) {
-                        console.log('❌ Errores de validación encontrados:', errors.length);
-                        hideLoading('login-loading');
-                    } else {
-                        console.log('✅ No hay errores de validación visibles');
-                    }
-                });
-            }
-        });
-    </script>
+    @vite(['resources/js/global/toggle-password.js', 'resources/js/auth/login.js'])
 
     <div class="mt-6 text-center">
         <p class="text-sm text-gray-700">
             ¿No tienes una cuenta? 
-            <a href="{{ route('register') }}" class="text-emerald-600 hover:text-emerald-700 underline font-medium">
+            <a href="{{ route('invitation.verify') }}" class="text-[#2f9f37] hover:text-[#2f9f37]/80 underline font-medium">
                 Regístrate aquí
             </a>
         </p>
     </div>
 
-    <script>
-        function togglePassword(fieldId) {
-            const passwordField = document.getElementById(fieldId);
-            const eyeIcon = document.getElementById(`eye-icon-${fieldId}`);
-            const eyeSlashIcon = document.getElementById(`eye-slash-icon-${fieldId}`);
-            
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                eyeIcon.classList.add('hidden');
-                eyeSlashIcon.classList.remove('hidden');
-            } else {
-                passwordField.type = 'password';
-                eyeIcon.classList.remove('hidden');
-                eyeSlashIcon.classList.add('hidden');
-            }
-        }
-
-    </script>
 
     <!-- Meta tags para mensajes flash -->
     @if(session('flash_message') && session('flash_token'))
@@ -127,8 +88,43 @@
         @endphp
     @endif
 
+    <!-- Meta tag para acceso no autorizado -->
+    @if(session('unauthorized_error'))
+        <meta name="unauthorized-error" content="{{ session('unauthorized_error') }}">
+        @php
+            session()->forget(['unauthorized_error']);
+        @endphp
+    @endif
+
+    <!-- Meta tags para errores de login -->
+    @if(session('error_type') && session('error_message'))
+        <meta name="error-type" content="{{ session('error_type') }}">
+        <meta name="error-message" content="{{ session('error_message') }}">
+        @php
+            session()->forget(['error_type', 'error_message']);
+        @endphp
+    @endif
 
 
-    <!-- Script simple para manejar alertas flash (temporal) -->
-    <script src="{{ asset('js/simple-flash.js') }}"></script>
+
+    <!-- Script para manejar alertas flash -->
+    @vite(['resources/js/simple-flash.js'])
+    
+    <!-- Script para manejar acceso no autorizado -->
+    @vite('resources/js/auth/unauthorized-access.js')
+
+    <!-- Scripts para alertas SweetAlert2 -->
+    @if(session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    confirmButtonText: 'Continuar',
+                    confirmButtonColor: '#2f9f37'
+                });
+            });
+        </script>
+    @endif
 </x-guest-layout>

@@ -14,8 +14,13 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(): View|RedirectResponse
     {
+        // Si el usuario ya está autenticado, redirigir al dashboard
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+        
         return view('auth.login');
     }
 
@@ -24,11 +29,44 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        try {
+            $request->authenticate();
 
-        $request->session()->regenerate();
+            $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false))->with('success', '¡Bienvenido de nuevo, ' . Auth::user()->name . ' ' );
+            return redirect()->intended(route('dashboard', absolute: false))->with('success', '¡Bienvenido de nuevo, ' . Auth::user()->primer_nombre . '!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Si hay errores de validación, redirigir con alerta de error
+            $errors = $e->errors();
+            $errorType = 'general';
+            $errorMessage = '';
+            
+            if (isset($errors['email'])) {
+                $errorType = 'email';
+                $errorMessage = $errors['email'][0];
+            } elseif (isset($errors['password'])) {
+                $errorType = 'password';
+                $errorMessage = $errors['password'][0];
+            } else {
+                $errorType = 'general';
+                $errorMessage = 'Error de autenticación. Por favor, verifica tus credenciales.';
+            }
+            
+            // Mantener el campo que está correcto, solo limpiar el que tiene error
+            $inputData = [];
+            if ($errorType === 'email') {
+                // Si el error es de email, mantener la contraseña
+                $inputData['password'] = $request->input('password');
+            } else if ($errorType === 'password') {
+                // Si el error es de contraseña, mantener el email
+                $inputData['email'] = $request->input('email');
+            }
+            
+            return redirect()->back()
+                ->with('error_type', $errorType)
+                ->with('error_message', $errorMessage)
+                ->withInput($inputData);
+        }
     }
 
     /**
@@ -42,6 +80,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with([
+            'logout_success' => true,
+            'goodbye' => 'Te agradecemos por haber visitado nuestra página. ¡Te esperamos pronto!'
+        ]);
     }
 }

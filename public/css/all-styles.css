@@ -1,0 +1,125 @@
+/* CSS que importa todos los estilos compilados */
+@import url('/build/assets/app-CIocAQW6.css');
+@import url('/build/assets/sidebar-C3jEGlBl.css');
+@import url('/build/assets/dashboard-Df7adjLL.css');
+@import url('/build/assets/catedral-image-BBeRnsYT.css');
+@import url('/build/assets/welcome-base-CfePnB42.css');
+@import url('/build/assets/welcome-main-C496JmrP.css');
+@import url('/build/assets/welcome-components-CUVlRmah.css');
+@import url('/build/assets/welcome-header-CP93o8qR.css');
+@import url('/build/assets/welcome-footer-BWa8ZSdm.css');
+
+/* Estilos adicionales para asegurar funcionamiento */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f8fafc;
+    color: #1f2937;
+    line-height: 1.6;
+}
+
+/* Asegurar que el sidebar funcione */
+.app-sidebar {
+    position: fixed !important;
+    inset: 64px auto 0 0 !important;
+    width: 260px !important;
+    background-color: #2A3658 !important;
+    border-right: 1px solid rgba(255,255,255,0.08) !important;
+    color: #e5e7eb !important;
+    z-index: 40 !important;
+    transition: width .25s ease, transform .25s ease !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.app-sidebar .section-title {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: .02em !important;
+    padding: 16px 16px !important;
+    transition: opacity 0.25s ease !important;
+}
+
+.app-sidebar .nav-list {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 8px !important;
+}
+
+.app-sidebar .nav-item {
+    margin: 2px 0 !important;
+}
+
+.app-sidebar .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+    color: #e5e7eb !important;
+    text-decoration: none !important;
+    transition: background .2s ease, color .2s ease !important;
+}
+
+.app-sidebar .nav-link:hover {
+    background: rgba(255,255,255,0.08) !important;
+    color: #fff !important;
+}
+
+.app-sidebar .nav-link .ico {
+    width: 18px !important;
+    height: 18px !important;
+    color: currentColor !important;
+    flex-shrink: 0 !important;
+}
+
+.dashboard-content {
+    margin-left: 280px !important;
+    transition: margin-left .25s ease !important;
+    padding: 2rem !important;
+    margin-top: 80px !important;
+}
+
+.sidebar-toggle-btn {
+    position: fixed !important;
+    top: 84px !important;
+    left: 280px !important;
+    z-index: 50 !important;
+    width: 40px !important;
+    height: 40px !important;
+    background: #000 !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+}
+
+.sidebar-toggle-btn:hover {
+    background: #1a1a1a !important;
+    border-color: rgba(255,255,255,0.3) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .app-sidebar {
+        transform: translateX(-100%) !important;
+        width: 260px !important;
+    }
+    
+    .app-sidebar.open {
+        transform: translateX(0) !important;
+    }
+    
+    .dashboard-content {
+        margin-left: 0 !important;
+    }
+    
+    .sidebar-toggle-btn {
+        left: 20px !important;
+        top: 84px !important;
+    }
+}

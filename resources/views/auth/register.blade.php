@@ -4,73 +4,98 @@
     <!-- Loading Overlay -->
     <x-loading-overlay id="register-loading" text="Enviando registro..." />
 
-    <form method="POST" action="{{ route('register') }}" id="register-form">
+
+    <form method="POST" action="{{ route('register') }}" id="register-form" class="register-form">
         @csrf
 
-        <!-- Primera fila: Primer Nombre y Segundo Nombre -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Primera fila: 3 columnas - Nombres -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- Primer Nombre -->
             <div>
                 <x-input-label for="primer_nombre" :value="__('Primer Nombre')" />
-                <x-text-input id="primer_nombre" class="block mt-1 w-full" type="text" name="primer_nombre" :value="old('primer_nombre')" required autofocus autocomplete="given-name" />
-                <x-input-error :messages="$errors->get('primer_nombre')" class="mt-2" />
+                <x-text-input id="primer_nombre" class="block mt-2 w-full" type="text" name="primer_nombre" :value="old('primer_nombre')" required autofocus autocomplete="given-name" />
+                <x-input-error :messages="$errors->get('primer_nombre')" class="mt-1" />
             </div>
 
             <!-- Segundo Nombre (Opcional) -->
             <div>
-                <x-input-label for="segundo_nombre" :value="__('Segundo Nombre (Opcional)')" />
-                <x-text-input id="segundo_nombre" class="block mt-1 w-full" type="text" name="segundo_nombre" :value="old('segundo_nombre')" autocomplete="additional-name" />
-                <x-input-error :messages="$errors->get('segundo_nombre')" class="mt-2" />
+                <x-input-label for="segundo_nombre" :value="__('Segundo Nombre')" />
+                <x-text-input id="segundo_nombre" class="block mt-2 w-full" type="text" name="segundo_nombre" :value="old('segundo_nombre')" autocomplete="additional-name" placeholder="Opcional" />
+                <x-input-error :messages="$errors->get('segundo_nombre')" class="mt-1" />
             </div>
-        </div>
 
-        <!-- Segunda fila: Primer Apellido y Segundo Apellido -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <!-- Primer Apellido -->
             <div>
                 <x-input-label for="primer_apellido" :value="__('Primer Apellido')" />
-                <x-text-input id="primer_apellido" class="block mt-1 w-full" type="text" name="primer_apellido" :value="old('primer_apellido')" required autocomplete="family-name" />
-                <x-input-error :messages="$errors->get('primer_apellido')" class="mt-2" />
-            </div>
-
-            <!-- Segundo Apellido -->
-            <div>
-                <x-input-label for="segundo_apellido" :value="__('Segundo Apellido')" />
-                <x-text-input id="segundo_apellido" class="block mt-1 w-full" type="text" name="segundo_apellido" :value="old('segundo_apellido')" required autocomplete="family-name" />
-                <x-input-error :messages="$errors->get('segundo_apellido')" class="mt-2" />
+                <x-text-input id="primer_apellido" class="block mt-2 w-full" type="text" name="primer_apellido" :value="old('primer_apellido')" required autocomplete="family-name" />
+                <x-input-error :messages="$errors->get('primer_apellido')" class="mt-1" />
             </div>
         </div>
 
-        <!-- Segunda fila: Email y Entidad -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <!-- Segunda fila: 3 columnas - Apellido, Documento y Email -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <!-- Segundo Apellido -->
+            <div>
+                <x-input-label for="segundo_apellido" :value="__('Segundo Apellido')" />
+                <x-text-input id="segundo_apellido" class="block mt-2 w-full" type="text" name="segundo_apellido" :value="old('segundo_apellido')" required autocomplete="family-name" />
+                <x-input-error :messages="$errors->get('segundo_apellido')" class="mt-1" />
+            </div>
+
+            <!-- Tipo de Documento -->
+            <div>
+                <x-input-label for="tipo_documento" :value="__('Tipo de Documento')" />
+                <select id="tipo_documento" name="tipo_documento" class="block mt-2 w-full border-gray-300 focus:border-[#2f9f37] focus:ring-[#2f9f37] rounded-md shadow-sm" required>
+                    <option value="">Selecciona el tipo</option>
+                    <option value="CC" {{ old('tipo_documento') == 'CC' ? 'selected' : '' }}>Cédula de Ciudadanía</option>
+                    <option value="CE" {{ old('tipo_documento') == 'CE' ? 'selected' : '' }}>Cédula de Extranjería</option>
+                    <option value="TI" {{ old('tipo_documento') == 'TI' ? 'selected' : '' }}>Tarjeta de Identidad</option>
+                    <option value="PP" {{ old('tipo_documento') == 'PP' ? 'selected' : '' }}>Pasaporte</option>
+                    <option value="NIT" {{ old('tipo_documento') == 'NIT' ? 'selected' : '' }}>NIT</option>
+                </select>
+                <x-input-error :messages="$errors->get('tipo_documento')" class="mt-1" />
+            </div>
+
             <!-- Correo electrónico -->
             <div>
                 <x-input-label for="email" :value="__('Correo Electrónico')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                <x-text-input id="email" class="block mt-2 w-full" type="email" name="email" :value="old('email', $invitation_email ?? '')" required autocomplete="username" readonly />
+                <x-input-error :messages="$errors->get('email')" class="mt-1" />
+            </div>
+        </div>
+
+        <!-- Tercera fila: 2 columnas - Número de Documento y Entidad -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <!-- Número de Documento -->
+            <div>
+                <x-input-label for="numero_documento" :value="__('Número de Documento')" />
+                <x-text-input id="numero_documento" class="block mt-2 w-full" type="text" name="numero_documento" :value="old('numero_documento')" required maxlength="20" placeholder="Sin espacios ni guiones" />
+                <x-input-error :messages="$errors->get('numero_documento')" class="mt-1" />
+                <p class="text-sm text-gray-500 mt-1">
+                    <span id="document-hint">Ingresa tu número de documento</span>
+                </p>
             </div>
 
             <!-- Entidad -->
             <div>
                 <x-input-label for="entidad" :value="__('Elije tu entidad')" />
-                <select id="entidad" name="entidad" class="block mt-1 w-full border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-md shadow-sm" required>
+                <select id="entidad" name="entidad" class="block mt-2 w-full border-gray-300 focus:border-[#2f9f37] focus:ring-[#2f9f37] rounded-md shadow-sm" required>
                     <option value="">Selecciona una entidad</option>
                     <option value="funadpas" {{ old('entidad') == 'funadpas' ? 'selected' : '' }}>Funadpas</option>
                     <option value="fundacion_isaias" {{ old('entidad') == 'fundacion_isaias' ? 'selected' : '' }}>Fundación Isaias Duarte Cancino</option>
                     <option value="diocesis_apartado" {{ old('entidad') == 'diocesis_apartado' ? 'selected' : '' }}>Diócesis de Apartadó</option>
                     <option value="pastoral_social" {{ old('entidad') == 'pastoral_social' ? 'selected' : '' }}>Pastoral Social</option>
                 </select>
-                <x-input-error :messages="$errors->get('entidad')" class="mt-2" />
+                <x-input-error :messages="$errors->get('entidad')" class="mt-1" />
             </div>
         </div>
 
-        <!-- Tercera fila: Contraseña y Confirmar Contraseña -->
+        <!-- Cuarta fila: 2 columnas - Contraseña y Confirmar Contraseña -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             <!-- Password -->
             <div>
                 <x-input-label for="password" :value="__('Contraseña')" />
                 <div class="relative">
-                    <x-text-input id="password" class="block mt-1 w-full pr-12"
+                    <x-text-input id="password" class="block mt-2 w-full pr-12"
                                  type="password"
                                  name="password"
                                  required autocomplete="new-password" />
@@ -88,14 +113,14 @@
                         </svg>
                     </button>
                 </div>
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password')" class="mt-1" />
             </div>
 
             <!-- Confirm Password -->
             <div>
                 <x-input-label for="password_confirmation" :value="__('Confirmar Contraseña')" />
                 <div class="relative">
-                    <x-text-input id="password_confirmation" class="block mt-1 w-full pr-12"
+                    <x-text-input id="password_confirmation" class="block mt-2 w-full pr-12"
                                  type="password"
                                  name="password_confirmation" required autocomplete="new-password" />
 
@@ -112,96 +137,21 @@
                         </svg>
                     </button>
                 </div>
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-1" />
             </div>
         </div>
 
         <!-- Botones de acción -->
-        <div class="flex items-center justify-center mt-6">
-            <a class="underline text-sm text-emerald-600 hover:text-emerald-700 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors" href="{{ route('login') }}">
+        <div class="flex items-center justify-between mt-6">
+            <a class="underline text-sm text-[#2f9f37] hover:text-[#2f9f37]/80 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2f9f37] transition-colors" href="{{ route('login') }}">
                 {{ __('¿Ya tienes una cuenta?') }}
             </a>
-
-            <x-primary-button class="ms-4" type="submit">
+            
+            <x-primary-button class="px-8" type="submit">
                 {{ __('Registrarse') }}
             </x-primary-button>
         </div>
     </form>
 
-    <script>
-        // Debug del formulario
-        console.log('=== REGISTER FORM DEBUG ===');
-        
-        // Agregar event listener al formulario
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('register-form');
-            
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    console.log('🎯 Formulario enviado!');
-                    console.log('Action:', form.action);
-                    console.log('Method:', form.method);
-                    
-                    // Mostrar datos del formulario
-                    const formData = new FormData(form);
-                    for (let [key, value] of formData.entries()) {
-                        if (key !== 'password' && key !== 'password_confirmation') {
-                            console.log(key + ':', value);
-                        } else {
-                            console.log(key + ':', '[OCULTO]');
-                        }
-                    }
-                    
-                    // Mostrar Loading Overlay personalizado
-                    showLoading('register-loading', 'Enviando registro...');
-                    
-                    // Debug adicional
-                    console.log('🔄 Formulario enviado, esperando respuesta...');
-                    console.log('⏰ Timestamp:', new Date().toISOString());
-                    
-                    // Verificar si hay CSRF token
-                    const csrfToken = form.querySelector('input[name="_token"]');
-                    if (csrfToken) {
-                        console.log('✅ CSRF token encontrado:', csrfToken.value.substring(0, 10) + '...');
-                    } else {
-                        console.log('❌ CSRF token NO encontrado');
-                    }
-                    
-                    // IMPORTANTE: NO prevenir el envío del formulario
-                    console.log('✅ Formulario se enviará normalmente...');
-                    
-                    // VERIFICAR QUE NO HAYA ERRORES DE VALIDACIÓN
-                    const errors = document.querySelectorAll('.text-red-600');
-                    if (errors.length > 0) {
-                        console.log('❌ ERRORES DE VALIDACIÓN ENCONTRADOS:', errors.length);
-                        errors.forEach((error, index) => {
-                            console.log(`Error ${index + 1}:`, error.textContent);
-                        });
-                        // Ocultar loading si hay errores
-                        hideLoading('register-loading');
-                    } else {
-                        console.log('✅ No hay errores de validación visibles');
-                    }
-                });
-            } else {
-                console.log('❌ Formulario no encontrado');
-            }
-        });
-        
-        function togglePassword(fieldId) {
-            const passwordField = document.getElementById(fieldId);
-            const eyeIcon = document.getElementById(`eye-icon-${fieldId}`);
-            const eyeSlashIcon = document.getElementById(`eye-slash-icon-${fieldId}`);
-            
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                eyeIcon.classList.add('hidden');
-                eyeSlashIcon.classList.remove('hidden');
-            } else {
-                passwordField.type = 'password';
-                eyeIcon.classList.remove('hidden');
-                eyeSlashIcon.classList.add('hidden');
-            }
-        }
-    </script>
+    @vite(['resources/js/global/toggle-password.js', 'resources/js/auth/register.js'])
 </x-guest-layout>

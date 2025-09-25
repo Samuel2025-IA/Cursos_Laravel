@@ -1,21 +1,44 @@
-MIT License
+LICENCIA DE SOFTWARE PROPIETARIO - USO INTERNO
 
 Copyright (c) 2024 Diócesis de Apartadó
+Todos los derechos reservados.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+RESTRICCIONES DE USO:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Este software y sus archivos de documentación asociados (el "Software") son 
+propiedad exclusiva de la Diócesis de Apartadó y están destinados únicamente 
+para uso administrativo interno.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+PROHIBICIONES:
+
+1. NO se permite la copia, distribución, modificación o venta del Software
+2. NO se permite el uso del Software por terceros sin autorización expresa
+3. NO se permite la ingeniería inversa, descompilación o desensamblado
+4. NO se permite el uso comercial o lucrativo del Software
+5. NO se permite la sublicencia o cesión de derechos
+
+AUTORIZACIÓN DE USO:
+
+El Software solo puede ser utilizado por:
+- Personal autorizado de la Diócesis de Apartadó
+- Ingenieros de desarrollo designados por la Diócesis
+- Personal administrativo con acceso autorizado
+
+CONDICIONES:
+
+- El uso del Software está sujeto a las políticas internas de la Diócesis
+- Se requiere autorización previa para cualquier modificación
+- El acceso debe ser registrado y monitoreado
+- La confidencialidad de la información debe ser mantenida
+
+VIOLACIONES:
+
+Cualquier violación de esta licencia resultará en:
+- Terminación inmediata del acceso
+- Acciones legales correspondientes
+- Reclamación por daños y perjuicios
+
+EL SOFTWARE SE PROPORCIONA "TAL COMO ESTÁ" SIN GARANTÍAS DE NINGÚN TIPO.
+
+Para consultas sobre el uso autorizado, contactar a la Diócesis de Apartadó.
+

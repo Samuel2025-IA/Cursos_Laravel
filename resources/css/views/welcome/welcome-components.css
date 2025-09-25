@@ -1,0 +1,98 @@
+/* Estilos de componentes especiales para la vista de bienvenida */
+
+/* Mensaje de cuenta eliminada */
+.account-deleted-message {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    padding: 0 1.5rem;
+    animation: slideDown 0.5s ease-out;
+}
+
+.account-deleted-content {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.3), 0 4px 6px -2px rgba(16, 185, 129, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.account-deleted-icon {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-deleted-icon svg {
+    color: white;
+}
+
+.account-deleted-text {
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0;
+    font-weight: 500;
+}
+
+.account-deleted-close {
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.account-deleted-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.account-deleted-close svg {
+    color: white;
+}
+
+/* Espaciado adicional para el footer - Ya no necesario */
+.welcome-footer-spacer {
+    display: none;
+}
+
+/* Responsive para desktop */
+@media (min-width: 1024px) {
+    .account-deleted-message {
+        max-width: 56rem;
+    }
+}
+
+/* Responsive para móviles pequeños */
+@media (max-width: 480px) {
+    .account-deleted-message {
+        padding: 0 1rem;
+    }
+    
+    .account-deleted-content {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .account-deleted-close {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+}

@@ -1,5 +1,5 @@
 ---
-name: 📱 Reporte de Problema Móvil
+name: Reporte de Problema Móvil
 about: Reportar un problema específico en dispositivos móviles
 title: '[MOBILE] '
 labels: 'mobile'
@@ -7,10 +7,10 @@ assignees: ''
 
 ---
 
-## 📱 Descripción del Problema
+## Descripción del Problema
 Una descripción clara y concisa del problema en dispositivos móviles.
 
-## 🔍 Área Afectada
+## Área Afectada
 ¿En qué parte del sistema se observa el problema móvil?
 - [ ] Página de inicio
 - [ ] Dashboard
@@ -18,7 +18,7 @@ Una descripción clara y concisa del problema en dispositivos móviles.
 - [ ] Navegación
 - [ ] Otro (especificar)
 
-## 📱 Dispositivo Afectado
+## Dispositivo Afectado
 Describe el dispositivo donde se observa el problema:
 - **Tipo de dispositivo**: [ej. Smartphone, Tablet]
 - **Marca y modelo**: [ej. iPhone 12, Samsung Galaxy S21]
@@ -26,38 +26,39 @@ Describe el dispositivo donde se observa el problema:
 - **Navegador**: [ej. Safari, Chrome Mobile]
 - **Versión del navegador**: [ej. 15.0]
 
-## 🔄 Pasos para Reproducir
+## Pasos para Reproducir
 1. Abrir '...' en el dispositivo móvil
 2. Navegar a '....'
 3. Hacer clic en '....'
 4. Observar el problema
 
-## 📐 Orientación de la Pantalla
+## Orientación de la Pantalla
 ¿En qué orientación se observa el problema?
 - [ ] Vertical (portrait)
 - [ ] Horizontal (landscape)
 - [ ] Ambas orientaciones
 
-## 📏 Resolución de Pantalla
+## Resolución de Pantalla
 ¿Cuál es la resolución de la pantalla del dispositivo?
 - **Ancho**: [ej. 375px]
 - **Alto**: [ej. 812px]
 
-## 🎯 Comportamiento Esperado
+## Comportamiento Esperado
 Una descripción clara de cómo debería funcionar en dispositivos móviles.
 
-## 📱 Comportamiento Actual
+## Comportamiento Actual
 Una descripción clara de cómo está funcionando actualmente en dispositivos móviles.
 
-## 📸 Capturas de Pantalla
+## Capturas de Pantalla
 Si es posible, agrega capturas de pantalla del problema en el dispositivo móvil.
 
-## 💡 Sugerencias de Mejora
+## Sugerencias de Mejora
 Si tienes ideas sobre cómo mejorar la experiencia móvil, compártelas aquí.
 
-## 📝 Información Adicional
+## Información Adicional
 Cualquier otra información que sea importante para entender el problema móvil.
 
-## 🔗 Enlaces Útiles
+## Enlaces Útiles
 - [Responsive Design Testing](https://developer.chrome.com/docs/devtools/device-mode/)
 - [Mobile-Friendly Test](https://search.google.com/test/mobile-friendly)
+

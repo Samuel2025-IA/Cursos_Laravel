@@ -1,0 +1,62 @@
+/* Estilos específicos para la vista de login */
+.login-container {
+    max-width: 36rem !important;
+    width: 100% !important;
+}
+
+/* Ajustes para el formulario de login */
+.login-form {
+    padding: 1.5rem !important;
+}
+
+/* Reducir espaciado entre elementos del formulario */
+.login-form .mt-4 {
+    margin-top: 1rem !important;
+}
+
+.login-form .mt-2 {
+    margin-top: 0.5rem !important;
+}
+
+/* Ajustar espaciado del logo en login */
+body:not(.register-page) .mb-6.pt-6 {
+    margin-bottom: 1rem !important;
+    padding-top: 0.5rem !important;
+}
+
+/* Reducir espaciado del contenedor principal */
+body:not(.register-page) .min-h-screen {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+/* Ajustar espaciado del contenedor del formulario */
+.login-container {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    padding: 1rem !important;
+}
+
+/* Responsive para móviles */
+@media (max-width: 640px) {
+    .login-container {
+        max-width: 100% !important;
+        margin: 0.5rem !important;
+        padding: 1rem !important;
+    }
+    
+    .login-form {
+        padding: 1rem !important;
+    }
+    
+    /* Reducir más el espaciado en móvil */
+    body:not(.register-page) .mb-6.pt-6 {
+        margin-bottom: 0.5rem !important;
+        padding-top: 0.25rem !important;
+    }
+    
+    body:not(.register-page) .min-h-screen {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+}

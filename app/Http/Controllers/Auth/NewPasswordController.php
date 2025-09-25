@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -19,8 +20,9 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request): View
     {
-        // Obtener el email del request
+        // Obtener el email y token del request
         $email = $request->email;
+        $token = $request->route('token');
         
         // Verificar si el usuario existe
         $user = \App\Models\User::where('email', $email)->first();
@@ -30,6 +32,19 @@ class NewPasswordController extends Controller
             return view('auth.account-deleted', [
                 'email' => $email,
                 'message' => 'No puedes acceder a este sitio porque tu cuenta ha sido eliminada.'
+            ]);
+        }
+        
+        // Verificar si el token ya fue usado
+        $resetToken = \DB::table('password_reset_tokens')
+            ->where('email', $email)
+            ->first();
+            
+        if ($resetToken && $resetToken->used) {
+            // Token ya fue usado
+            return view('auth.link-used', [
+                'email' => $email,
+                'message' => 'Este enlace de restablecimiento ya fue utilizado. Por favor, solicita un nuevo enlace.'
             ]);
         }
         
@@ -48,6 +63,15 @@ class NewPasswordController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        // Verificar si el token ya fue usado ANTES del restablecimiento
+        $existingToken = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->first();
+            
+        if ($existingToken && $existingToken->used) {
+            return back()->withErrors(['email' => 'Este enlace de restablecimiento ya fue utilizado.']);
+        }
 
         // Usar el sistema estándar de Laravel para reset de contraseña
         // Laravel automáticamente obtiene el email del token

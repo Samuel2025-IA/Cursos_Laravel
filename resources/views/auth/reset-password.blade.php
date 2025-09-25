@@ -33,7 +33,10 @@
                     </svg>
                 </button>
             </div>
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <!-- Errores ocultos - se manejan con SweetAlert2 -->
+            <div class="hidden">
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
         </div>
 
         <!-- Confirm Password -->
@@ -56,7 +59,10 @@
                     </svg>
                 </button>
             </div>
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            <!-- Errores ocultos - se manejan con SweetAlert2 -->
+            <div class="hidden">
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            </div>
         </div>
 
         <div class="flex items-center justify-end mt-4">
@@ -66,44 +72,87 @@
         </div>
     </form>
 
+    @vite(['resources/js/global/toggle-password.js', 'resources/js/auth/reset-password.js'])
+
+    <!-- Script para validación en tiempo real -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('reset-password-form');
-            
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    console.log('🎯 Formulario de reset enviado!');
-                    
-                    // Mostrar Loading Overlay
-                    showLoading('reset-password-loading', 'Restableciendo contraseña...');
-                    
-                    // Verificar errores de validación
-                    const errors = document.querySelectorAll('.text-red-600');
-                    if (errors.length > 0) {
-                        console.log('❌ Errores de validación encontrados:', errors.length);
-                        hideLoading('reset-password-loading');
-                    } else {
-                        console.log('✅ No hay errores de validación visibles');
-                    }
-                });
-            }
-        });
+            const passwordField = document.getElementById('password');
+            const confirmPasswordField = document.getElementById('password_confirmation');
+            const submitBtn = document.querySelector('button[type="submit"]');
 
-        // Función para mostrar/ocultar contraseña
-        function togglePassword(fieldId) {
-            const field = document.getElementById(fieldId);
-            const eyeIcon = document.getElementById('eye-icon-' + fieldId);
-            const eyeSlashIcon = document.getElementById('eye-slash-icon-' + fieldId);
-            
-            if (field.type === 'password') {
-                field.type = 'text';
-                eyeIcon.classList.add('hidden');
-                eyeSlashIcon.classList.remove('hidden');
-            } else {
-                field.type = 'password';
-                eyeIcon.classList.remove('hidden');
-                eyeSlashIcon.classList.add('hidden');
+            // Función para validar contraseñas
+            function validarContraseñas() {
+                const password = passwordField.value;
+                const confirmPassword = confirmPasswordField.value;
+
+                // Solo validar si ambos campos tienen contenido
+                if (password && confirmPassword) {
+                    if (password !== confirmPassword) {
+                        // Mostrar alerta de error
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '¡Las contraseñas no coinciden!',
+                                text: 'Por favor, asegúrate de que ambas contraseñas sean exactamente iguales.',
+                                confirmButtonColor: '#dc2626',
+                                confirmButtonText: 'Aceptar',
+                                background: '#ffffff',
+                                iconColor: '#dc2626',
+                                allowOutsideClick: true,
+                                allowEscapeKey: true
+                            });
+                        }
+                        return false;
+                    }
+                }
+
+                // Validar longitud mínima
+                if (password && password.length < 8) {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '¡Contraseña muy corta!',
+                            text: 'La contraseña debe tener al menos 8 caracteres.',
+                            confirmButtonColor: '#dc2626',
+                            confirmButtonText: 'Aceptar',
+                            background: '#ffffff',
+                            iconColor: '#dc2626',
+                            allowOutsideClick: true,
+                            allowEscapeKey: true
+                        });
+                    }
+                    return false;
+                }
+
+                return true;
             }
-        }
+
+            // Validar cuando se escriba en el campo de confirmación
+            confirmPasswordField.addEventListener('blur', function() {
+                validarContraseñas();
+            });
+
+            // Validar cuando se escriba en el campo de contraseña
+            passwordField.addEventListener('blur', function() {
+                if (confirmPasswordField.value) {
+                    validarContraseñas();
+                }
+            });
+
+            // Validar antes de enviar el formulario
+            document.getElementById('reset-password-form').addEventListener('submit', function(e) {
+                if (!validarContraseñas()) {
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Si todo está bien, mostrar loading
+                if (typeof showLoading === 'function') {
+                    showLoading('reset-password-loading', 'Restableciendo contraseña...');
+                }
+            });
+        });
     </script>
+
 </x-guest-layout>

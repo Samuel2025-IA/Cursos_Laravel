@@ -34,7 +34,7 @@
     <!-- Botones de acción -->
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
         <a href="{{ route('login') }}" 
-           class="inline-flex items-center justify-center px-4 py-2 bg-emerald-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-emerald-700 focus:bg-emerald-700 active:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition ease-in-out duration-150">
+           class="inline-flex items-center justify-center px-4 py-2 bg-[#2f9f37] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-[#2f9f37]/90 focus:bg-[#2f9f37]/90 active:bg-[#2f9f37]/80 focus:outline-none focus:ring-2 focus:ring-[#2f9f37] focus:ring-offset-2 transition ease-in-out duration-150">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
             </svg>
@@ -50,12 +50,5 @@
         </a>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎯 Vista de cuenta eliminada cargada');
-            console.log('📧 Email:', '{{ $email }}');
-            console.log('💬 Mensaje:', '{{ $message }}');
-        });
-    </script>
 </x-guest-layout>
 

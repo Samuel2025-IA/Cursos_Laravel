@@ -1,0 +1,242 @@
+/* Estilos del contenido principal para la vista de bienvenida */
+
+/* Contenedor principal */
+.welcome-main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: opacity 0.75s;
+    opacity: 1;
+    margin-top: 0; /* Eliminado completamente */
+    margin-bottom: 3rem; /* Aumentado de 1rem a 3rem para más espacio abajo */
+}
+
+.welcome-main {
+    display: flex;
+    max-width: 800px;
+    width: 100%;
+    flex-direction: column-reverse;
+}
+
+@media (min-width: 1024px) {
+    .welcome-main {
+        max-width: 56rem;
+        flex-direction: row;
+    }
+    .welcome-main-container {
+        margin-top: 0; /* Eliminado completamente también en desktop */
+    }
+}
+
+/* Contenedor de texto */
+.welcome-text-container {
+    font-size: 16px;
+    line-height: 22px; /* tighter */
+    flex: 1;
+    padding: 1rem 1.25rem 1.25rem 1.25rem; /* reduced */
+    background-color: white;
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
+    overflow: hidden;
+    height: auto;
+    max-height: 450px; /* Aumentado de 360px a 450px */
+    min-height: 350px; /* Aumentado de 260px a 350px */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+/* Efectos hover para mejorar la interacción */
+.welcome-text-container:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra más prominente al hover */
+    transform: translateY(-2px);
+    transition: all 0.4s ease-in-out;
+}
+
+@media (min-width: 1024px) {
+    .welcome-text-container {
+        padding: 1.25rem 1.75rem 1.75rem 1.75rem; /* reduced */
+        border-top-left-radius: 0.5rem;
+        border-bottom-right-radius: 0;
+        max-height: 550px; /* Aumentado de 440px a 550px */
+        min-height: 450px; /* Aumentado de 300px a 450px */
+    }
+}
+
+/* Responsive: mejorar visualización en dispositivos móviles */
+@media (max-width: 768px) {
+    .welcome-text-container {
+        height: auto; /* Cambiar a altura automática para que el botón sea visible */
+        min-height: 350px; /* Mantener altura mínima */
+        max-height: none; /* Permitir que crezca según el contenido */
+        border-radius: 0.375rem;
+        padding: 0.75rem 1rem 1rem 1rem; /* reduced */
+    }
+}
+
+/* Responsive: optimización para tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .welcome-text-container {
+        height: auto;
+        min-height: 400px; /* Aumentado de 300px a 400px */
+        max-height: 500px; /* Aumentado de 400px a 500px */
+        padding: 1rem 1.5rem 1.5rem 1.5rem; /* reduced */
+    }
+}
+
+/* Títulos y texto */
+.welcome-title {
+    margin-bottom: 0.75rem;
+    font-size: 2rem; /* aumentado */
+    font-weight: 700; /* Más bold como en la imagen */
+    color: #2d3748; /* Color gris oscuro como en la imagen */
+    line-height: 1.3;
+}
+
+.welcome-description {
+    margin-bottom: 1rem;
+    color: #4a5568; /* Color gris oscuro como en la imagen */
+    font-size: 17px; /* aumentado */
+    line-height: 1.55;
+}
+
+/* Lista de características */
+.welcome-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+/* Línea vertical removida */
+
+.welcome-features-list li {
+    list-style: none;
+    margin-bottom: 0.6rem;
+    padding: 0.25rem 0;
+    color: #4a5568;
+    font-size: 15px; /* aumentado */
+    line-height: 20px;
+    padding-left: 2rem;
+    position: relative;
+}
+
+.welcome-features-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 1px solid #2a3882; /* Círculo exterior del color del header */
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.welcome-features-list li::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #2a3882; /* Círculo interior del color del header */
+    border-radius: 50%;
+}
+
+/* Botones de acción */
+.welcome-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+@media (min-width: 640px) {
+    .welcome-actions {
+        flex-direction: row;
+    }
+}
+
+.welcome-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+}
+
+.welcome-cta-button {
+    background: #2a3882; /* Color azul del header */
+    color: white; /* Texto blanco */
+    border: none;
+    padding: 0.6rem 1.5rem; /* Aumentado padding */
+    font-size: 15px; /* Aumentado de 13.5px a 15px */
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 6px;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.welcome-cta-button:hover {
+    background: #1e2a5e; /* Azul más oscuro al hover */
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(42, 56, 130, 0.4); /* Sombra del color del header */
+}
+
+.welcome-btn-secondary {
+    background: white;
+    color: #374151;
+    border: 2px solid #e5e7eb;
+}
+
+.welcome-btn-secondary:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+/* Contenedor de imagen */
+.welcome-image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .welcome-image-container {
+        padding: 1rem 2rem 2rem 2rem;
+        border-top-right-radius: 0.5rem;
+        border-bottom-left-radius: 0;
+    }
+}
+
+.welcome-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease;
+}
+
+.welcome-image:hover {
+    transform: scale(1.05);
+}

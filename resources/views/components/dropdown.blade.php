@@ -27,7 +27,8 @@ $width = match ($width) {
             x-transition:leave-end="opacity-0 scale-95"
             class="absolute z-50 mt-2 {{ $width }} rounded-md shadow-lg border border-gray-200 {{ $alignmentClasses }}"
             style="display: none;"
-            @click="open = false">
+            @click="open = false"
+            x-cloak>
         <div class="rounded-md ring-1 ring-black ring-opacity-5 {{ $contentClasses }}" style="min-width: 200px;">
             {{ $content }}
         </div>

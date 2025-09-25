@@ -39,3 +39,4 @@ Los casos de comportamiento abusivo, acosador o inaceptable pueden ser reportado
 ## Atribución
 
 Este Código de Conducta es una adaptación del [Contributor Covenant](https://www.contributor-covenant.org), versión 1.4, disponible en https://www.contributor-covenant.org/es/version/1/4/code-of-conduct.html
+

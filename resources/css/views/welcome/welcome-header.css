@@ -1,0 +1,721 @@
+/* Estilos del header para la vista de bienvenida */
+
+/* Reset básico */
+* { 
+    box-sizing: border-box; 
+}
+
+html, body { 
+    margin: 0; 
+    padding: 0; 
+    height: 100%; 
+}
+
+/* Compensar el header fijo */
+body {
+    padding-top: 110px !important; /* Más espacio debajo del header */
+}
+
+/* Header de navegación */
+.welcome-header {
+    width: 100%;
+    max-width: 100vw;
+    background-color: #2a3882 !important; /* Color azul específico solicitado */
+    color: white;
+    padding: 1.5rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin: 0;
+    flex-shrink: 0;
+    z-index: 10002; /* Sobre el overlay */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    overflow-x: hidden; /* Evitar desbordamiento horizontal */
+}
+
+/* Contenedor interno del header */
+.welcome-header-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem 0 2rem; /* Menos padding a la derecha para pegar botones al borde */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem; /* Espacio entre elementos */
+    position: relative;
+    z-index: 1; /* Z-index bajo para no interferir */
+}
+
+/* Ajustes para móvil */
+@media (max-width: 768px) {
+    .welcome-header-container {
+        padding: 0 1rem;
+        gap: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-header-container {
+        padding: 0 0.75rem;
+        gap: 0.5rem;
+    }
+}
+
+/* Logo del header */
+.welcome-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0; /* Evitar que se comprima */
+}
+
+.header-logo-img {
+    width: 45px; /* Más grande */
+    height: 45px; /* Más grande */
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.header-logo-text {
+    font-family: 'Arsenal', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700; /* Arsenal Bold */
+    color: white; /* Texto blanco para contraste con fondo oscuro */
+    white-space: nowrap;
+}
+
+/* Navegación del header */
+.welcome-header-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: auto; /* Empujar acciones a la derecha */
+}
+
+/* Enlaces de navegación */
+.welcome-nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.welcome-nav-link:hover {
+    color: #1f2937;
+    background-color: #f3f4f6;
+}
+
+.welcome-nav-link.active {
+    color: #1f2937;
+    background-color: #e5e7eb;
+}
+
+/* Estilos específicos para el botón de login - ESTILO TRANSPARENTE */
+.login-link {
+    color: white !important;
+    font-weight: 500 !important;
+    background: transparent !important;
+    border: 2px solid rgba(255,255,255,0.3) !important;
+    padding: 12px 24px !important;
+    border-radius: 25px !important;
+    font-size: 0.95rem !important;
+    min-width: 140px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.login-link:hover {
+    background: rgba(255,255,255,0.1) !important;
+    border-color: white !important;
+}
+
+/* Estilos específicos para el botón de registro - ESTILO VERDE CON GRADIENTE */
+.register-link {
+    color: white !important;
+    font-weight: 500 !important;
+    background: linear-gradient(45deg, #4CAF50, #45a049) !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    border-radius: 25px !important;
+    font-size: 0.95rem !important;
+    min-width: 140px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+}
+
+.register-link:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+}
+
+/* Estilos para los indicadores de carga */
+.btn-text, .btn-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.loading-spinner {
+    width: 16px;
+    height: 16px;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive para móviles pequeños */
+@media (max-width: 480px) {
+    body {
+        padding-top: 95px !important; /* Más espacio en móviles */
+    }
+    
+    .welcome-header-logo {
+        gap: 0.5rem; /* Reducir espacio entre logo y texto */
+    }
+    
+    .header-logo-img {
+        width: 40px; /* Más grande en móvil pequeño */
+        height: 40px; /* Más grande en móvil pequeño */
+    }
+    
+    .header-logo-text {
+        font-size: 1rem; /* Más grande en móvil */
+    }
+    
+    .welcome-header {
+        padding: 0.75rem 0;
+    }
+    
+    .welcome-header-container {
+        padding: 0 1rem;
+    }
+    
+    .welcome-header-nav {
+        gap: 0.5rem;
+    }
+    
+    .welcome-nav-link {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Botón Iniciar Sesión más visible en móvil (INVERTIDO) */
+    .login-link {
+        background: #2f9f37 !important; /* Verde único */
+        color: white !important;
+        border: none !important;
+        font-weight: 600 !important;
+        padding: 16px 32px !important; /* Más grande */
+        border-radius: 15px !important;
+        font-size: 0.95rem !important; /* Tamaño consistente */
+        min-width: 140px !important; /* Ancho mínimo igual */
+        text-align: center !important;
+    }
+}
+
+/* Responsive para desktop */
+@media (min-width: 1024px) {
+    body {
+        padding-top: 130px !important; /* Más espacio en desktop */
+    }
+    
+    .welcome-header {
+        padding: 1.25rem 0;
+    }
+    
+    .welcome-header-container {
+        max-width: 1440px;
+        padding: 0 1rem 0 2.5rem; /* Aún menos padding derecho en desktop */
+    }
+    
+    .header-logo-img {
+        width: 52px; /* Más grande en desktop */
+        height: 52px; /* Más grande en desktop */
+    }
+    
+    .header-logo-text {
+        font-size: 1rem;
+    }
+    
+    .welcome-header-nav {
+        gap: 1rem;
+    }
+}
+
+/* Botón de menú hamburguesa */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 26px; /* Más pequeño */
+    height: 26px; /* Más pequeño */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 1.5rem; /* Margen derecho más grande para separarlo del borde */
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10001 !important; /* Z-index muy alto para asegurar que esté encima */
+    -webkit-tap-highlight-color: transparent; /* Elimina el highlight en móviles */
+    touch-action: manipulation; /* Mejora la respuesta táctil */
+    pointer-events: auto !important; /* Asegurar que los eventos funcionen */
+    outline: none; /* Eliminar outline por defecto */
+}
+
+.menu-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-toggle span {
+    width: 26px; /* Más pequeño para coincidir con el botón */
+    height: 3px;
+    background: white;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Breakpoint para tablets grandes */
+@media (max-width: 1024px) {
+    body {
+        padding-top: 115px !important; /* Más espacio en tablets */
+    }
+    
+    .welcome-header-container {
+        max-width: 100%;
+        padding: 0 1.5rem;
+    }
+    
+    .welcome-header-nav {
+        gap: 0.5rem;
+    }
+    
+    .welcome-nav-link {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Breakpoint para tablets medianas */
+@media (max-width: 768px) {
+    body {
+        padding-top: 110px !important; /* Más espacio en tablets medianas */
+    }
+    
+    .welcome-header {
+        padding: 0.75rem 0;
+    }
+    
+    .welcome-header-container {
+        padding: 0 1rem;
+    }
+    
+    .welcome-header-nav {
+        gap: 0.4rem;
+    }
+    
+    .welcome-nav-link {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+    }
+    
+    .header-logo-text {
+        font-size: 1rem; /* Más grande en tablets */
+    }
+}
+
+/* Breakpoint para móviles grandes y cuando la navegación no cabe */
+@media (max-width: 900px) {
+    .menu-toggle {
+        display: flex !important; /* Forzar display flex */
+        position: relative !important;
+        z-index: 9999 !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        width: 38px !important; /* Más pequeño en móvil */
+        height: 38px !important; /* Más pequeño en móvil */
+        min-width: 38px !important;
+        min-height: 38px !important;
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+        touch-action: manipulation !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Ocultar navegación normal cuando se muestra el menú hamburguesa */
+    .welcome-header-nav {
+        display: none !important;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 75vw; /* Reducido de 85% a 75% */
+        max-width: 320px; /* Reducido de 400px a 320px */
+        min-width: 260px; /* Reducido de 300px a 260px */
+        background: rgba(255, 255, 255, 0.15) !important; /* Fondo translúcido */
+        backdrop-filter: blur(20px) !important; /* Efecto glassmorphism */
+        -webkit-backdrop-filter: blur(20px) !important; /* Para Safari */
+        border: 1px solid rgba(255, 255, 255, 0.2) !important; /* Borde sutil */
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center; /* Centrar elementos */
+        padding: 5rem 1.5rem 2rem 1.5rem; /* Reducido padding */
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important; /* Sombra mejorada */
+        transition: right 0.3s ease;
+        gap: 1rem; /* Reducido espacio entre elementos */
+        z-index: 10000 !important;
+        overflow-y: auto; /* Permitir scroll interno si es necesario */
+    }
+    
+    .menu-toggle.active {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .menu-toggle.active span {
+        background: white;
+    }
+    
+    .welcome-header-nav.active {
+        right: 0 !important;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        background: rgba(255, 255, 255, 0.15) !important; /* Fondo translúcido */
+        backdrop-filter: blur(20px) !important; /* Efecto glassmorphism */
+        -webkit-backdrop-filter: blur(20px) !important; /* Para Safari */
+        border: 1px solid rgba(255, 255, 255, 0.2) !important; /* Borde sutil */
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important; /* Sombra mejorada */
+        z-index: 10001 !important; /* Z-index más alto que el overlay */
+        overflow: visible !important; /* Permitir que el contenido sea visible */
+    }
+    
+    /* Asegurar que todos los elementos del menú móvil sean visibles */
+    .welcome-header-nav.active * {
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .welcome-header-nav.active .welcome-nav-link {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .welcome-nav-link {
+        width: 100% !important;
+        max-width: 240px !important; /* Reducido de 300px a 240px */
+        align-self: center !important; /* Centrar dentro del panel */
+        padding: 0.6rem 1rem !important; /* Padding más pequeño */
+        font-size: 0.9rem !important; /* Texto más pequeño */
+        border-radius: 0.4rem !important; /* Bordes menos redondeados */
+        text-align: center !important; /* Centrar texto */
+        color: #374151 !important;
+        font-weight: 500 !important; /* Texto moderadamente grueso */
+        text-decoration: none !important;
+        display: flex !important; /* Usar flex en lugar de block */
+        align-items: center !important;
+        justify-content: center !important;
+        margin-bottom: 0.4rem !important; /* Menos espacio entre botones */
+        transition: all 0.2s ease !important;
+        min-height: 40px !important; /* Altura más pequeña */
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+    
+    .welcome-nav-link:hover {
+        background-color: #f3f4f6 !important;
+        color: #1f2937 !important;
+        transform: translateX(4px) !important; /* Efecto de deslizamiento sutil */
+    }
+    
+    /* Botón Iniciar Sesión visible en menú móvil - ESTILO TRANSPARENTE */
+    .login-link {
+        background: transparent !important;
+        color: white !important;
+        border: 2px solid rgba(255,255,255,0.3) !important;
+        font-weight: 500 !important;
+        text-align: center !important;
+        min-height: 48px !important;
+        font-size: 0.95rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 2 !important;
+        width: 100% !important;
+        max-width: 240px !important;
+        align-self: center !important;
+        padding: 12px 24px !important;
+        border-radius: 25px !important;
+        min-width: 140px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .login-link:hover {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: white !important;
+    }
+    
+    /* Botón Registrarse visible en menú móvil - ESTILO VERDE CON GRADIENTE */
+    .register-link {
+        background: linear-gradient(45deg, #4CAF50, #45a049) !important;
+        color: white !important;
+        border: none !important;
+        font-weight: 500 !important;
+        text-align: center !important;
+        min-height: 48px !important;
+        font-size: 0.95rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        z-index: 2 !important;
+        width: 100% !important;
+        max-width: 240px !important;
+        align-self: center !important;
+        padding: 12px 24px !important;
+        border-radius: 25px !important;
+        min-width: 140px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+    }
+    
+    .register-link:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+    }
+}
+
+/* Breakpoint para móviles medianos */
+@media (max-width: 480px) {
+    .welcome-header {
+        padding: 0.5rem 0;
+    }
+    
+    .welcome-header-container {
+        padding: 0 0.75rem 0 0.75rem; /* Padding izquierdo y derecho */
+        gap: 0.5rem; /* Espacio reducido en móviles */
+    }
+    
+    .menu-toggle {
+        margin-right: 1rem; /* Margen separado del borde en móviles */
+    }
+    
+    .header-logo-img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .header-logo-text {
+        font-size: 0.75rem;
+    }
+    
+    .welcome-header-nav {
+        width: 80vw; /* Reducido de 90% a 80% */
+        max-width: 280px; /* Reducido de 350px a 280px */
+        min-width: 240px; /* Reducido de 280px a 240px */
+        padding: 4.5rem 1.2rem 1.2rem 1.2rem; /* Menos padding */
+        gap: 0.8rem; /* Menos espacio entre elementos */
+    }
+}
+
+/* Breakpoint para móviles pequeños */
+@media (max-width: 360px) {
+    .welcome-header-container {
+        padding: 0 0.5rem;
+    }
+    
+    .welcome-header-logo {
+        gap: 0.4rem; /* Espacio mínimo entre logo y texto */
+    }
+    
+    .header-logo-img {
+        width: 35px; /* Más grande incluso en móviles muy pequeños */
+        height: 35px; /* Más grande incluso en móviles muy pequeños */
+    }
+    
+    .header-logo-text {
+        font-size: 0.9rem; /* Más grande incluso en móviles muy pequeños */
+    }
+    
+    .welcome-header-nav {
+        width: 85vw; /* Reducido de 95% a 85% */
+        max-width: 260px; /* Reducido de 320px a 260px */
+        min-width: 220px; /* Reducido de 260px a 220px */
+        padding: 4rem 0.8rem 0.8rem 0.8rem; /* Padding mínimo */
+        gap: 0.6rem; /* Espacio mínimo entre elementos */
+    }
+    
+    .welcome-nav-link {
+        padding: 0.5rem 0.8rem; /* Padding más pequeño */
+        font-size: 0.85rem; /* Texto más pequeño */
+        min-height: 38px !important; /* Altura más pequeña */
+    }
+    
+    /* Botones específicos para móviles muy pequeños */
+    .login-link {
+        background: transparent !important;
+        color: white !important;
+        border: 2px solid rgba(255,255,255,0.3) !important;
+        font-weight: 500 !important;
+        font-size: 0.9rem !important;
+        min-height: 44px !important;
+        padding: 12px 24px !important;
+        max-width: 220px !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        border-radius: 25px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .login-link:hover {
+        background: rgba(255,255,255,0.1) !important;
+        border-color: white !important;
+    }
+    
+    .register-link {
+        background: linear-gradient(45deg, #4CAF50, #45a049) !important;
+        color: white !important;
+        border: none !important;
+        font-weight: 500 !important;
+        font-size: 0.9rem !important;
+        min-height: 44px !important;
+        padding: 12px 24px !important;
+        max-width: 220px !important;
+        min-width: 120px !important;
+        text-align: center !important;
+        border-radius: 25px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+    }
+    
+    .register-link:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+    }
+}
+
+/* Animaciones del menú hamburguesa */
+@media (max-width: 640px) {
+    .menu-toggle.active span:first-child {
+        transform: rotate(45deg);
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+}
+
+/* Overlay para cerrar menú */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9998; /* Debajo del header y del menú */
+    pointer-events: none; /* Deshabilitar eventos cuando está oculto */
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    background: rgba(0, 0, 0, 0.3) !important; /* Fondo más sutil */
+    backdrop-filter: none !important; /* Sin blur para evitar el efecto borroso */
+    -webkit-backdrop-filter: none !important; /* Para Safari */
+    pointer-events: auto !important; /* Habilitar eventos cuando está activo */
+}
+
+/* Soporte para modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .welcome-header {
+        background-color: #2a3882;
+        border-bottom-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .header-logo-text {
+        color: #f9fafb;
+    }
+    
+    .welcome-nav-link {
+        color: #d1d5db;
+    }
+    
+    .welcome-nav-link:hover {
+        color: #f9fafb;
+        background-color: #374151;
+    }
+    
+    .welcome-nav-link.active {
+        color: #f9fafb;
+        background-color: #4b5563;
+    }
+    
+    .menu-toggle span {
+        background: #f9fafb;
+    }
+}
+
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .welcome-nav-link:hover {
+        background-color: transparent;
+    }
+    
+    .welcome-nav-link:active {
+        background-color: #f3f4f6;
+    }
+    
+    .menu-toggle {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}

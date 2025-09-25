@@ -20,9 +20,12 @@ class User extends Authenticatable
         'segundo_nombre',
         'primer_apellido',
         'segundo_apellido',
+        'tipo_documento',
+        'numero_documento',
         'entidad',
         'email',
         'password',
+        'rol',
     ];
 
     /**

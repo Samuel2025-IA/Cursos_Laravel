@@ -7,7 +7,7 @@
                 <!-- Logo y Nombre -->
                 <div class="flex flex-col items-start space-y-4">
                     <div class="flex items-center space-x-3">
-                        <div class="w-16 h-16 bg-gradient-to-b from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
+                        <div class="w-16 h-16 bg-gradient-to-b from-[#2f9f37] to-blue-600 rounded-lg flex items-center justify-center">
                             <div class="w-12 h-12 bg-white rounded-md flex items-center justify-center">
                                 <span class="text-2xl font-bold text-blue-900">D</span>
                             </div>
@@ -185,7 +185,7 @@
 
     <!-- Botón flotante de WhatsApp -->
     <div class="fixed bottom-6 right-6 z-50">
-        <a href="https://wa.me/573206829530" target="_blank" class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors">
+        <a href="https://wa.me/573206829530" target="_blank" class="w-16 h-16 bg-[#2f9f37] rounded-full flex items-center justify-center shadow-lg hover:bg-[#2f9f37]/90 transition-colors">
             <span class="text-white text-2xl">📱</span>
         </a>
     </div>
