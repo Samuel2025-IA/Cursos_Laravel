@@ -16,7 +16,10 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/css/views/auth/register.css', 'resources/css/views/auth/login.css', 'resources/css/views/auth/verify-invitation.css', 'resources/css/views/auth/invitation-alert.css'])
+        @vite(['resources/css/app.css', 'resources/css/utilities/forms.css', 'resources/css/views/auth/register.css', 'resources/css/views/auth/login.css', 'resources/css/views/auth/verify-invitation.css', 'resources/css/views/auth/invitation-alert.css', 'resources/css/views/auth/forgot-password.css'])
+        
+        <!-- CSS de Layouts -->
+        <link rel="stylesheet" href="{{ asset('css/views/layouts/layouts.css') }}">
         
         <!-- SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -31,7 +34,7 @@
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-lg mt-2 mb-2 px-6 py-6 bg-white shadow-lg overflow-hidden sm:rounded-lg @if(request()->routeIs('login')) login-container @endif @if(request()->routeIs('invitation.verify')) invitation-container @endif">
+            <div class="w-full sm:max-w-lg mt-2 mb-2 px-6 py-6 bg-white shadow-lg overflow-hidden sm:rounded-lg @if(request()->routeIs('login')) login-container @endif @if(request()->routeIs('invitation.verify')) invitation-container @endif @if(request()->routeIs('password.request') || request()->routeIs('password.reset')) forgot-password-container @endif">
                 @if(isset($slot))
                     {{ $slot }}
                 @else
@@ -40,190 +43,26 @@
             </div>
         </div>
 
-        <!-- SweetAlert2 Helper Functions -->
-        <script>
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            });
+        <!-- Scripts del Layout de Invitados -->
+        <script src="{{ asset('js/views/layouts/guest.js') }}"></script>
 
-            window.showInfo = function(message) {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Información',
-                    text: message,
-                    confirmButtonColor: '#2563eb',
-                    confirmButtonText: 'Aceptar',
-                    background: '#ffffff',
-                    iconColor: '#2563eb',
-                    timer: 6000,
-                    timerProgressBar: true
-                });
-            };
 
-            window.showError = function(message) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: message,
-                    confirmButtonColor: '#dc2626',
-                    confirmButtonText: 'Aceptar',
-                    background: '#ffffff',
-                    iconColor: '#dc2626',
-                    timer: 5000,
-                    timerProgressBar: true
-                });
-            };
-
-            window.showSuccess = function(message) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Éxito',
-                    text: message,
-                    confirmButtonColor: '#059669',
-                    confirmButtonText: '¡Perfecto!',
-                    background: '#ffffff',
-                    iconColor: '#059669',
-                    timer: 4000,
-                    timerProgressBar: true
-                });
-            };
-
-            // Función que faltaba - showErrorAlert
-            window.showErrorAlert = function(message) {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '¡Error!',
-                        text: message,
-                        confirmButtonColor: '#dc2626',
-                        confirmButtonText: 'Aceptar',
-                        background: '#ffffff',
-                        iconColor: '#dc2626',
-                        allowOutsideClick: true,
-                        allowEscapeKey: true
-                    });
-                } else {
-                    alert('ERROR: ' + message);
-                }
-            };
-        </script>
-
-        <!-- Scripts de alertas -->
-        @vite('resources/js/views/layouts/guest-alerts.js')
-        
-        <!-- Script para aplicar estilos de registro -->
-        <script>
-            // Aplicar clases CSS para el formulario de registro
-            document.addEventListener('DOMContentLoaded', function() {
-                if (window.location.pathname === '/register') {
-                    document.body.classList.add('register-page');
-                    const container = document.querySelector('.min-h-screen');
-                    if (container) {
-                        container.classList.add('register-container');
-                    }
-                }
-            });
-        </script>
-
-        <!-- Mostrar alertas desde sesiones de Laravel - UNA SOLA A LA VEZ -->
+        <!-- Pasar datos de sesión a JavaScript -->
         @if(session('error'))
-            <script data-session-alert="error">
-                // Marcar que hay alerta de sesión
-                document.body.setAttribute('data-has-session-message', 'true');
-                
-                setTimeout(function() {
-                    console.log('🔴 Mostrando alerta de ERROR:', '{{ session('error') }}');
-                    if (typeof Swal !== 'undefined') {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: '{{ session('error') }}',
-                            confirmButtonColor: '#dc2626',
-                            confirmButtonText: 'Aceptar',
-                            background: '#ffffff',
-                            iconColor: '#dc2626',
-                            timer: 5000,
-                            timerProgressBar: true
-                        });
-                    }
-                }, 800);
+            <script>
+                window.sessionError = '{{ session('error') }}';
             </script>
         @elseif(session('info'))
-            <script data-session-alert="info">
-                // Marcar que hay alerta de sesión
-                document.body.setAttribute('data-has-session-message', 'true');
-                
-                setTimeout(function() {
-                    console.log('🔵 Mostrando alerta de INFO:', '{{ session('info') }}');
-                    if (typeof Swal !== 'undefined') {
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'Información Importante',
-                            text: '{{ session('info') }}',
-                            confirmButtonColor: '#2563eb',
-                            confirmButtonText: 'Aceptar',
-                            background: '#ffffff',
-                            iconColor: '#2563eb',
-                            showCloseButton: false,
-                            allowOutsideClick: false,
-                            allowEscapeKey: false
-                        });
-                    }
-                }, 800);
+            <script>
+                window.sessionInfo = '{{ session('info') }}';
             </script>
         @elseif(session('success'))
-            <script data-session-alert="success">
-                // Marcar que hay alerta de sesión
-                document.body.setAttribute('data-has-session-message', 'true');
-                
-                setTimeout(function() {
-                    console.log('🟢 Mostrando alerta de SUCCESS:', '{{ session('success') }}');
-                    if (typeof Swal !== 'undefined') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Éxito',
-                            text: '{{ session('success') }}',
-                            confirmButtonColor: '#059669',
-                            confirmButtonText: '¡Perfecto!',
-                            background: '#ffffff',
-                            iconColor: '#059669',
-                            timer: 4000,
-                            timerProgressBar: true
-                        });
-                    }
-                }, 800);
+            <script>
+                window.sessionSuccess = '{{ session('success') }}';
             </script>
         @elseif(session('status'))
-            <script data-session-alert="status">
-                // Marcar que hay alerta de sesión
-                document.body.setAttribute('data-has-session-message', 'true');
-                
-                setTimeout(function() {
-                    console.log('📧 Mostrando alerta de STATUS (Password Reset):', '{{ session('status') }}');
-                    if (typeof Swal !== 'undefined') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '¡Enlace Enviado!',
-                            text: '{{ session('status') }}',
-                            confirmButtonColor: '#2563eb',
-                            confirmButtonText: '¡Perfecto!',
-                            background: '#ffffff',
-                            iconColor: '#2563eb',
-                            timer: 5000,
-                            timerProgressBar: true,
-                            allowOutsideClick: true,
-                            allowEscapeKey: true
-                        });
-                    }
-                }, 800);
+            <script>
+                window.sessionStatus = '{{ session('status') }}';
             </script>
         @endif
     </body>

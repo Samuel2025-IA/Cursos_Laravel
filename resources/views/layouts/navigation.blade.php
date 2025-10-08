@@ -1,16 +1,16 @@
-<nav x-data="{ open: false }" class="sticky top-0 z-60 shadow-md" style="background-color: #2a3882; border-bottom: 1px solid rgba(255,255,255,0.2);">
+<nav x-data="{ open: false }" class="fixed top-0 left-0 right-0 z-50 shadow-md w-full" style="background-color: #2a3882; border-bottom: 1px solid rgba(255,255,255,0.2); margin: 0; padding: 0;">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 header-content">
+    <div class="w-full px-4 sm:px-6 lg:px-8 header-content">
         <div class="flex justify-between items-center h-16 min-h-16">
-            <!-- Logo integrado en el header -->
+            <!-- Logo integrado en el header - Clickeable para ir al dashboard -->
             <div class="flex items-center flex-shrink-0">
-                <div class="flex items-center gap-2 sm:gap-3">
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity duration-200 cursor-pointer" title="Ir al Dashboard">
                     <img src="{{ asset('img/ESCUDO_DIOCESIS.png') }}" alt="Escudo Diócesis de Apartadó" class="w-8 h-8 sm:w-10 sm:h-10 lg:w-11 lg:h-11 object-contain flex-shrink-0">
-                    <span class="font-bold text-white text-xs sm:text-sm lg:text-base hidden sm:block" style="font-family: 'Arsenal', sans-serif; white-space: nowrap;">Diócesis de Apartadó</span>
-                </div>
+                    <span class="font-bold text-white text-xs sm:text-sm lg:text-base" style="font-family: 'Arsenal', sans-serif; white-space: nowrap;">Diócesis de Apartadó</span>
+                </a>
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- Settings Dropdown - Derecha -->
             <div class="flex items-center">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -37,6 +37,10 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Perfil') }}
                         </x-dropdown-link>
+                        
+                        <x-dropdown-link href="#">
+                            {{ __('Configuración') }}
+                        </x-dropdown-link>
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}" id="logout-form">
@@ -48,67 +52,10 @@
                             </x-dropdown-link>
                         </form>
                         
-                        <script>
-                        function confirmLogout() {
-                            if (typeof Swal !== 'undefined') {
-                                Swal.fire({
-                                    title: '¿Cerrar sesión?',
-                                    text: '¿Estás seguro de que quieres cerrar tu sesión?',
-                                    icon: 'question',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#dc2626',
-                                    cancelButtonColor: '#6b7280',
-                                    confirmButtonText: 'Cerrar sesión',
-                                    cancelButtonText: 'Cancelar',
-                                    background: '#ffffff',
-                                    reverseButtons: true
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        // Marcar que se está haciendo logout real
-                                        localStorage.setItem('legitimate_logout', 'true');
-                                        
-                                        // Intentar con el formulario de escritorio primero, luego el móvil
-                                        const desktopForm = document.getElementById('logout-form');
-                                        const mobileForm = document.getElementById('logout-form-mobile');
-                                        
-                                        if (desktopForm) {
-                                            desktopForm.submit();
-                                        } else if (mobileForm) {
-                                            mobileForm.submit();
-                                        }
-                                    }
-                                });
-                            } else {
-                                // Fallback: confirmación nativa del navegador
-                                if (confirm('¿Estás seguro de que quieres cerrar tu sesión?')) {
-                                    // Marcar que se está haciendo logout real
-                                    localStorage.setItem('legitimate_logout', 'true');
-                                    
-                                    const desktopForm = document.getElementById('logout-form');
-                                    const mobileForm = document.getElementById('logout-form-mobile');
-                                    
-                                    if (desktopForm) {
-                                        desktopForm.submit();
-                                    } else if (mobileForm) {
-                                        mobileForm.submit();
-                                    }
-                                }
-                            }
-                        }
-                        </script>
                     </x-slot>
                 </x-dropdown>
             </div>
 
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden ml-2">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-10 focus:outline-none focus:bg-white focus:bg-opacity-10 focus:text-white transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
         </div>
     </div>
 
@@ -144,9 +91,15 @@
                     <x-responsive-nav-link href="#"
                             onclick="event.preventDefault(); confirmLogout();">
                         {{ __('Cerrar Sesión') }}
-                    </x-dropdown-link>
+                    </x-responsive-nav-link>
                 </form>
             </div>
         </div>
     </div>
 </nav>
+
+<!-- Componente de Loading para Navegación -->
+<x-navigation-loading />
+
+<!-- Scripts de Navegación -->
+@vite(['resources/js/views/layouts/navigation.js'])

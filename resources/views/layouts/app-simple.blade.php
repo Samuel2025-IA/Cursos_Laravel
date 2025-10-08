@@ -18,6 +18,9 @@
         <!-- Scripts - Usando asset() directamente -->
         <link rel="stylesheet" href="{{ asset('build/assets/app-CAjc0yiz.css') }}">
         
+        <!-- CSS de Layouts -->
+        <link rel="stylesheet" href="{{ asset('css/views/layouts/layouts.css') }}">
+        
         <!-- Alpine.js -->
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         
@@ -51,62 +54,26 @@
         <!-- SweetAlert2 CDN -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
-        <!-- SweetAlert2 Helper Functions -->
-        <script>
-            // Función global para alertas de error
-            window.showErrorAlert = function(message) {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '¡Error!',
-                        text: message,
-                        confirmButtonColor: '#2f9f37',
-                        confirmButtonText: '¡Perfecto!',
-                        background: '#ffffff',
-                        iconColor: '#dc2626'
-                    });
-                } else {
-                    alert('ERROR: ' + message);
-                }
-            };
+        <!-- Scripts del Layout Simple -->
+        <script src="{{ asset('js/views/layouts/app-simple.js') }}"></script>
 
-            // Función global para alertas de éxito
-            window.showSuccessAlert = function(message) {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Éxito!',
-                        text: message,
-                        confirmButtonColor: '#2f9f37',
-                        confirmButtonText: '¡Perfecto!',
-                        background: '#ffffff',
-                        iconColor: '#059669',
-                        timer: 4000,
-                        timerProgressBar: true
-                    });
-                } else {
-                    alert('ÉXITO: ' + message);
-                }
-            };
-
-            console.log('✅ Funciones de alerta cargadas');
-        </script>
-
-        <!-- Mostrar alertas desde sesiones de Laravel -->
+        <!-- Pasar datos de sesión a JavaScript -->
         @if(session('error'))
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    showErrorAlert('{{ session('error') }}');
-                });
+                window.sessionError = '{{ session('error') }}';
             </script>
         @endif
 
         @if(session('success'))
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    showSuccessAlert('{{ session('success') }}');
-                });
+                window.sessionSuccess = '{{ session('success') }}';
             </script>
         @endif
     </body>
 </html>
+
+
+
+
+
+

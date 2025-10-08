@@ -72,7 +72,7 @@
         </div>
     </form>
 
-    @vite(['resources/js/global/toggle-password.js', 'resources/js/auth/reset-password.js'])
+    @vite(['resources/js/global/toggle-password-unified.js', 'resources/js/auth/reset-password.js'])
 
     <!-- Script para validación en tiempo real -->
     <script>

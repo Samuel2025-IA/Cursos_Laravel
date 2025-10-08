@@ -47,18 +47,18 @@
         }
         .welcome-message h2 {
             color: #374151;
-            font-size: 20px;
+            font-size: 14px;
             margin: 0 0 12px 0;
             font-weight: 500;
         }
         .welcome-message p {
             color: #6b7280;
-            font-size: 15px;
+            font-size: 11px;
             margin: 0;
             line-height: 1.5;
         }
         .cta-section {
-            text-align: center;
+            text-align: right;
             margin: 25px 0;
         }
         .cta-button {

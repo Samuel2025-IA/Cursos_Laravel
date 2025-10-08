@@ -36,6 +36,14 @@
     .diocesis-logo-section {
         grid-column: 1 / -1;
         margin-bottom: 1rem;
+        align-items: center;
+        text-align: center;
+        justify-self: center;
+    }
+    
+    .diocesis-social {
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -46,11 +54,20 @@
         gap: 1.5rem;
         text-align: center;
         padding: 0 1rem;
+        justify-items: center; /* Centrar todos los elementos del grid */
     }
     
     .diocesis-logo-section {
         grid-column: 1;
         margin-bottom: 0;
+        align-items: center;
+        text-align: center;
+        justify-self: center;
+    }
+    
+    .diocesis-social {
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -63,7 +80,18 @@
     .diocesis-footer-container {
         padding: 0 0.75rem;
         gap: 1.25rem;
-        justify-items: start; /* alinear a la izquierda en móviles */
+        justify-items: center; /* Centrar todos los elementos en móviles */
+    }
+    
+    .diocesis-logo-section {
+        align-items: center;
+        text-align: center;
+        justify-self: center;
+    }
+    
+    .diocesis-social {
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -76,6 +104,18 @@
     .diocesis-footer-container {
         padding: 0 0.5rem;
         gap: 1rem;
+        justify-items: center; /* Centrar todos los elementos */
+    }
+    
+    .diocesis-logo-section {
+        align-items: center;
+        text-align: center;
+        justify-self: center;
+    }
+    
+    .diocesis-social {
+        justify-content: center;
+        align-items: center;
     }
 }
 
@@ -83,24 +123,13 @@
 .diocesis-logo-section {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    margin-top: 1.5rem; /* Reducido de 3rem a 1.5rem */
+    align-items: center; /* Siempre centrado */
+    text-align: center; /* Siempre centrado */
+    margin-top: 1.5rem;
     justify-content: center;
     height: 100%;
-    justify-self: start; /* alinear a la izquierda por defecto */
-}
-
-@media (min-width: 1024px) {
-    .diocesis-logo-section {
-        align-items: center; /* centrar escudo con los iconos */
-        text-align: center;
-        justify-self: center; /* centrar dentro del grid */
-    }
-    .diocesis-social {
-        justify-content: center !important; /* centrar fila de redes en desktop */
-        align-items: center;
-    }
+    justify-self: center; /* Siempre centrado en el grid */
+    width: 100%; /* Ocupar todo el ancho disponible */
 }
 
 .diocesis-logo-section img {
@@ -125,15 +154,11 @@
 .diocesis-social {
     display: flex;
     gap: 0.75rem;
-    justify-content: flex-start;
-    margin-top: 1rem; /* Reducido de 1.5rem a 1rem */
-}
-
-@media (min-width: 1024px) {
-    .diocesis-social {
-        justify-content: flex-start !important; /* alinear a la izquierda en desktop */
-        align-items: center; /* centrado vertical */
-    }
+    justify-content: center; /* Siempre centrado */
+    align-items: center; /* Siempre centrado verticalmente */
+    margin-top: 1rem;
+    width: 100%; /* Ocupar todo el ancho disponible */
+    flex-wrap: wrap; /* Permitir que se envuelvan si es necesario */
 }
 
 .diocesis-social a {
@@ -567,7 +592,7 @@
     
     .diocesis-footer-container {
         padding: 0 1rem;
-        justify-items: start; /* alinear items del grid a la izquierda */
+        justify-items: center; /* centrar items del grid para mantener consistencia */
     }
     
     .extensions-grid {
@@ -594,17 +619,7 @@
         height: 1.25rem;
     }
     
-    /* Centrar redes en móvil/tablet */
-    .diocesis-social {
-        justify-content: center !important;
-        align-items: center;
-    }
-
-    .diocesis-logo-section {
-        align-items: center;
-        text-align: center;
-        justify-self: center;
-    }
+    /* Centrar redes en móvil/tablet - ya definido arriba */
 
     /* Ajustar Instagram para tablets manteniendo proporciones */
     .instagram-camera {
@@ -649,17 +664,7 @@
         font-size: 1.1rem;
     }
     
-    /* Centrar redes en móvil */
-    .diocesis-social {
-        justify-content: center !important;
-        align-items: center;
-    }
-
-    .diocesis-logo-section {
-        align-items: center;
-        text-align: center;
-        justify-self: center;
-    }
+    /* Centrar redes en móvil - ya definido arriba */
 
     /* Ajustar Instagram para móvil manteniendo proporciones */
     .instagram-camera {

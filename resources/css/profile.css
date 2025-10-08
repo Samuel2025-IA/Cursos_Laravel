@@ -1,0 +1,145 @@
+/**
+ * ========================================
+ * PROFILE STYLES - ESTILOS DEL PERFIL
+ * ========================================
+ * Estilos específicos para la vista del perfil - VERSIÓN LIGERA
+ */
+
+/* Contenedor principal del perfil */
+.profile-container {
+    /* Sin transiciones para mejor rendimiento */
+}
+
+/* Tarjetas del perfil */
+.profile-card {
+    /* Sin transiciones para mejor rendimiento */
+}
+
+.profile-card:hover {
+    /* Sin efectos hover */
+}
+
+/* Campos de contraseña */
+.password-field {
+    position: relative;
+    /* Sin transiciones para mejor rendimiento */
+}
+
+.password-field:focus-within {
+    /* Sin efectos de focus */
+}
+
+.password-toggle-btn {
+    /* Sin transiciones para mejor rendimiento */
+}
+
+.password-toggle-btn:hover {
+    /* Sin efectos hover */
+}
+
+/* Botones de acción */
+.profile-action-btn {
+    position: relative;
+    overflow: hidden;
+    /* Sin transiciones para mejor rendimiento */
+}
+
+.profile-action-btn:hover {
+    /* Sin efectos hover */
+}
+
+.profile-action-btn:active {
+    /* Sin efectos active */
+}
+
+/* Efectos de loading - Solo el spinner básico */
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Alertas personalizadas - Sin animaciones */
+.profile-alert {
+    /* Sin animaciones para mejor rendimiento */
+}
+
+/* Campos de solo lectura */
+.readonly-field {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    /* Sin transiciones para mejor rendimiento */
+}
+
+.readonly-field:hover {
+    /* Sin efectos hover */
+}
+
+/* Secciones de información */
+.info-section {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    /* Sin transiciones para mejor rendimiento */
+}
+
+.info-section:hover {
+    /* Sin efectos hover */
+}
+
+/* Iconos de sección */
+.section-icon {
+    /* Sin transiciones para mejor rendimiento */
+}
+
+.info-section:hover .section-icon {
+    /* Sin efectos hover */
+}
+
+/* Estados de validación */
+.field-valid {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+}
+
+.field-invalid {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Headers sin efectos */
+.profile-header {
+    background: #2f9f37;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-header::before {
+    display: none; /* Desactivar efecto shimmer */
+}
+
+/* Botón de cambio de contraseña */
+.password-header {
+    background: #2D3A73;
+    position: relative;
+    overflow: hidden;
+}
+
+.password-header::before {
+    display: none; /* Desactivar efecto shimmer */
+}
+
+
+
+
+
+
+
+
+

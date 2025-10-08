@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Logout SessionStorage</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <h1>Test de Logout y SessionStorage</h1>
+    
+    <div>
+        <h2>Estado actual del SessionStorage:</h2>
+        <p>welcome_shown: <span id="welcome-shown"></span></p>
+        <p>admin_welcome_shown: <span id="admin-welcome-shown"></span></p>
+        <p>last_welcome_time: <span id="last-welcome-time"></span></p>
+        <p>last_admin_welcome_time: <span id="last-admin-welcome-time"></span></p>
+    </div>
+    
+    <div>
+        <h2>Acciones:</h2>
+        <button onclick="simulateLogin()">Simular Login (Mostrar Alerta)</button>
+        <button onclick="simulateLogout()">Simular Logout (Limpiar SessionStorage)</button>
+        <button onclick="checkSessionStorage()">Verificar SessionStorage</button>
+        <button onclick="clearAll()">Limpiar Todo</button>
+    </div>
+    
+    <div>
+        <h2>Logs:</h2>
+        <div id="logs" style="background: #f0f0f0; padding: 10px; height: 200px; overflow-y: auto;"></div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logsDiv = document.getElementById('logs');
+            const timestamp = new Date().toLocaleTimeString();
+            logsDiv.innerHTML += `[${timestamp}] ${message}<br>`;
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function checkSessionStorage() {
+            const welcomeShown = sessionStorage.getItem('welcome_shown');
+            const adminWelcomeShown = sessionStorage.getItem('admin_welcome_shown');
+            const lastWelcomeTime = sessionStorage.getItem('last_welcome_time');
+            const lastAdminWelcomeTime = sessionStorage.getItem('last_admin_welcome_time');
+            
+            document.getElementById('welcome-shown').textContent = welcomeShown || 'null';
+            document.getElementById('admin-welcome-shown').textContent = adminWelcomeShown || 'null';
+            document.getElementById('last-welcome-time').textContent = lastWelcomeTime || 'null';
+            document.getElementById('last-admin-welcome-time').textContent = lastAdminWelcomeTime || 'null';
+            
+            log(`SessionStorage verificado:
+                - welcome_shown: ${welcomeShown || 'null'}
+                - admin_welcome_shown: ${adminWelcomeShown || 'null'}
+                - last_welcome_time: ${lastWelcomeTime || 'null'}
+                - last_admin_welcome_time: ${lastAdminWelcomeTime || 'null'}`);
+        }
+
+        function simulateLogin() {
+            log('Simulando login...');
+            
+            // Simular la lógica del dashboard
+            const welcomeShown = sessionStorage.getItem('welcome_shown');
+            if (!welcomeShown) {
+                log('Mostrando alerta de bienvenida...');
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Bienvenido!',
+                    text: '¡Qué bueno verte por aquí!',
+                    confirmButtonText: 'Entendido',
+                    confirmButtonColor: '#2563eb',
+                    timer: 6000,
+                    timerProgressBar: true,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    showConfirmButton: true,
+                    showCloseButton: false,
+                    position: 'center',
+                    backdrop: true,
+                    focusConfirm: true,
+                    toast: false,
+                    width: 'auto',
+                    padding: '2em'
+                }).then(() => {
+                    log('Alerta de bienvenida cerrada');
+                });
+                
+                // Marcar como mostrado con timestamp
+                sessionStorage.setItem('welcome_shown', 'true');
+                sessionStorage.setItem('last_welcome_time', Date.now().toString());
+                log('SessionStorage actualizado con timestamp');
+            } else {
+                log('Alerta de bienvenida ya mostrada en esta sesión, omitiendo');
+            }
+            
+            checkSessionStorage();
+        }
+
+        function simulateLogout() {
+            log('Simulando logout...');
+            
+            // Limpiar sessionStorage como lo hace el logout real
+            sessionStorage.removeItem('welcome_shown');
+            sessionStorage.removeItem('admin_welcome_shown');
+            sessionStorage.removeItem('last_welcome_time');
+            sessionStorage.removeItem('last_admin_welcome_time');
+            
+            log('SessionStorage limpiado completamente');
+            checkSessionStorage();
+        }
+
+        function clearAll() {
+            log('Limpiando todo...');
+            sessionStorage.clear();
+            log('SessionStorage completamente limpiado');
+            checkSessionStorage();
+        }
+
+        // Inicializar
+        log('Página cargada');
+        checkSessionStorage();
+    </script>
+</body>
+</html>

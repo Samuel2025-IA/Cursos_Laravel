@@ -42,33 +42,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Función para mostrar/ocultar contraseña
-window.togglePassword = function(fieldId) {
-    const passwordField = document.getElementById(fieldId);
-    const eyeIcon = document.getElementById(`eye-icon-${fieldId}`);
-    const eyeSlashIcon = document.getElementById(`eye-slash-icon-${fieldId}`);
-    
-    // Debug: verificar que los elementos existen
-    if (!passwordField) {
-        console.error(`Campo de contraseña no encontrado: ${fieldId}`);
-        return;
-    }
-    if (!eyeIcon) {
-        console.error(`Icono de ojo no encontrado: eye-icon-${fieldId}`);
-        return;
-    }
-    if (!eyeSlashIcon) {
-        console.error(`Icono de ojo tachado no encontrado: eye-slash-icon-${fieldId}`);
-        return;
-    }
-    
-    if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        eyeIcon.classList.add('hidden');
-        eyeSlashIcon.classList.remove('hidden');
-    } else {
-        passwordField.type = 'password';
-        eyeIcon.classList.remove('hidden');
-        eyeSlashIcon.classList.add('hidden');
-    }
-};
+// Función togglePassword() ahora está centralizada en toggle-password-unified.js

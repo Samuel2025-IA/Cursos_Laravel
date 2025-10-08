@@ -13,7 +13,7 @@ html, body {
 
 /* Compensar el header fijo */
 body {
-    padding-top: 110px !important; /* Más espacio debajo del header */
+    padding-top: 80px !important; /* Reducido para acercar el contenido al header */
 }
 
 /* Header de navegación */
@@ -81,7 +81,7 @@ body {
 
 .header-logo-text {
     font-family: 'Arsenal', sans-serif;
-    font-size: 0.9rem;
+    font-size: 1.1rem; /* Aumentado de 0.9rem a 1.1rem para mejor visibilidad */
     font-weight: 700; /* Arsenal Bold */
     color: white; /* Texto blanco para contraste con fondo oscuro */
     white-space: nowrap;
@@ -188,7 +188,7 @@ body {
 /* Responsive para móviles pequeños */
 @media (max-width: 480px) {
     body {
-        padding-top: 95px !important; /* Más espacio en móviles */
+        padding-top: 70px !important; /* Reducido para acercar al header */
     }
     
     .welcome-header-logo {
@@ -201,7 +201,7 @@ body {
     }
     
     .header-logo-text {
-        font-size: 1rem; /* Más grande en móvil */
+        font-size: 1.1rem; /* Reducido de 1.4rem a 1.1rem para mejor proporción en móviles */
     }
     
     .welcome-header {
@@ -238,7 +238,7 @@ body {
 /* Responsive para desktop */
 @media (min-width: 1024px) {
     body {
-        padding-top: 130px !important; /* Más espacio en desktop */
+        padding-top: 90px !important; /* Reducido para acercar al header */
     }
     
     .welcome-header {
@@ -256,7 +256,7 @@ body {
     }
     
     .header-logo-text {
-        font-size: 1rem;
+        font-size: 1.3rem; /* Aumentado de 1.1rem a 1.3rem para mejor visibilidad */
     }
     
     .welcome-header-nav {
@@ -304,7 +304,7 @@ body {
 /* Breakpoint para tablets grandes */
 @media (max-width: 1024px) {
     body {
-        padding-top: 115px !important; /* Más espacio en tablets */
+        padding-top: 85px !important; /* Reducido para acercar al header */
     }
     
     .welcome-header-container {
@@ -325,7 +325,7 @@ body {
 /* Breakpoint para tablets medianas */
 @media (max-width: 768px) {
     body {
-        padding-top: 110px !important; /* Más espacio en tablets medianas */
+        padding-top: 75px !important; /* Reducido para acercar al header */
     }
     
     .welcome-header {
@@ -346,7 +346,7 @@ body {
     }
     
     .header-logo-text {
-        font-size: 1rem; /* Más grande en tablets */
+        font-size: 1.25rem; /* Aumentado de 1.05rem a 1.25rem para mejor visibilidad */
     }
 }
 
@@ -545,7 +545,7 @@ body {
     }
     
     .header-logo-text {
-        font-size: 0.75rem;
+        font-size: 1rem; /* Reducido de 1.3rem a 1rem para mejor proporción en móviles pequeños */
     }
     
     .welcome-header-nav {
@@ -573,7 +573,7 @@ body {
     }
     
     .header-logo-text {
-        font-size: 0.9rem; /* Más grande incluso en móviles muy pequeños */
+        font-size: 1rem; /* Reducido de 1.3rem a 1rem para mejor proporción en móviles muy pequeños */
     }
     
     .welcome-header-nav {

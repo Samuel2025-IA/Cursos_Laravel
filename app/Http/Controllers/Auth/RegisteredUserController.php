@@ -45,33 +45,62 @@ class RegisteredUserController extends Controller
                     ->with('error', 'Sesión de invitación inválida. Por favor, verifica tu código de invitación nuevamente.');
             }
 
-            // Validar los datos básicos
+            // Validar los datos básicos con validaciones mejoradas
             $request->validate([
-                'primer_nombre' => ['required', 'string', 'max:255'],
-                'segundo_nombre' => ['nullable', 'string', 'max:255'],
-                'primer_apellido' => ['required', 'string', 'max:255'],
-                'segundo_apellido' => ['required', 'string', 'max:255'],
+                'primer_nombre' => ['required', 'string', 'min:2', 'max:50', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s\'-]+$/'],
+                'segundo_nombre' => ['nullable', 'string', 'min:2', 'max:50', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s\'-]+$/'],
+                'primer_apellido' => ['required', 'string', 'min:2', 'max:50', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s\'-]+$/'],
+                'segundo_apellido' => ['required', 'string', 'min:2', 'max:50', 'regex:/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s\'-]+$/'],
                 'tipo_documento' => ['required', 'string', 'in:CC,CE,TI,PP,NIT'],
-                'numero_documento' => ['required', 'string', 'max:20', 'unique:users'],
+                'numero_documento' => ['required', 'string', 'max:20', 'unique:users,numero_documento', 'regex:/^[0-9A-Za-z]+$/'],
                 'entidad' => ['required', 'string', 'in:funadpas,fundacion_isaias,diocesis_apartado,pastoral_social'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email', 'regex:/^[^\s@]+@[^\s@]+\.[^\s@]+$/'],
+                'password' => ['required', 'confirmed', 'min:8'],
             ], [
+                // Mensajes para nombres
                 'primer_nombre.required' => 'El primer nombre es obligatorio.',
+                'primer_nombre.min' => 'El primer nombre debe tener al menos 2 caracteres.',
+                'primer_nombre.max' => 'El primer nombre no puede tener más de 50 caracteres.',
+                'primer_nombre.regex' => 'El primer nombre solo puede contener letras, espacios, acentos y guiones.',
+                
+                'segundo_nombre.min' => 'El segundo nombre debe tener al menos 2 caracteres.',
+                'segundo_nombre.max' => 'El segundo nombre no puede tener más de 50 caracteres.',
+                'segundo_nombre.regex' => 'El segundo nombre solo puede contener letras, espacios, acentos y guiones.',
+                
                 'primer_apellido.required' => 'El primer apellido es obligatorio.',
+                'primer_apellido.min' => 'El primer apellido debe tener al menos 2 caracteres.',
+                'primer_apellido.max' => 'El primer apellido no puede tener más de 50 caracteres.',
+                'primer_apellido.regex' => 'El primer apellido solo puede contener letras, espacios, acentos y guiones.',
+                
                 'segundo_apellido.required' => 'El segundo apellido es obligatorio.',
+                'segundo_apellido.min' => 'El segundo apellido debe tener al menos 2 caracteres.',
+                'segundo_apellido.max' => 'El segundo apellido no puede tener más de 50 caracteres.',
+                'segundo_apellido.regex' => 'El segundo apellido solo puede contener letras, espacios, acentos y guiones.',
+                
+                // Mensajes para documento
                 'tipo_documento.required' => 'El tipo de documento es obligatorio.',
                 'tipo_documento.in' => 'El tipo de documento seleccionado no es válido.',
+                
                 'numero_documento.required' => 'El número de documento es obligatorio.',
                 'numero_documento.max' => 'El número de documento no puede tener más de 20 caracteres.',
                 'numero_documento.unique' => 'Este número de documento ya está registrado.',
+                'numero_documento.regex' => 'El número de documento solo puede contener números y letras.',
+                
+                // Mensajes para entidad
                 'entidad.required' => 'Debes seleccionar una entidad.',
                 'entidad.in' => 'La entidad seleccionada no es válida.',
+                
+                // Mensajes para email
                 'email.required' => 'El correo electrónico es obligatorio.',
                 'email.email' => 'El formato del correo electrónico no es válido.',
                 'email.unique' => 'Este correo electrónico ya está registrado.',
+                'email.max' => 'El correo electrónico no puede tener más de 255 caracteres.',
+                'email.regex' => 'El formato del correo electrónico no es válido.',
+                
+                // Mensajes para contraseña
                 'password.required' => 'La contraseña es obligatoria.',
                 'password.confirmed' => 'Las contraseñas no coinciden.',
+                'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
             ]);
 
             // Validar documento colombiano
@@ -91,16 +120,16 @@ class RegisteredUserController extends Controller
                     ->withInput($request->except('password', 'password_confirmation'));
             }
 
-            // Crear el usuario
+            // Limpiar y normalizar los datos antes de crear el usuario
             $user = User::create([
-                'primer_nombre' => $request->primer_nombre,
-                'segundo_nombre' => $request->segundo_nombre,
-                'primer_apellido' => $request->primer_apellido,
-                'segundo_apellido' => $request->segundo_apellido,
-                'tipo_documento' => $request->tipo_documento,
-                'numero_documento' => $request->numero_documento,
+                'primer_nombre' => trim($request->primer_nombre),
+                'segundo_nombre' => $request->segundo_nombre ? trim($request->segundo_nombre) : null,
+                'primer_apellido' => trim($request->primer_apellido),
+                'segundo_apellido' => trim($request->segundo_apellido),
+                'tipo_documento' => strtoupper($request->tipo_documento),
+                'numero_documento' => strtoupper(trim($request->numero_documento)),
                 'entidad' => $request->entidad,
-                'email' => $request->email,
+                'email' => strtolower(trim($request->email)),
                 'password' => Hash::make($request->password),
                 'rol' => 'estudiante', // Rol por defecto para nuevos usuarios
             ]);
@@ -129,10 +158,13 @@ class RegisteredUserController extends Controller
             // Generar token para mensaje flash
             $messageToken = Str::random(32);
 
-            // Redirigir al dashboard con mensaje de éxito
+            // Limpiar las sesiones de visitas para mostrar mensaje de bienvenida especial
+            $request->session()->forget('dashboard_visited');
+            $request->session()->forget('admin_panel_visited');
+            
+            // Redirigir al dashboard con mensaje de bienvenida para nuevo usuario
             return redirect()->route('dashboard')
-                           ->with('flash_message', '¡Bienvenido a la Diócesis de Apartadó! Tu cuenta ha sido creada exitosamente.')
-                           ->with('flash_token', $messageToken);
+                           ->with('welcome_message', '¡Bienvenido a la Diócesis de Apartadó, ' . $user->primer_nombre . '! Tu cuenta ha sido creada exitosamente.');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Si hay errores de validación, redirigir de vuelta con los errores

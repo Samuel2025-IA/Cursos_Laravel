@@ -14,6 +14,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Arsenal:wght@400;700&display=swap" rel="stylesheet">
 
         <!-- Scripts - CSS unificado -->
         <link rel="stylesheet" href="{{ asset('css/all-styles.css') }}">
@@ -21,19 +22,11 @@
         <!-- CSS de respaldo directo -->
         <link rel="stylesheet" href="{{ asset('css/fallback.css') }}">
         
+        <!-- CSS de Layouts -->
+        <link rel="stylesheet" href="{{ asset('css/views/layouts/layouts.css') }}">
+        
         <!-- Tailwind CSS CDN como respaldo adicional -->
         <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            'primary': '#2f9f37',
-                        }
-                    }
-                }
-            }
-        </script>
         
         <!-- Alpine.js -->
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -46,16 +39,14 @@
         <!-- SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen">
+    <body class="font-sans antialiased" style="margin: 0; padding: 0;">
+        <div class="min-h-screen" style="margin: 0; padding: 0;">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
                 <header class="shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
+                    {{ $header }}
                 </header>
             @endisset
 
@@ -64,149 +55,46 @@
                 {{ $slot }}
             </main>
         </div>
-
-        <!-- SweetAlert2 CDN -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
-        <!-- SweetAlert2 Helper Functions - DEFINIDAS DIRECTAMENTE -->
-        <script>
-            // Función global para alertas de error
-            window.showErrorAlert = function(message) {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '¡Error!',
-                        text: message,
-                        confirmButtonColor: '#2f9f37', // Verde
-                        confirmButtonText: '¡Perfecto!',
-                        background: '#ffffff',
-                        iconColor: '#dc2626'
-                    });
-                } else {
-                    alert('ERROR: ' + message);
-                }
-            };
+        <!-- Scripts del Layout Principal -->
+        <script src="{{ asset('js/views/layouts/app.js') }}"></script>
+        
+        <!-- Scripts de Transiciones de Navegación -->
+        <script src="{{ asset('build/assets/navigation-transitions-B76zogpA.js') }}"></script>
 
-            // Función global para alertas de advertencia
-            window.showWarningAlert = function(message) {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: '¡Atención!',
-                        text: message,
-                        confirmButtonColor: '#2f9f37', // Verde
-                        confirmButtonText: '¡Perfecto!',
-                        background: '#ffffff',
-                        iconColor: '#d97706'
-                    });
-                } else {
-                    alert('ADVERTENCIA: ' + message);
-                }
-            };
-
-            // Función global para alertas de información
-            window.showInfoAlert = function(message) {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Información',
-                        text: message,
-                        confirmButtonColor: '#2563eb', // Azul
-                        confirmButtonText: 'Aceptar',
-                        background: '#ffffff',
-                        iconColor: '#2563eb'
-                    });
-                } else {
-                    alert('INFO: ' + message);
-                }
-            };
-
-            // Función global para alertas de éxito
-            window.showSuccessAlert = function(message) {
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Éxito!',
-                        text: message,
-                        confirmButtonColor: '#2f9f37', // Verde
-                        confirmButtonText: '¡Perfecto!',
-                        background: '#ffffff',
-                        iconColor: '#059669',
-                        timer: 4000,
-                        timerProgressBar: true
-                    });
-                } else {
-                    alert('ÉXITO: ' + message);
-                }
-            };
-
-            console.log('✅ Funciones de alerta cargadas directamente en app.blade.php');
-        </script>
-
-        <!-- Mostrar alertas desde sesiones de Laravel -->
+        <!-- Pasar datos de sesión a JavaScript -->
         @if(session('error'))
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    console.log('🔴 Mostrando alerta de error:', '{{ session('error') }}');
-                    showErrorAlert('{{ session('error') }}');
-                });
+                window.sessionError = '{{ session('error') }}';
             </script>
         @endif
 
         @if(session('warning'))
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    console.log('🟡 Mostrando alerta de advertencia:', '{{ session('warning') }}');
-                    showWarningAlert('{{ session('warning') }}');
-                });
+                window.sessionWarning = '{{ session('warning') }}';
             </script>
         @endif
 
         @if(session('info'))
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    console.log('🔵 Mostrando alerta de información:', '{{ session('info') }}');
-                    showInfoAlert('{{ session('info') }}');
-                });
+                window.sessionInfo = '{{ session('info') }}';
             </script>
         @endif
 
         @if(session('success'))
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    console.log('🟢 Mostrando alerta de éxito:', '{{ session('success') }}');
-                    showSuccessAlert('{{ session('success') }}');
-                });
+                window.sessionSuccess = '{{ session('success') }}';
             </script>
         @endif
 
-        <!-- Manejo de errores de validación específicos -->
+        <!-- Pasar errores de validación a JavaScript -->
         @if($errors->updatePassword->any())
             <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    setTimeout(function() {
-                        const errors = [
-                            @foreach($errors->updatePassword->all() as $error)
-                                '{{ $error }}',
-                            @endforeach
-                        ];
-                        
-                        if (errors.length > 0 && typeof Swal !== 'undefined') {
-                            const errorMessage = errors.length === 1 ? errors[0] : errors.join('\n• ');
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error en la Contraseña',
-                                text: errorMessage,
-                                confirmButtonColor: '#dc2626',
-                                confirmButtonText: 'Aceptar',
-                                background: '#ffffff',
-                                iconColor: '#dc2626',
-                                allowOutsideClick: true,
-                                allowEscapeKey: true
-                            });
-                        }
-                    }, 800);
-                });
+                window.passwordErrors = [
+                    @foreach($errors->updatePassword->all() as $error)
+                        '{{ $error }}',
+                    @endforeach
+                ];
             </script>
         @endif
     </body>

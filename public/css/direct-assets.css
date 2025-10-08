@@ -1,7 +1,6 @@
 /* CSS directo que carga los assets compilados */
-@import url('/build/assets/app-CIocAQW6.css');
+/* Archivos CSS importados eliminados - no existen */
 @import url('/build/assets/sidebar-C3jEGlBl.css');
-@import url('/build/assets/dashboard-Df7adjLL.css');
 
 /* Estilos adicionales para asegurar funcionamiento */
 body {
@@ -117,3 +116,6 @@ body {
         top: 84px !important;
     }
 }
+
+
+

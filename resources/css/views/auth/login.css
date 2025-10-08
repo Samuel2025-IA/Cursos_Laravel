@@ -2,6 +2,10 @@
 .login-container {
     max-width: 36rem !important;
     width: 100% !important;
+    min-height: 400px !important; /* Altura mínima para más espacio */
+    border-radius: 1rem !important; /* Bordes redondeados */
+    box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important; /* Sombra suave */
+    padding: 2.5rem 1.5rem !important; /* Más padding vertical */
 }
 
 /* Ajustes para el formulario de login */
@@ -40,9 +44,13 @@ body:not(.register-page) .min-h-screen {
 /* Responsive para móviles */
 @media (max-width: 640px) {
     .login-container {
-        max-width: 100% !important;
-        margin: 0.5rem !important;
-        padding: 1rem !important;
+        width: calc(100% - 3rem) !important; /* Forzar ancho con márgenes */
+        max-width: calc(100% - 3rem) !important; /* Dejar margen de 1.5rem a cada lado */
+        margin: 0.5rem 1.5rem !important; /* Margen horizontal de 1.5rem */
+        padding: 2rem 1.5rem !important; /* Más padding vertical en móvil */
+        min-height: 350px !important; /* Altura mínima para móviles */
+        border-radius: 0.75rem !important; /* Bordes ligeramente menos redondeados en móvil */
+        box-shadow: 0 8px 20px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
     }
     
     .login-form {
@@ -58,5 +66,41 @@ body:not(.register-page) .min-h-screen {
     body:not(.register-page) .min-h-screen {
         padding-top: 0.5rem !important;
         padding-bottom: 0.5rem !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+/* Responsive para móviles más pequeños */
+@media (max-width: 480px) {
+    .login-container {
+        width: calc(100% - 2rem) !important; /* Forzar ancho con márgenes */
+        max-width: calc(100% - 2rem) !important; /* Margen de 1rem a cada lado */
+        margin: 0.5rem 1rem !important; /* Margen horizontal de 1rem */
+        padding: 1.5rem 1rem !important; /* Más padding vertical */
+        min-height: 320px !important; /* Altura mínima para móviles pequeños */
+        border-radius: 0.75rem !important; /* Mantener bordes redondeados */
+        box-shadow: 0 6px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+    }
+    
+    .login-form {
+        padding: 0.75rem !important;
+    }
+}
+
+/* Responsive para móviles muy pequeños */
+@media (max-width: 360px) {
+    .login-container {
+        width: calc(100% - 1.5rem) !important; /* Forzar ancho con márgenes */
+        max-width: calc(100% - 1.5rem) !important; /* Margen de 0.75rem a cada lado */
+        margin: 0.5rem 0.75rem !important; /* Margen horizontal de 0.75rem */
+        padding: 1.25rem 0.75rem !important; /* Más padding vertical */
+        min-height: 300px !important; /* Altura mínima para móviles muy pequeños */
+        border-radius: 0.5rem !important; /* Bordes menos redondeados en pantallas muy pequeñas */
+        box-shadow: 0 4px 12px -3px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+    }
+    
+    .login-form {
+        padding: 0.5rem !important;
     }
 }

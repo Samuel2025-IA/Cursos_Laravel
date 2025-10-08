@@ -34,7 +34,17 @@ class AuthenticatedSessionController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended(route('dashboard', absolute: false))->with('success', '¡Bienvenido de nuevo, ' . Auth::user()->primer_nombre . '!');
+            // Limpiar las sesiones de visitas para mostrar mensaje de bienvenida
+            $request->session()->forget('dashboard_visited');
+            $request->session()->forget('admin_panel_visited');
+            
+            \Log::info('=== LOGIN EXITOSO ===');
+            \Log::info('Usuario: ' . Auth::user()->primer_nombre);
+            \Log::info('Rol: ' . Auth::user()->rol);
+            \Log::info('Limpiando sesiones de visitas para mostrar mensaje de bienvenida');
+            \Log::info('Sesión después del login: ' . json_encode($request->session()->all()));
+            
+            return redirect()->intended(route('dashboard', absolute: false));
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Si hay errores de validación, redirigir con alerta de error
             $errors = $e->errors();

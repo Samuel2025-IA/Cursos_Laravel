@@ -1,0 +1,202 @@
+/**
+ * Estilos para los layouts del sistema
+ * Contiene estilos comunes y específicos para cada layout
+ */
+
+/* ===========================================
+   ESTILOS COMUNES
+   =========================================== */
+
+/* Estilos para Alpine.js x-cloak */
+[x-cloak] { 
+    display: none !important; 
+}
+
+/* Estilos para el layout simple */
+.app-simple-layout {
+    /* Estilos específicos para app-simple si es necesario */
+}
+
+/* ===========================================
+   ESTILOS DE NAVEGACIÓN
+   =========================================== */
+
+/* Navegación fija */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    background-color: #2a3882;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenido del header */
+.header-content {
+    width: 100%;
+    padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+    .header-content {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .header-content {
+        padding: 0 2rem;
+    }
+}
+
+/* Logo y título */
+nav .flex.items-center.gap-2 img {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+    nav .flex.items-center.gap-2 img {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    nav .flex.items-center.gap-2 img {
+        width: 2.75rem;
+        height: 2.75rem;
+    }
+}
+
+/* Título de la navegación */
+nav .font-bold.text-white {
+    font-family: 'Arsenal', sans-serif;
+    white-space: nowrap;
+    font-size: 0.875rem; /* Reducido de 1rem a 0.875rem para móviles pequeños */
+}
+
+@media (min-width: 640px) {
+    nav .font-bold.text-white {
+        font-size: 0.9rem; /* Reducido de 1.1rem a 0.9rem para móviles medianos */
+    }
+}
+
+@media (min-width: 1024px) {
+    nav .font-bold.text-white {
+        font-size: 1rem; /* Reducido de 1.3rem a 1rem para desktop */
+    }
+}
+
+/* Botón de dropdown */
+nav .inline-flex.items-center {
+    transition: all 0.2s ease-in-out;
+}
+
+nav .inline-flex.items-center:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+}
+
+/* ===========================================
+   ESTILOS DE LAYOUTS ESPECÍFICOS
+   =========================================== */
+
+/* Layout principal */
+.app-layout {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout de invitados */
+.guest-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+    background-color: #f3f4f6;
+}
+
+/* Layout simple */
+.app-simple-layout {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===========================================
+   ESTILOS DE ALERTAS
+   =========================================== */
+
+/* Estilos para alertas de sesión */
+[data-has-session-message="true"] {
+    /* Estilos específicos si es necesario */
+}
+
+/* ===========================================
+   ESTILOS RESPONSIVOS
+   =========================================== */
+
+/* Navegación móvil */
+@media (max-width: 639px) {
+    .sm\\:hidden {
+        display: block;
+    }
+    
+    .sm\\:hidden .pt-2 {
+        padding-top: 0.5rem;
+    }
+    
+    .sm\\:hidden .pb-3 {
+        padding-bottom: 0.75rem;
+    }
+    
+    .sm\\:hidden .space-y-1 > * + * {
+        margin-top: 0.25rem;
+    }
+}
+
+/* ===========================================
+   ESTILOS DE UTILIDAD
+   =========================================== */
+
+/* Transiciones suaves */
+.transition-smooth {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Sombras suaves */
+.shadow-soft {
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Bordes redondeados */
+.rounded-soft {
+    border-radius: 0.5rem;
+}
+
+/* ===========================================
+   ESTILOS DE DEBUG (solo para desarrollo)
+   =========================================== */
+
+/* Descomentar para debug */
+/*
+.debug-border {
+    border: 2px solid red !important;
+}
+
+.debug-bg {
+    background-color: rgba(255, 0, 0, 0.1) !important;
+}
+*/
+

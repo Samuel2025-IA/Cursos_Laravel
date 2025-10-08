@@ -6,8 +6,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css', 
-                'resources/css/dashboard.css',
-                'resources/css/sidebar.css',
+                'resources/css/utilities/forms.css',
                 'resources/css/test-view.css',
                 'resources/css/views/welcome/img/catedral-image.css',
                 'resources/css/views/welcome/welcome-base.css',
@@ -22,10 +21,9 @@ export default defineConfig({
                 'resources/css/views/auth/login.css',
                 'resources/css/views/auth/verify-invitation.css',
                 'resources/css/views/auth/invitation-alert.css',
-                'resources/js/dashboard.js',
-                'resources/js/sidebar.js',
+                'resources/css/views/auth/forgot-password.css',
                 'resources/js/simple-flash.js',
-                'resources/js/welcome.js',
+                'resources/js/views/welcome/welcome.js',
                 'resources/js/auth/login.js',
                 'resources/js/auth/register.js',
                 'resources/js/auth/verify-invitation.js',
@@ -40,7 +38,12 @@ export default defineConfig({
                 'resources/js/views/components/loading-overlay.js',
                 'resources/js/views/profile/update-password.js',
                 'resources/js/views/profile/delete-user.js',
-                'resources/js/global/toggle-password.js'
+                'resources/js/views/admin/panel.js',
+                'resources/js/views/admin/admin-welcome.js',
+                'resources/js/views/layouts/navigation-transitions.js',
+                'resources/js/views/layouts/navigation.js',
+                'resources/js/global/toggle-password-unified.js',
+                'resources/js/dashboard.js'
             ],
             refresh: true,
         }),

@@ -67,7 +67,7 @@
         </div>
     </form>
 
-    @vite(['resources/js/global/toggle-password.js', 'resources/js/auth/login.js'])
+    @vite(['resources/js/global/toggle-password-unified.js', 'resources/js/auth/login.js'])
 
     <div class="mt-6 text-center">
         <p class="text-sm text-gray-700">

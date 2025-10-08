@@ -22,6 +22,11 @@ Route::get('/test', function () {
     return view('test-final');
 })->name('test');
 
+// Ruta de prueba para navigation loading
+Route::get('/test-navigation', function () {
+    return view('test-navigation');
+})->name('test-navigation');
+
 // Rutas temporales para debugging móvil (solo para testing)
 Route::get('/check-mobile-session', function () {
     return response()->json([
@@ -91,88 +96,52 @@ Route::get('/check-database-connection', function () {
 */
 
 Route::middleware(['auth.custom'])->group(function () {
-    // Dashboard principal
+    // Ruta para limpiar sesión de bienvenida
+    Route::post('/dashboard/clear-welcome-session', function () {
+        session()->forget('welcome_message');
+        return response()->json(['success' => true]);
+    })->name('dashboard.clear-welcome-session');
+    
+    // Dashboard principal (nuevo layout)
     Route::get('/dashboard', function () {
-        $cursos = \App\Models\Curso::latest()->limit(6)->get();
-        
-        // Preparar datos para admin
-        $invitationCodes = collect(); // Inicializar como colección vacía por defecto
-        if (auth()->user()->rol === 'admin') {
-            // Obtener códigos activos
-            $activeCodes = \App\Models\InvitationCode::orderBy('created_at', 'desc')->get();
-            
-            // Obtener historial de códigos eliminados
-            $historyCodes = \App\Models\InvitationCodeHistory::orderBy('created_at', 'desc')->get();
-            
-            // Combinar ambos en una sola colección
-            $allCodes = collect();
-            
-            // Agregar códigos activos
-            foreach ($activeCodes as $code) {
-                $allCodes->push((object) [
-                    'id' => $code->id,
-                    'email' => $code->email,
-                    'code' => $code->code,
-                    'used' => $code->used,
-                    'expires_at' => $code->expires_at,
-                    'created_at' => $code->created_at,
-                    'updated_at' => $code->updated_at,
-                    'is_active' => true,
-                    'status' => $code->used ? 'used' : ($code->expires_at->isPast() ? 'expired' : 'active')
-                ]);
-            }
-            
-            // Agregar códigos del historial
-            foreach ($historyCodes as $code) {
-                $allCodes->push((object) [
-                    'id' => 'hist_' . $code->id,
-                    'email' => $code->email,
-                    'code' => $code->code,
-                    'used' => $code->used,
-                    'expires_at' => $code->expires_at,
-                    'created_at' => $code->created_at,
-                    'updated_at' => $code->updated_at,
-                    'is_active' => false,
-                    'status' => $code->status
-                ]);
-            }
-            
-            // Ordenar por fecha de creación descendente
-            $allCodes = $allCodes->sortByDesc('created_at');
-            
-            // Paginar manualmente - 5 elementos por página
-            $perPage = 5;
-            $currentPage = request()->get('page', 1);
-            $offset = ($currentPage - 1) * $perPage;
-            $items = $allCodes->slice($offset, $perPage)->values();
-            
-            // Crear paginador personalizado
-            $invitationCodes = new \Illuminate\Pagination\LengthAwarePaginator(
-                $items,
-                $allCodes->count(),
-                $perPage,
-                $currentPage,
-                [
-                    'path' => request()->url(),
-                    'pageName' => 'page',
-                ]
-            );
-        }
-        
         // Log de depuración
-        \Log::info('Dashboard accedido. Usuario: ' . auth()->user()->primer_nombre);
+        \Log::info('=== DASHBOARD ACCEDIDO ===');
+        \Log::info('Usuario: ' . auth()->user()->primer_nombre);
+        \Log::info('Rol: ' . auth()->user()->rol);
         \Log::info('Dashboard visited: ' . (session()->has('dashboard_visited') ? 'true' : 'false'));
+        \Log::info('Welcome message en sesión: ' . (session()->has('welcome_message') ? 'true' : 'false'));
+        \Log::info('Todas las variables de sesión: ' . json_encode(session()->all()));
+        
+        // Verificar si hay un mensaje de bienvenida especial (registro)
+        if (session()->has('welcome_message')) {
+            $welcomeMessage = session('welcome_message');
+            session()->put('dashboard_visited', true); // Marcar como visitado
+            
+            \Log::info('Mostrando mensaje de bienvenida especial (registro): ' . $welcomeMessage);
+            return view('dashboard-new')->with('welcome_message', $welcomeMessage);
+        }
         
         // Verificar si es la primera vez que el usuario accede al dashboard en esta sesión
         if (!session()->has('dashboard_visited')) {
             session()->put('dashboard_visited', true);
-            $welcomeMessage = '¡Bienvenido de nuevo, ' . auth()->user()->primer_nombre . '!';
-            \Log::info('Mensaje de bienvenida: ' . $welcomeMessage);
-            return view('dashboard', compact('cursos', 'invitationCodes'))->with('welcome_message', $welcomeMessage);
+            // Mensaje para visitas posteriores (login)
+            $welcomeMessage = '¡Qué bueno verte por aquí otra vez, ' . auth()->user()->primer_nombre . '!';
+            \Log::info('Mostrando mensaje de bienvenida (primera vez en sesión): ' . $welcomeMessage);
+            
+            // Enviar la vista con el mensaje de bienvenida
+            return view('dashboard-new')->with('welcome_message', $welcomeMessage);
         }
         
-        \Log::info('Dashboard ya visitado, no mostrando mensaje');
-        return view('dashboard', compact('cursos', 'invitationCodes'));
+        // Verificar si hay un parámetro para forzar la alerta (solo para testing)
+        if (request()->has('force_welcome') && request()->get('force_welcome') === '1') {
+            $welcomeMessage = '¡Mensaje de prueba forzado, ' . auth()->user()->primer_nombre . '!';
+            \Log::info('Mostrando mensaje de bienvenida FORZADO: ' . $welcomeMessage);
+            return view('dashboard-new')->with('welcome_message', $welcomeMessage);
+        }
+        
+        // Si ya visitó antes en esta sesión, no mostrar mensaje
+        \Log::info('Dashboard ya visitado en esta sesión, no mostrando mensaje de bienvenida');
+        return view('dashboard-new');
     })->name('dashboard');
     
     // Perfil del usuario
@@ -183,12 +152,69 @@ Route::middleware(['auth.custom'])->group(function () {
     // Rutas de Cursos
     Route::resource('cursos', CursoController::class);
     
-    // Rutas de Administración
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/panel', [AdminController::class, 'index'])->name('panel');
-        Route::get('/', [AdminController::class, 'index'])->name('panel'); // Alias para /admin
+    // Rutas de Administración - Solo para administradores
+    Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
+        // Ruta para limpiar sesión de bienvenida en admin
+        Route::post('/clear-welcome-session', function () {
+            session()->forget('welcome_message');
+            return response()->json(['success' => true]);
+        })->name('clear-welcome-session');
+        
+        Route::get('/panel', function () {
+            // Preparar datos para el panel de administración
+            $activeCodes = \App\Models\InvitationCode::where('used', false)
+                ->where('expires_at', '>', now())
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+                
+            // Para el historial, obtenemos códigos que ya no están activos (usados o expirados)
+            $historyCodes = \App\Models\InvitationCode::where(function($query) {
+                $query->where('used', true)
+                      ->orWhere('expires_at', '<', now());
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+            
+            // Verificar si hay un mensaje de bienvenida especial (registro)
+            if (session()->has('welcome_message')) {
+                $welcomeMessage = session('welcome_message');
+                session()->put('dashboard_visited', true); // Marcar como visitado
+                
+                return view('admin.panel-new', compact('activeCodes', 'historyCodes'))->with('welcome_message', $welcomeMessage);
+            }
+            
+            // Verificar si es la primera vez que el usuario accede al dashboard en esta sesión
+            if (!session()->has('dashboard_visited')) {
+                session()->put('dashboard_visited', true);
+                // Mensaje para visitas posteriores (login)
+                $welcomeMessage = '¡Qué bueno verte por aquí otra vez, ' . auth()->user()->primer_nombre . '!';
+                
+                return view('admin.panel-new', compact('activeCodes', 'historyCodes'))->with('welcome_message', $welcomeMessage);
+            }
+            
+            return view('admin.panel-new', compact('activeCodes', 'historyCodes'));
+        })->name('panel');
+        Route::get('/', function () {
+            return redirect()->route('admin.panel');
+        }); // Redirigir /admin a /admin/panel
         Route::post('/send-invitations', [AdminController::class, 'sendInvitations'])->name('send-invitations');
         Route::delete('/delete-invitation/{invitationCode}', [AdminController::class, 'deleteInvitation'])->name('delete-invitation');
+        
+        // Rutas de búsqueda AJAX
+        Route::post('/search-active-codes', [AdminController::class, 'searchActiveCodes'])->name('search-active-codes');
+        Route::post('/search-history-codes', [AdminController::class, 'searchHistoryCodes'])->name('search-history-codes');
+        
+        // Ruta temporal para debugging
+        Route::post('/debug-send', function(Request $request) {
+            return response()->json([
+                'received_data' => $request->all(),
+                'emails' => $request->input('emails'),
+                'method' => $request->method(),
+                'content_type' => $request->header('Content-Type'),
+                'is_ajax' => $request->ajax(),
+                'expects_json' => $request->expectsJson()
+            ]);
+        })->name('debug-send');
     });
 });
 

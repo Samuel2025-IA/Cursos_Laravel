@@ -9,3 +9,18 @@
     <p class="text-blue-600">Si ves estilos, el problema está en @vite()</p>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

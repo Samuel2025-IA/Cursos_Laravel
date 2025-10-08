@@ -16,10 +16,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Arsenal:wght@400;700&display=swap" rel="stylesheet">
 
         <!-- Styles / Scripts - CSS unificado -->
-        <link rel="stylesheet" href="{{ asset('css/all-styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/all-styles.css') }}?v={{ time() }}">
         
         <!-- CSS de respaldo -->
-        <link rel="stylesheet" href="{{ asset('css/fallback.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/fallback.css') }}?v={{ time() }}">
         
         <!-- JavaScript de welcome -->
         <script src="{{ asset('build/assets/welcome-BjK2c7iW.js') }}"></script>
@@ -336,192 +336,10 @@
 
 
         <!-- Script para alerta de despedida -->
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verificar si hay mensaje de despedida (solo para logout exitoso)
-            const goodbyeMeta = document.querySelector('meta[name="goodbye-message"]');
-            const logoutRedirectMeta = document.querySelector('meta[name="is-logout-redirect"]');
-            
-            if (goodbyeMeta && logoutRedirectMeta && typeof Swal !== 'undefined') {
-                const message = goodbyeMeta.getAttribute('content');
-                if (message && message.trim() !== '') {
-                    // Verificar si la página se cargó por navegación del navegador
-                    const navigationEntries = performance.getEntriesByType('navigation');
-                    const isBackForwardNavigation = navigationEntries.length > 0 && 
-                        navigationEntries[0].type === 'back_forward';
-                    
-                    // Verificar si viene desde páginas de login o verify-invitation
-                    const referrer = document.referrer;
-                    const isFromAuthPages = referrer.includes('/login') || 
-                                          referrer.includes('/verify-invitation') || 
-                                          referrer.includes('/register');
-                    
-                    // Verificar si es un logout legítimo
-                    const isLegitimateLogout = localStorage.getItem('legitimate_logout');
-                    
-                    // Solo mostrar si es un logout legítimo Y NO es navegación hacia atrás/adelante Y NO viene de páginas de auth
-                    if (isLegitimateLogout && !isBackForwardNavigation && !isFromAuthPages) {
-                        // Verificar que no se haya mostrado ya
-                        const alreadyShown = sessionStorage.getItem('logout_farewell_shown');
-                        if (!alreadyShown) {
-                            // Marcar como mostrado para evitar duplicados
-                            sessionStorage.setItem('logout_farewell_shown', 'true');
-                            
-                            // Mostrar alerta de despedida
-                            Swal.fire({
-                                icon: 'success',
-                                title: '¡Hasta pronto!',
-                                text: message,
-                                confirmButtonText: 'Entendido',
-                                confirmButtonColor: '#2563eb',
-                                background: '#ffffff',
-                                timer: 4000,
-                                timerProgressBar: true,
-                                allowOutsideClick: false,
-                                allowEscapeKey: false
-                            }).then(() => {
-                                // Limpiar el storage después de cerrar la alerta
-                                sessionStorage.removeItem('logout_farewell_shown');
-                                localStorage.removeItem('legitimate_logout');
-                            });
-                        }
-                    } else {
-                        // Si es navegación no permitida, limpiar inmediatamente
-                        if (isBackForwardNavigation) {
-                            console.log('Navegación hacia atrás/adelante detectada. Omitiendo alerta de despedida.');
-                        }
-                        if (isFromAuthPages) {
-                            console.log('Navegación desde páginas de autenticación detectada. Omitiendo alerta de despedida.');
-                            console.log('Referrer:', referrer);
-                        }
-                        if (!isLegitimateLogout) {
-                            console.log('No es un logout legítimo. Omitiendo alerta de despedida.');
-                        }
-                        
-                        // Limpiar localStorage si no es logout legítimo
-                        if (!isLegitimateLogout || isFromAuthPages || isBackForwardNavigation) {
-                            localStorage.removeItem('legitimate_logout');
-                        }
-                    }
-                    
-                    // Limpiar los meta tags después de procesar
-                    goodbyeMeta.remove();
-                    logoutRedirectMeta.remove();
-                }
-            }
-        });
-        </script>
+        <script src="{{ asset('js/views/welcome/goodbye-alert.js') }}"></script>
         
-        <!-- Script simplificado para el menú hamburguesa -->
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Inicializando menú hamburguesa...');
-            
-            const menuToggle = document.getElementById('menuToggle');
-            const headerNav = document.getElementById('headerNav');
-            const navOverlay = document.getElementById('navOverlay');
-            
-            if (!menuToggle || !headerNav || !navOverlay) {
-                console.error('Elementos del menú no encontrados:', {
-                    menuToggle: !!menuToggle,
-                    headerNav: !!headerNav,
-                    navOverlay: !!navOverlay
-                });
-                return;
-            }
-            
-            console.log('Elementos del menú encontrados correctamente');
-            
-            // Función para verificar si debe mostrar menú móvil
-            function shouldShowMobileMenu() {
-                return window.innerWidth <= 900;
-            }
-            
-            // Función para cerrar menú
-            function closeMenu() {
-                menuToggle.classList.remove('active');
-                headerNav.classList.remove('active');
-                navOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-                console.log('Menú cerrado');
-            }
-            
-            // Función para abrir/cerrar menú
-            function toggleMenu(e) {
-                if (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                
-                console.log('Toggle menú - Ancho pantalla:', window.innerWidth);
-                
-                if (!shouldShowMobileMenu()) {
-                    closeMenu();
-                    return;
-                }
-                
-                const isActive = headerNav.classList.contains('active');
-                
-                if (isActive) {
-                    closeMenu();
-                } else {
-                    menuToggle.classList.add('active');
-                    headerNav.classList.add('active');
-                    navOverlay.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                    console.log('Menú abierto');
-                }
-            }
-            
-            // Mostrar/ocultar botón hamburguesa
-            function updateMenuVisibility() {
-                const shouldShow = shouldShowMobileMenu();
-                console.log('Actualizando visibilidad - Debe mostrar:', shouldShow);
-                
-                if (shouldShow) {
-                    menuToggle.style.display = 'flex';
-                    menuToggle.style.visibility = 'visible';
-                    menuToggle.style.opacity = '1';
-                } else {
-                    menuToggle.style.display = 'none';
-                    menuToggle.style.visibility = 'hidden';
-                    menuToggle.style.opacity = '0';
-                    closeMenu();
-                }
-            }
-            
-            // Event listeners
-            menuToggle.addEventListener('click', toggleMenu);
-            
-            navOverlay.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                closeMenu();
-            });
-            
-            // Cerrar al hacer click en enlaces
-            const navLinks = headerNav.querySelectorAll('.welcome-nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (shouldShowMobileMenu()) {
-                        closeMenu();
-                    }
-                });
-            });
-            
-            // Redimensionar ventana
-            window.addEventListener('resize', function() {
-                updateMenuVisibility();
-                if (!shouldShowMobileMenu()) {
-                    closeMenu();
-                }
-            });
-            
-            // Inicializar
-            updateMenuVisibility();
-            console.log('Menú hamburguesa inicializado correctamente');
-        });
-        </script>
+        <!-- Script para el menú hamburguesa -->
+        <script src="{{ asset('js/views/welcome/welcome-hamburger-menu.js') }}"></script>
 
     </body>
 </html>

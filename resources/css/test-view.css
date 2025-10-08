@@ -1,7 +1,5 @@
 /* Estilos específicos para la vista de prueba */
 @import 'app.css';
-@import 'dashboard.css';
-@import 'sidebar.css';
 
 /* Estilos adicionales para asegurar que todo funcione */
 .test-view-container {
@@ -20,117 +18,8 @@
     padding: 2rem;
 }
 
-/* Asegurar que el sidebar funcione */
-.app-sidebar {
-    position: fixed;
-    inset: 64px auto 0 0;
-    width: 260px;
-    background-color: #2A3658;
-    border-right: 1px solid rgba(255,255,255,0.08);
-    color: #e5e7eb;
-    z-index: 40;
-    transition: width .25s ease, transform .25s ease;
-    display: flex;
-    flex-direction: column;
-}
 
-.app-sidebar.collapsed {
-    width: 64px;
-}
 
-.app-sidebar .section-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: .02em;
-    padding: 16px 16px;
-    transition: opacity 0.25s ease;
-}
 
-.app-sidebar .nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 8px;
-}
 
-.app-sidebar .nav-item {
-    margin: 2px 0;
-}
 
-.app-sidebar .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    border-radius: 10px;
-    color: #e5e7eb;
-    text-decoration: none;
-    transition: background .2s ease, color .2s ease;
-}
-
-.app-sidebar .nav-link:hover {
-    background: rgba(255,255,255,0.08);
-    color: #fff;
-}
-
-.app-sidebar .nav-link .ico {
-    width: 18px;
-    height: 18px;
-    color: currentColor;
-    flex-shrink: 0;
-}
-
-/* Botón de colapso */
-.sidebar-toggle-btn {
-    position: fixed;
-    top: 84px;
-    left: 280px;
-    z-index: 50;
-    width: 40px;
-    height: 40px;
-    background: #000;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.sidebar-toggle-btn:hover {
-    background: #1a1a1a;
-    border-color: rgba(255,255,255,0.3);
-}
-
-/* Ajustes para el contenido con sidebar */
-.with-sidebar .dashboard-content {
-    margin-left: 280px;
-    transition: margin-left .25s ease;
-}
-
-.with-sidebar.sidebar-collapsed .dashboard-content {
-    margin-left: 84px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .app-sidebar {
-        transform: translateX(-100%);
-        width: 260px;
-    }
-    
-    .app-sidebar.open {
-        transform: translateX(0);
-    }
-    
-    .with-sidebar .dashboard-content {
-        margin-left: 0;
-    }
-    
-    .sidebar-toggle-btn {
-        left: 20px;
-        top: 84px;
-    }
-}

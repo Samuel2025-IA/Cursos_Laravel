@@ -1,0 +1,232 @@
+/* Estilos para el Panel de Administración */
+
+/* Paginador personalizado */
+.pagination-custom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #2D3A73 0%, #1e2a5a 100%);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.pagination-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    padding: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.pagination-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.pagination-item:hover::before {
+    left: 100%;
+}
+
+.pagination-item:hover {
+    background-color: rgba(47, 159, 55, 0.8);
+    border-color: #2f9f37;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(47, 159, 55, 0.3);
+}
+
+.pagination-item[aria-current="page"] {
+    background: linear-gradient(135deg, #2f9f37 0%, #2f9f37dd 100%);
+    border-color: #2f9f37;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(47, 159, 55, 0.4);
+    transform: scale(1.05);
+}
+
+.pagination-item[aria-current="page"]:hover {
+    background: linear-gradient(135deg, #2f9f37dd 0%, #2f9f37 100%);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 20px rgba(47, 159, 55, 0.5);
+}
+
+.pagination-item:disabled,
+.pagination-item[aria-disabled="true"] {
+    background-color: rgba(107, 114, 128, 0.3);
+    border-color: rgba(107, 114, 128, 0.3);
+    color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.5;
+    transform: none;
+}
+
+.pagination-item:disabled:hover,
+.pagination-item[aria-disabled="true"]:hover {
+    background-color: rgba(107, 114, 128, 0.3);
+    border-color: rgba(107, 114, 128, 0.3);
+    color: #9ca3af;
+    transform: none;
+    box-shadow: none;
+}
+
+.pagination-item:disabled::before,
+.pagination-item[aria-disabled="true"]::before {
+    display: none;
+}
+
+/* Información de paginación */
+.pagination-info {
+    color: #4b5563;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-info .font-medium {
+    color: #1f2937;
+    font-weight: 600;
+    background: linear-gradient(135deg, #2f9f37 0%, #2D3A73 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Responsive para móvil */
+@media (max-width: 768px) {
+    .pagination-custom {
+        flex-wrap: wrap;
+        gap: 0.375rem;
+        padding: 0.75rem;
+    }
+    
+    .pagination-item {
+        min-width: 2.25rem;
+        height: 2.25rem;
+        font-size: 0.75rem;
+        padding: 0.375rem;
+    }
+    
+    .pagination-info {
+        text-align: center;
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Ocultar algunos números de página en móvil para evitar overflow */
+    .pagination-item:nth-child(n+8):nth-last-child(n+3) {
+        display: none;
+    }
+    
+    /* Mostrar solo los primeros 3 y últimos 3 en móvil */
+    .pagination-item:nth-child(2),
+    .pagination-item:nth-child(3),
+    .pagination-item:nth-child(4),
+    .pagination-item:nth-last-child(3),
+    .pagination-item:nth-last-child(2),
+    .pagination-item:nth-last-child(1) {
+        display: inline-flex;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination-custom {
+        gap: 0.25rem;
+        padding: 0.5rem;
+    }
+    
+    .pagination-item {
+        min-width: 2rem;
+        height: 2rem;
+        font-size: 0.7rem;
+    }
+    
+    .pagination-info {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.75rem;
+    }
+}
+
+/* Tabla responsive */
+@media (max-width: 1024px) {
+    .admin-table {
+        font-size: 0.875rem;
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-table {
+        font-size: 0.8rem;
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    /* Ocultar algunas columnas en móvil */
+    .admin-table .hidden-mobile {
+        display: none;
+    }
+}
+
+/* Estilos para los badges de estado */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-badge.active {
+    background-color: rgba(47, 159, 55, 0.1);
+    color: #2f9f37;
+}
+
+.status-badge.used {
+    background-color: rgba(251, 146, 60, 0.1);
+    color: #ea580c;
+}
+
+.status-badge.expired {
+    background-color: rgba(107, 114, 128, 0.1);
+    color: #4b5563;
+}
+
+.status-badge.deleted {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
