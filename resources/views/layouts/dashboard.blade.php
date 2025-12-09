@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@hasSection('title') @yield('title') @else Dashboard - Diócesis de Apartadó @endif</title>
+    <title>@hasSection('title') @yield('title') @else Diócesis de Apartadó @endif</title>
 
     <!-- Favicon personalizado -->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
@@ -56,31 +56,8 @@
         <!-- Contenido Principal -->
         <div class="flex-1 flex flex-col main-content-with-sidebar" style="margin-left: 16rem; margin-top: 4rem; transition: margin-left 0.2s ease-in-out;">
             <!-- Contenido de la página -->
-            <main class="flex-1 p-6">
-                <!-- Mensajes Flash -->
-                @if(session('success'))
-                    <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ session('success') }}</span>
-                    </div>
-                @endif
-
-                @if(session('error'))
-                    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ session('error') }}</span>
-                    </div>
-                @endif
-
-                @if(session('warning'))
-                    <div class="mb-4 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ session('warning') }}</span>
-                    </div>
-                @endif
-
-                @if(session('info'))
-                    <div class="mb-4 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ session('info') }}</span>
-                    </div>
-                @endif
+            <main class="flex-1 {{ request()->routeIs('profile.edit') ? 'px-3 sm:px-4 md:px-6 pt-0 pb-6' : 'px-3 sm:px-4 md:px-6 -mt-10 pb-6' }}">
+                <!-- Mensajes Flash (se muestran con SweetAlert2 en lugar de HTML) -->
 
                 <!-- Contenido específico de la vista -->
                 @yield('content')
@@ -108,29 +85,110 @@
     <!-- Scripts de Transiciones de Navegación -->
     <script src="{{ asset('build/assets/navigation-transitions-B76zogpA.js') }}"></script>
 
-    <!-- Pasar datos de sesión a JavaScript -->
+    <!-- Script para manejar alertas flash con SweetAlert2 -->
+    @if(session('success'))
+        <script>
+            window.sessionSuccess = {!! json_encode(session('success')) !!};
+        </script>
+    @endif
+
     @if(session('error'))
         <script>
-            window.sessionError = '{{ session('error') }}';
+            window.sessionError = {!! json_encode(session('error')) !!};
         </script>
     @endif
 
     @if(session('warning'))
         <script>
-            window.sessionWarning = '{{ session('warning') }}';
+            window.sessionWarning = {!! json_encode(session('warning')) !!};
         </script>
     @endif
 
     @if(session('info'))
         <script>
-            window.sessionInfo = '{{ session('info') }}';
+            window.sessionInfo = {!! json_encode(session('info')) !!};
         </script>
     @endif
 
-    @if(session('success'))
-        <script>
-            window.sessionSuccess = '{{ session('success') }}';
-        </script>
+    <!-- Script para mostrar alertas flash con SweetAlert2 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mostrar alerta de éxito
+            if (window.sessionSuccess) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: window.sessionSuccess,
+                    confirmButtonColor: '#2f9f37',
+                    confirmButtonText: 'Aceptar',
+                    background: '#ffffff',
+                    iconColor: '#2f9f37',
+                    timer: 4000,
+                    timerProgressBar: true
+                });
+                window.sessionSuccess = null;
+            }
+
+            // Mostrar alerta de error
+            if (window.sessionError) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: window.sessionError,
+                    confirmButtonColor: '#dc2626',
+                    confirmButtonText: 'Entiendo',
+                    background: '#ffffff',
+                    iconColor: '#dc2626'
+                });
+                window.sessionError = null;
+            }
+
+            // Mostrar alerta de advertencia
+            if (window.sessionWarning) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Advertencia',
+                    text: window.sessionWarning,
+                    confirmButtonColor: '#d97706',
+                    confirmButtonText: 'Entiendo',
+                    background: '#ffffff',
+                    iconColor: '#d97706'
+                });
+                window.sessionWarning = null;
+            }
+
+            // Mostrar alerta de información
+            if (window.sessionInfo) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Información',
+                    text: window.sessionInfo,
+                    confirmButtonColor: '#2563eb',
+                    confirmButtonText: 'Aceptar',
+                    background: '#ffffff',
+                    iconColor: '#2563eb'
+                });
+                window.sessionInfo = null;
+            }
+        });
+    </script>
+
+    <!-- Script para alertas de bienvenida y despedida -->
+    @vite('resources/js/views/global/welcome-goodbye-alerts.js')
+    
+    <!-- Meta tags para alertas de bienvenida/despedida (moved to end for better timing) -->
+    @if(session('welcome_message'))
+        <meta name="welcome-message" content="{{ session('welcome_message') }}" id="welcome-message-meta">
+        <script>console.log('🔍 Meta tag welcome-message creado:', '{{ session('welcome_message') }}'});</script>
+    @endif
+
+    @if(session('admin_welcome_message') || isset($admin_welcome_message))
+        <meta name="admin-welcome-message" content="{{ session('admin_welcome_message') ?? $admin_welcome_message }}" id="admin-welcome-message-meta">
+        <script>console.log('🔍 Meta tag admin-welcome-message creado:', '{{ session('admin_welcome_message') ?? $admin_welcome_message }}');</script>
+    @endif
+
+    @if(session('goodbye'))
+        <meta name="goodbye-message" content="{{ session('goodbye') }}" id="goodbye-message-meta">
     @endif
 
     @stack('scripts')

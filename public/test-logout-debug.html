@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Logout Debug</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <h1>Test de Logout con Debug</h1>
+    
+    <button onclick="testConfirmLogout()">Probar confirmLogout</button>
+    <button onclick="testSweetAlert2()">Probar SweetAlert2</button>
+    
+    <div id="debug-info"></div>
+    
+    <script>
+        // Función de prueba para confirmLogout
+        function testConfirmLogout() {
+            console.log('🧪 Probando confirmLogout...');
+            if (typeof window.confirmLogout === 'function') {
+                console.log('✅ confirmLogout está disponible');
+                window.confirmLogout();
+            } else {
+                console.log('❌ confirmLogout NO está disponible');
+                document.getElementById('debug-info').innerHTML = '<p style="color: red;">❌ confirmLogout NO está disponible</p>';
+            }
+        }
+        
+        // Función de prueba para SweetAlert2
+        function testSweetAlert2() {
+            console.log('🧪 Probando SweetAlert2...');
+            if (typeof Swal !== 'undefined') {
+                console.log('✅ SweetAlert2 está disponible');
+                Swal.fire({
+                    title: 'Test SweetAlert2',
+                    text: 'SweetAlert2 está funcionando correctamente',
+                    icon: 'success'
+                });
+            } else {
+                console.log('❌ SweetAlert2 NO está disponible');
+                document.getElementById('debug-info').innerHTML = '<p style="color: red;">❌ SweetAlert2 NO está disponible</p>';
+            }
+        }
+        
+        // Cargar el script de navegación
+        const script = document.createElement('script');
+        script.src = '/build/assets/navigation-C0-O2xlo.js';
+        script.onload = function() {
+            console.log('✅ Script de navegación cargado');
+            document.getElementById('debug-info').innerHTML = '<p style="color: green;">✅ Script de navegación cargado correctamente</p>';
+        };
+        script.onerror = function() {
+            console.log('❌ Error cargando script de navegación');
+            document.getElementById('debug-info').innerHTML = '<p style="color: red;">❌ Error cargando script de navegación</p>';
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

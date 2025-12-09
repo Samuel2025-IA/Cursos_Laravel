@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Logout Simple</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <h1>Test de Logout Simple</h1>
+    
+    <button onclick="testLogout()">Probar Logout</button>
+    <button onclick="testDirectLogout()">Probar Logout Directo</button>
+    
+    <div id="debug-info"></div>
+    
+    <script>
+        // Función de prueba
+        function testLogout() {
+            console.log('🧪 Test logout ejecutado');
+            
+            if (typeof Swal !== 'undefined') {
+                console.log('✅ SweetAlert2 disponible, mostrando confirmación');
+                Swal.fire({
+                    title: '¿Cerrar sesión?',
+                    text: '¿Estás seguro de que quieres cerrar tu sesión?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc2626',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Cerrar sesión',
+                    cancelButtonText: 'Cancelar',
+                    background: '#ffffff',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log('✅ Usuario confirmó logout');
+                        alert('Logout confirmado!');
+                    } else {
+                        console.log('❌ Usuario canceló logout');
+                    }
+                });
+            } else {
+                console.log('⚠️ SweetAlert2 no disponible');
+                alert('SweetAlert2 no está disponible');
+            }
+        }
+        
+        // Función de prueba directa
+        function testDirectLogout() {
+            console.log('🧪 Test logout directo');
+            if (confirm('¿Estás seguro de que quieres cerrar tu sesión?')) {
+                console.log('✅ Usuario confirmó logout (nativo)');
+                alert('Logout confirmado (nativo)!');
+            } else {
+                console.log('❌ Usuario canceló logout (nativo)');
+            }
+        }
+        
+        console.log('✅ Script cargado');
+        document.getElementById('debug-info').innerHTML = '<p style="color: green;">✅ Script cargado correctamente</p>';
+    </script>
+</body>
+</html>

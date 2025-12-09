@@ -7,7 +7,9 @@
  */
 
 // Función global unificada para mostrar/ocultar contraseña
-window.togglePassword = function(fieldId) {
+// Verificar si ya existe para evitar duplicidad en Edge
+if (typeof window.togglePassword === 'undefined') {
+    window.togglePassword = function(fieldId) {
     const field = document.getElementById(fieldId);
     
     if (!field) {
@@ -40,10 +42,17 @@ window.togglePassword = function(fieldId) {
         eyeSlashIcon.classList.add('hidden');
         console.log(`🙈 Ocultando contraseña para: ${fieldId}`);
     }
-};
+    };
+}
 
 // Configurar toggles automáticamente al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
+    // Verificar si ya se configuró (para evitar duplicidad en Edge)
+    if (window.togglePasswordConfigured) {
+        console.log('⚠️ Toggle password ya configurado, evitando duplicidad');
+        return;
+    }
+    
     const toggleButtons = document.querySelectorAll('button[onclick*="togglePassword"]');
     
     toggleButtons.forEach(button => {
@@ -56,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function() {
             button.classList.remove('text-gray-600');
         });
     });
+    
+    // Marcar como configurado
+    window.togglePasswordConfigured = true;
     
     console.log(`✅ Configurados ${toggleButtons.length} botones de toggle de contraseña`);
 });

@@ -43,14 +43,13 @@
                         </x-dropdown-link>
 
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}" id="logout-form">
-                            @csrf
-
-                            <x-dropdown-link href="#"
-                                    onclick="event.preventDefault(); confirmLogout();">
+                        <div>
+                            <button type="button" 
+                                    onclick="confirmLogoutDirect()"
+                                    class="block w-full px-4 py-2 text-start text-sm leading-5 text-[#2f9f37] hover:bg-[#2f9f37]/5 hover:text-[#2f9f37]/80 focus:outline-none focus:bg-[#2f9f37]/10 focus:text-[#2f9f37]/80 transition duration-150 ease-in-out">
                                 {{ __('Cerrar Sesión') }}
-                            </x-dropdown-link>
-                        </form>
+                            </button>
+                        </div>
                         
                     </x-slot>
                 </x-dropdown>
@@ -85,14 +84,13 @@
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}" id="logout-form-mobile">
-                    @csrf
-
-                    <x-responsive-nav-link href="#"
-                            onclick="event.preventDefault(); confirmLogout();">
+                <div>
+                    <button type="button" 
+                            onclick="confirmLogoutDirect()"
+                            class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 transition duration-150 ease-in-out">
                         {{ __('Cerrar Sesión') }}
-                    </x-responsive-nav-link>
-                </form>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -103,3 +101,73 @@
 
 <!-- Scripts de Navegación -->
 @vite(['resources/js/views/layouts/navigation.js'])
+
+<!-- Función de Logout Directa -->
+<script>
+// Función simple y directa para logout
+window.confirmLogoutDirect = function() {
+    console.log('🔴 confirmLogoutDirect ejecutado');
+    console.log('🔍 SweetAlert2 disponible:', typeof Swal !== 'undefined');
+    
+    if (typeof Swal !== 'undefined') {
+        console.log('✅ Usando SweetAlert2 para confirmación');
+        Swal.fire({
+            title: '¿Cerrar sesión?',
+            text: '¿Estás seguro de que quieres cerrar tu sesión?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Cerrar sesión',
+            cancelButtonText: 'Cancelar',
+            background: '#ffffff',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log('✅ Usuario confirmó logout');
+                localStorage.setItem('legitimate_logout', 'true');
+                
+                // Crear y enviar formulario de logout
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route("logout") }}';
+                
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+                
+                form.appendChild(csrfToken);
+                document.body.appendChild(form);
+                form.submit();
+            } else {
+                console.log('❌ Usuario canceló logout');
+            }
+        });
+    } else {
+        console.log('⚠️ SweetAlert2 no disponible, usando confirmación nativa');
+        if (confirm('¿Estás seguro de que quieres cerrar tu sesión?')) {
+            console.log('✅ Usuario confirmó logout (nativo)');
+            localStorage.setItem('legitimate_logout', 'true');
+            
+            // Crear y enviar formulario de logout
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("logout") }}';
+            
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            
+            form.appendChild(csrfToken);
+            document.body.appendChild(form);
+            form.submit();
+        } else {
+            console.log('❌ Usuario canceló logout (nativo)');
+        }
+    }
+};
+
+console.log('✅ Función confirmLogoutDirect cargada');
+</script>

@@ -4,6 +4,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Script de registro cargado correctamente');
     
+    // ===== REFRESCAR TOKEN CSRF =====
+    initializeCSRFRefresh();
+    
     // ===== VALIDACIONES DE NOMBRES =====
     initializeNameValidations();
     
@@ -579,5 +582,70 @@ function showFormErrors() {
     if (firstError) {
         firstError.focus();
         firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+// ===== FUNCIÓN PARA REFRESCAR TOKEN CSRF =====
+function initializeCSRFRefresh() {
+    console.log('🔄 Inicializando refresco automático de token CSRF');
+    
+    // Refrescar token CSRF cada 5 minutos
+    setInterval(function() {
+        fetch('/csrf-token', {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.csrf_token) {
+                // Actualizar el token en el formulario
+                const csrfInput = document.querySelector('input[name="_token"]');
+                if (csrfInput) {
+                    csrfInput.value = data.csrf_token;
+                    console.log('✅ Token CSRF actualizado automáticamente');
+                }
+                
+                // Actualizar el meta tag si existe
+                const metaToken = document.querySelector('meta[name="csrf-token"]');
+                if (metaToken) {
+                    metaToken.setAttribute('content', data.csrf_token);
+                }
+            }
+        })
+        .catch(error => {
+            console.log('⚠️ No se pudo actualizar el token CSRF:', error);
+        });
+    }, 300000); // 5 minutos
+    
+    // También refrescar antes de enviar el formulario
+    const form = document.getElementById('register-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            console.log('🔄 Refrescando token CSRF antes del envío');
+            
+            fetch('/csrf-token', {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.csrf_token) {
+                    const csrfInput = document.querySelector('input[name="_token"]');
+                    if (csrfInput) {
+                        csrfInput.value = data.csrf_token;
+                        console.log('✅ Token CSRF actualizado antes del envío');
+                    }
+                }
+            })
+            .catch(error => {
+                console.log('⚠️ No se pudo actualizar el token CSRF antes del envío:', error);
+            });
+        });
     }
 }

@@ -54,6 +54,28 @@
     width: var(--sidebar-collapsed-width);
 }
 
+/* Estilos para sidebar colapsado */
+.sidebar.collapsed .sidebar-content {
+    display: none;
+}
+
+.sidebar.collapsed .user-details {
+    display: none;
+}
+
+.sidebar.collapsed .nav-text {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-toggle svg {
+    transform: rotate(180deg);
+}
+
+/* Ajustar el contenido principal cuando el sidebar está colapsado */
+.main-content-with-sidebar.sidebar-collapsed {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
 /* Logo y Toggle */
 .sidebar-header {
     padding: 1rem;
@@ -101,10 +123,39 @@
     border-radius: 0.5rem;
     transition: background-color var(--transition);
     cursor: pointer;
+    display: block;
 }
 
 .sidebar-toggle:hover {
     background-color: #374151;
+}
+
+/* Botón de colapsar visible en desktop */
+.sidebar-toggle {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Botón de cerrar para móviles */
+.sidebar-close-mobile {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color var(--transition);
+    cursor: pointer;
+    display: none; /* Oculto por defecto en desktop */
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+.sidebar-close-mobile:hover {
+    background-color: #374151;
+}
+
+.sidebar-close-mobile svg {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 /* Información del Usuario */
@@ -178,8 +229,8 @@
 }
 
 .nav-item:hover {
-    background-color: #374151;
-    color: white;
+    background-color: transparent;
+    color: inherit;
 }
 
 .nav-item.active {
@@ -191,6 +242,45 @@
     width: 1.25rem;
     height: 1.25rem;
     flex-shrink: 0;
+}
+
+/* Mejorar el espaciado de los iconos en el sidebar */
+.sidebar .nav-item {
+    padding: 0.5rem 0.25rem !important;
+    min-height: 2.25rem !important;
+    justify-content: flex-start !important;
+    border-radius: 8px !important;
+}
+
+/* Hover para elementos inactivos */
+.sidebar .nav-item:not(.bg-\[#2f9f37\]):hover {
+    background-color: #374151 !important;
+    color: white !important;
+}
+
+/* Sin hover para elementos activos - mantener el verde original */
+.sidebar .nav-item.bg-\[#2f9f37\]:hover {
+    background-color: #2f9f37 !important;
+    color: white !important;
+}
+
+.sidebar .nav-item .flex {
+    align-items: center !important;
+    gap: 0.75rem !important;
+}
+
+.sidebar .nav-item .flex > div {
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.sidebar .nav-item svg {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    flex-shrink: 0 !important;
 }
 
 /* Navegación Secundaria */
@@ -224,8 +314,8 @@
 /* Prevenir superposición en el header */
 .dashboard-header > div:first-child {
     flex: 1;
-    min-width: 0;
-    overflow: hidden;
+    min-width: 200px;
+    overflow: visible;
 }
 
 .dashboard-header > div:last-child {
@@ -234,9 +324,9 @@
 }
 
 .dashboard-header h1 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: initial;
 }
 
 .header-left {
@@ -884,39 +974,36 @@
     z-index: 1001 !important;
 }
 
-/* Asegurar que el dropdown se muestre correctamente */
-.dashboard-header [x-show="open"] {
-    display: block !important;
-}
-
-.dashboard-header [x-show="!open"] {
-    display: none !important;
+/* Dropdown del usuario - comportamiento base */
+.dashboard-header [x-data] [x-show] {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 0.5rem;
+    width: 16rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 1001;
+    overflow: hidden;
 }
 
 /* Dropdown del usuario en desktop */
 @media (min-width: 769px) {
-    .dashboard-header .user-dropdown [x-show] {
+    .dashboard-header [x-data] [x-show] {
         position: absolute !important;
-        top: 100% !important;
+        top: calc(100% + 0.5rem) !important;
         right: 0 !important;
         left: auto !important;
-        width: 12rem !important;
+        width: 16rem !important;
         z-index: 1001 !important;
         background: white !important;
         border: 1px solid #e5e7eb !important;
         border-radius: 0.5rem !important;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
-    
-    /* Debug: hacer visible el dropdown para testing */
-    .dashboard-header .user-dropdown [x-show="open"] {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        background: red !important; /* Temporal para debug */
+        margin-top: 0.5rem !important;
+        overflow: hidden !important;
     }
 }
 
@@ -928,14 +1015,14 @@
     display: none;
     flex-direction: column;
     justify-content: space-around;
-    width: 26px;
-    height: 26px;
+    width: 32px;
+    height: 32px;
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 0;
-    margin-right: 1rem;
-    border-radius: 4px;
+    padding: 4px;
+    margin-right: 0.5rem;
+    border-radius: 6px;
     transition: all 0.3s ease;
     position: relative;
     z-index: 10001 !important;
@@ -943,33 +1030,40 @@
     touch-action: manipulation;
     pointer-events: auto !important;
     outline: none;
+    flex-shrink: 0;
 }
 
 .menu-toggle:hover {
     background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.menu-toggle:active {
+    transform: scale(0.95);
 }
 
 .menu-toggle span {
-    width: 26px;
+    width: 24px;
     height: 3px;
     background: #374151;
-    border-radius: 10px;
-    transition: all 0.3s linear;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    transform-origin: 1px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transform-origin: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .menu-toggle.active span:first-child {
-    transform: rotate(45deg);
+    transform: rotate(45deg) translate(6px, 6px);
 }
 
 .menu-toggle.active span:nth-child(2) {
     opacity: 0;
+    transform: scaleX(0);
 }
 
 .menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg);
+    transform: rotate(-45deg) translate(6px, -6px);
 }
 
 /* Overlay del sidebar */
@@ -999,8 +1093,10 @@
     /* Header responsive */
     .dashboard-header {
         padding: 0.5rem 0.75rem !important;
-        height: 3rem !important;
-        overflow: hidden !important;
+        height: 3.5rem !important;
+        overflow: visible !important;
+        position: relative !important;
+        z-index: 100 !important;
     }
     
     .dashboard-header h1 {
@@ -1011,6 +1107,7 @@
     /* Elementos más compactos en móvil */
     .dashboard-header .flex {
         gap: 0.25rem !important;
+        align-items: center !important;
     }
     
     .dashboard-header .space-x-2 > * + * {
@@ -1021,9 +1118,26 @@
         margin-left: 0.5rem !important;
     }
     
+    /* Mejorar el layout del header en móvil */
+    .dashboard-header > div:first-child {
+        flex: 1 !important;
+        min-width: 150px !important;
+        max-width: calc(100% - 100px) !important;
+    }
+    
+    .dashboard-header > div:last-child {
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+        position: relative !important;
+        z-index: 1001 !important;
+    }
+    
     /* Menú hamburguesa visible en móvil */
     .menu-toggle {
         display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
     }
     
     /* Acciones del header responsive */
@@ -1089,11 +1203,111 @@
         left: 0 !important;
     }
     
+    /* Mostrar botón de cerrar en móviles */
+    .sidebar-close-mobile {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Ocultar botón de toggle en móviles */
+    .sidebar-toggle {
+        display: none !important;
+    }
+    
+    /* Asegurar que el sidebar no se colapse en móviles */
+    .sidebar {
+        width: 80vw !important;
+        max-width: 280px !important;
+    }
+    
+    .sidebar.collapsed {
+        width: 80vw !important;
+        max-width: 280px !important;
+    }
+    
+    /* Asegurar que el texto de navegación sea visible en móvil */
+    .sidebar .nav-text {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: inherit !important;
+        font-size: 0.875rem !important;
+        font-weight: 500 !important;
+    }
+    
+    /* Mejorar el espaciado de los elementos de navegación en móvil */
+    .sidebar .nav-item {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+        padding: 0.75rem !important;
+    }
+    
+    /* Asegurar que los iconos y texto sean visibles */
+    .sidebar .nav-item svg {
+        flex-shrink: 0 !important;
+        width: 1.25rem !important;
+        height: 1.25rem !important;
+    }
+    
     /* Contenido principal responsive */
     .main-content-with-sidebar {
         margin-left: 0 !important;
         margin-top: 3rem !important;
-        padding: 0.75rem !important;
+        padding: 0.5rem !important;
+    }
+    
+    /* Mejorar el padding del contenido principal */
+    .main-content-with-sidebar main {
+        padding: 0.5rem !important;
+    }
+    
+    /* Espaciado más compacto en móviles */
+    .space-y-6 > * + * {
+        margin-top: 1rem !important;
+    }
+    
+    /* Grid de estadísticas más compacto */
+    .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-4 {
+        gap: 0.75rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Tarjetas de estadísticas más compactas */
+    .bg-white.rounded-xl.shadow-md {
+        padding: 1rem !important;
+    }
+    
+    /* Iconos más pequeños en móviles */
+    .w-6.h-6.sm\\:w-8.sm\\:h-8 {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+    }
+    
+    /* Números de estadísticas más pequeños */
+    .text-2xl.sm\\:text-3xl {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Texto más pequeño */
+    .text-xs.sm\\:text-sm {
+        font-size: 0.75rem !important;
+    }
+    
+    /* Padding de cards más compacto */
+    .dashboard-card-content {
+        padding: 1rem !important;
+    }
+    
+    /* Headers de cards más compactos */
+    .dashboard-card-header {
+        padding: 1rem !important;
+    }
+    
+    /* Títulos de cards más pequeños */
+    .dashboard-card-title {
+        font-size: 1rem !important;
     }
     
     /* Overlay responsive */
@@ -1133,68 +1347,218 @@
         z-index: 50 !important;
     }
     
-    /* Dropdown del usuario en móvil */
-    .dashboard-header .user-dropdown [x-show] {
-        position: fixed !important;
-        top: 3rem !important;
-        right: 0.75rem !important;
-        left: auto !important;
-        width: 180px !important;
-        max-width: calc(100vw - 1.5rem) !important;
-        z-index: 9999 !important;
-    }
-
+    /* ============================================
+       DROPDOWN DEL USUARIO - ELIMINADO PARA USAR SOLO JAVASCRIPT
+       ============================================ */
+    
     /* Botón del usuario en móvil */
-    .dashboard-header .user-dropdown button {
-        padding: 0.25rem !important;
+    .dashboard-header [x-data] button {
+        padding: 0.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
     }
 
-    .dashboard-header .user-dropdown button > div:last-child {
-        display: none !important; /* Ocultar nombre en móvil */
+    /* Ocultar texto del usuario en móvil */
+    .dashboard-header [x-data] button > div:last-child {
+        display: none !important;
     }
 
-    .dashboard-header .user-dropdown svg {
-        width: 0.875rem !important;
-        height: 0.875rem !important;
+    .dashboard-header [x-data] svg {
+        width: 1rem !important;
+        height: 1rem !important;
     }
     
     /* Avatar más pequeño en móvil */
-    .dashboard-header .user-dropdown button > div:first-child {
-        width: 1.75rem !important;
-        height: 1.75rem !important;
+    .dashboard-header [x-data] button > div:first-child {
+        width: 2rem !important;
+        height: 2rem !important;
     }
     
-    .dashboard-header .user-dropdown button > div:first-child span {
-        font-size: 0.75rem !important;
+    .dashboard-header [x-data] button > div:first-child span {
+        font-size: 0.875rem !important;
     }
+    
 }
 
 @media (max-width: 640px) {
     .dashboard-header {
-        padding: 0.75rem 1rem;
+        padding: 0.5rem 0.75rem !important;
+        height: 3rem !important;
     }
     
-    .header-title h1 {
-        font-size: 1.25rem;
+    .dashboard-header h1 {
+        font-size: 0.75rem !important;
+        display: block !important; /* Mostrar título en pantallas pequeñas */
+    }
+    
+    /* Ajustar logo en pantallas muy pequeñas */
+    .dashboard-header .w-10 {
+        width: 2rem !important;
+        height: 2rem !important;
     }
     
     .dashboard-main {
         padding: 0.75rem;
+        margin-top: 3rem !important;
     }
     
     .dashboard-card-content {
         padding: 1rem;
     }
     
-    .notifications-dropdown {
-        width: 16rem;
-        right: -4rem;
+    /* Contenido principal aún más compacto */
+    .main-content-with-sidebar {
+        padding: 0.25rem !important;
+        margin-top: 2.5rem !important;
     }
     
-    .user-dropdown {
-        width: 10rem;
-        right: -2rem;
+    .main-content-with-sidebar main {
+        padding: 0.25rem !important;
     }
+    
+    /* Espaciado aún más compacto */
+    .space-y-6 > * + * {
+        margin-top: 0.75rem !important;
+    }
+    
+    /* Grid de estadísticas aún más compacto */
+    .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-4 {
+        gap: 0.5rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    /* Tarjetas aún más compactas */
+    .bg-white.rounded-xl.shadow-md {
+        padding: 0.75rem !important;
+    }
+    
+    /* Iconos aún más pequeños */
+    .w-6.h-6.sm\\:w-8.sm\\:h-8 {
+        width: 1.25rem !important;
+        height: 1.25rem !important;
+    }
+    
+    /* Números aún más pequeños */
+    .text-2xl.sm\\:text-3xl {
+        font-size: 1.25rem !important;
+    }
+    
+    /* Texto aún más pequeño */
+    .text-xs.sm\\:text-sm {
+        font-size: 0.6875rem !important;
+    }
+    
+    /* Cards aún más compactas */
+    .dashboard-card-content {
+        padding: 0.75rem !important;
+    }
+    
+    .dashboard-card-header {
+        padding: 0.75rem !important;
+    }
+    
+    .dashboard-card-title {
+        font-size: 0.875rem !important;
+    }
+    
+    /* Dropdown del usuario en pantallas muy pequeñas */
+    .dashboard-header [x-data] [x-show] {
+        width: 220px !important;
+        max-width: calc(100vw - 1rem) !important;
+        right: 0 !important;
+        left: auto !important;
+        min-width: 180px !important;
+    }
+    
+    /* Asegurar que el contenedor del dropdown tenga posición relativa */
+    .dashboard-header [x-data] {
+        position: relative !important;
+    }
+    
+    /* CSS del dropdown eliminado - usando solo JavaScript */
+    
+    /* Botón hamburguesa más pequeño */
+    .menu-toggle {
+        width: 22px !important;
+        height: 22px !important;
+    }
+    
+    .menu-toggle span {
+        width: 22px !important;
+        height: 2px !important;
+    }
+}
+
+/* ============================================
+   HAMBURGER MENU BUTTON
+   ============================================ */
+
+.sidebar-toggle.hamburger-menu {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: rgba(55, 65, 81, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 6px !important;
+    padding: 6px !important;
+    width: 32px !important;
+    height: 32px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+}
+
+.sidebar-toggle.hamburger-menu:hover {
+    background-color: rgba(55, 65, 81, 1) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.hamburger-icon {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    width: 18px !important;
+    height: 14px !important;
+}
+
+.hamburger-line {
+    display: block !important;
+    width: 100% !important;
+    height: 2.5px !important;
+    background-color: white !important;
+    border-radius: 1px !important;
+    transition: all 0.3s ease !important;
+    transform-origin: center !important;
+}
+
+/* Animación cuando el sidebar está colapsado (hamburger normal) */
+.sidebar.collapsed .hamburger-line:nth-child(1) {
+    transform: translateY(0) rotate(0deg) !important;
+}
+
+.sidebar.collapsed .hamburger-line:nth-child(2) {
+    opacity: 1 !important;
+    transform: scaleX(1) !important;
+}
+
+.sidebar.collapsed .hamburger-line:nth-child(3) {
+    transform: translateY(0) rotate(0deg) !important;
+}
+
+/* Animación cuando el sidebar está expandido (X) */
+.sidebar:not(.collapsed) .hamburger-line:nth-child(1) {
+    transform: translateY(6px) rotate(45deg) !important;
+}
+
+.sidebar:not(.collapsed) .hamburger-line:nth-child(2) {
+    opacity: 0 !important;
+    transform: scaleX(0) !important;
+}
+
+.sidebar:not(.collapsed) .hamburger-line:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg) !important;
 }
 
 /* ============================================
@@ -1274,6 +1638,10 @@
 
 .slide-up {
     animation: slideUp 0.3s ease-in-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 /* ============================================

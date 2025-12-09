@@ -43,6 +43,7 @@ export default defineConfig({
                 'resources/js/views/layouts/navigation-transitions.js',
                 'resources/js/views/layouts/navigation.js',
                 'resources/js/global/toggle-password-unified.js',
+                'resources/js/views/global/welcome-goodbye-alerts.js',
                 'resources/js/dashboard.js'
             ],
             refresh: true,
@@ -52,7 +53,7 @@ export default defineConfig({
         host: '0.0.0.0',
         port: 5173,
         hmr: {
-            host: '192.168.80.237',
+            host: '192.168.1.43',
             port: 5173,
         },
         cors: true,

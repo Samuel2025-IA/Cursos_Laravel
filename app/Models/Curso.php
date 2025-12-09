@@ -15,13 +15,42 @@ class Curso extends Model
         'duracion_horas',
         'instructor',
         'lugar',
-        'costo'
+        'costo',
+        'form_fields',
+        'has_form'
     ];
 
     protected $casts = [
         'activo' => 'boolean',
         'fecha_inicio' => 'date',
         'fecha_fin' => 'date',
-        'costo' => 'decimal:2'
+        'costo' => 'decimal:2',
+        'form_fields' => 'array',
+        'has_form' => 'boolean'
     ];
+
+    protected $appends = ['esta_finalizado', 'estado'];
+
+    public function getEstaFinalizadoAttribute(): bool
+    {
+        if (!$this->fecha_fin) {
+            return false;
+        }
+
+        return $this->fecha_fin->copy()->endOfDay()->isPast();
+    }
+
+    public function getEstadoAttribute(): string
+    {
+        if ($this->esta_finalizado) {
+            return 'Finalizado';
+        }
+
+        return $this->activo ? 'Activo' : 'Inactivo';
+    }
+
+    public function respuestas()
+    {
+        return $this->hasMany(CursoRespuesta::class);
+    }
 }

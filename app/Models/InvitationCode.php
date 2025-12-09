@@ -39,9 +39,21 @@ class InvitationCode extends Model
      */
     public static function createForEmail(string $email): self
     {
-        // Delete any existing unused codes for this email
-        self::where('email', $email)->where('used', false)->delete();
-
+        // Buscar si existe algún código para este email
+        $existingCode = self::where('email', $email)->first();
+        
+        if ($existingCode) {
+            // Si existe, actualizar el código existente (sea usado, expirado o lo que sea)
+            $existingCode->update([
+                'code' => self::generateCode(),
+                'used' => false,
+                'expires_at' => now()->addDays(7),
+            ]);
+            
+            return $existingCode;
+        }
+        
+        // Si no existe, crear uno nuevo
         return self::create([
             'email' => $email,
             'code' => self::generateCode(),

@@ -1,14 +1,16 @@
 <section>
     <div class="space-y-6">
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <!-- Información de Seguridad (informativo, azul) -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
             <div class="flex items-start">
                 <div class="flex-shrink-0">
-                    <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-blue-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
-                <div class="ml-3">
-                    <p class="text-sm text-blue-800 font-medium">
+                <div class="ml-4">
+                    <h4 class="text-lg font-semibold text-blue-900 mb-2">Importante sobre la Seguridad</h4>
+                    <p class="text-blue-800">
                         {{ __('Asegúrate de que tu cuenta use una contraseña larga y aleatoria para mantener la seguridad.') }}
                     </p>
                 </div>

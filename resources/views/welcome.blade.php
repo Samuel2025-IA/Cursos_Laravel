@@ -22,10 +22,13 @@
         <link rel="stylesheet" href="{{ asset('css/fallback.css') }}?v={{ time() }}">
         
         <!-- JavaScript de welcome -->
-        <script src="{{ asset('build/assets/welcome-BjK2c7iW.js') }}"></script>
+        @vite('resources/js/views/welcome/welcome.js')
         
         <!-- SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
+        <!-- Script para alertas de bienvenida y despedida -->
+        @vite('resources/js/views/global/welcome-goodbye-alerts.js')
     </head>
     <body class ="welcome-body">
         <!-- Meta tag para mensaje de despedida - solo cuando es logout exitoso -->

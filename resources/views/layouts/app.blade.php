@@ -59,6 +59,9 @@
         <!-- Scripts del Layout Principal -->
         <script src="{{ asset('js/views/layouts/app.js') }}"></script>
         
+        <!-- Scripts de Navegación (cargar antes que otros) -->
+        <script src="{{ asset('build/assets/navigation-C0-O2xlo.js') }}"></script>
+        
         <!-- Scripts de Transiciones de Navegación -->
         <script src="{{ asset('build/assets/navigation-transitions-B76zogpA.js') }}"></script>
 

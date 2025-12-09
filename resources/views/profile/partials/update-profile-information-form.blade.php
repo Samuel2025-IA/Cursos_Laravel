@@ -1,14 +1,14 @@
 <section>
     <div class="space-y-6">
         <!-- Información Personal -->
-        <div class="bg-gradient-to-r from-gray-50 to-gray-100 p-6 rounded-xl border border-gray-200">
-            <div class="flex items-center mb-4">
-                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+            <div class="flex items-center mb-6">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900">Información Personal</h3>
+                <h3 class="text-xl font-semibold text-gray-900">Información Personal</h3>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

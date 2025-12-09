@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Logout Final</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <h1>Test Logout Final</h1>
+    
+    <button onclick="testLogout()">Probar Logout</button>
+    
+    <div id="debug-info"></div>
+    
+    <script>
+        function testLogout() {
+            console.log('🧪 Test logout ejecutado');
+            
+            if (typeof Swal !== 'undefined') {
+                console.log('✅ SweetAlert2 disponible');
+                Swal.fire({
+                    title: '¿Cerrar sesión?',
+                    text: '¿Estás seguro de que quieres cerrar tu sesión?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc2626',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Cerrar sesión',
+                    cancelButtonText: 'Cancelar',
+                    background: '#ffffff',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log('✅ Usuario confirmó logout');
+                        alert('Logout confirmado!');
+                    } else {
+                        console.log('❌ Usuario canceló logout');
+                    }
+                });
+            } else {
+                console.log('⚠️ SweetAlert2 no disponible');
+                alert('SweetAlert2 no está disponible');
+            }
+        }
+        
+        console.log('✅ Script cargado');
+        document.getElementById('debug-info').innerHTML = '<p style="color: green;">✅ Script cargado correctamente</p>';
+    </script>
+</body>
+</html>

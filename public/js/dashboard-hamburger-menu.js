@@ -27,9 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Función para cerrar menú
     function closeMenu() {
-        if (menuToggle) menuToggle.classList.remove('active');
+        if (menuToggle) {
+            menuToggle.classList.remove('active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Abrir menú de navegación');
+        }
         if (sidebar) sidebar.classList.remove('open');
-        if (navOverlay) navOverlay.classList.remove('active');
+        if (navOverlay) {
+            navOverlay.classList.remove('active');
+            setTimeout(() => {
+                if (navOverlay) navOverlay.style.display = 'none';
+            }, 300);
+        }
         document.body.style.overflow = '';
         console.log('Menú cerrado');
     }
@@ -53,12 +62,24 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isActive) {
             closeMenu();
         } else {
-            if (menuToggle) menuToggle.classList.add('active');
-            if (sidebar) sidebar.classList.add('open');
-            if (navOverlay) navOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            console.log('Menú abierto');
+            openMenu();
         }
+    }
+    
+    // Función para abrir menú
+    function openMenu() {
+        if (menuToggle) {
+            menuToggle.classList.add('active');
+            menuToggle.setAttribute('aria-expanded', 'true');
+            menuToggle.setAttribute('aria-label', 'Cerrar menú de navegación');
+        }
+        if (sidebar) sidebar.classList.add('open');
+        if (navOverlay) {
+            navOverlay.style.display = 'block';
+            navOverlay.classList.add('active');
+        }
+        document.body.style.overflow = 'hidden';
+        console.log('Menú abierto');
     }
     
     // Mostrar/ocultar botón hamburguesa
@@ -87,6 +108,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (navOverlay) {
         navOverlay.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeMenu();
+        });
+    }
+    
+    // Botón de cerrar del sidebar
+    const sidebarCloseBtn = document.querySelector('.sidebar-close-mobile');
+    if (sidebarCloseBtn) {
+        sidebarCloseBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             closeMenu();
@@ -122,4 +153,24 @@ function toggleMobileSidebar() {
     if (menuToggle) {
         menuToggle.click();
     }
+}
+
+// Función para colapsar/expandir el sidebar en desktop
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content-with-sidebar');
+    
+    if (!sidebar || !mainContent) return;
+    
+    // Toggle de la clase collapsed
+    sidebar.classList.toggle('collapsed');
+    
+    // Ajustar el margen del contenido principal
+    if (sidebar.classList.contains('collapsed')) {
+        mainContent.style.marginLeft = '4rem'; // Ancho del sidebar colapsado
+    } else {
+        mainContent.style.marginLeft = '16rem'; // Ancho del sidebar expandido
+    }
+    
+    console.log('Sidebar toggled:', sidebar.classList.contains('collapsed') ? 'collapsed' : 'expanded');
 }

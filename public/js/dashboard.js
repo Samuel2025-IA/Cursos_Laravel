@@ -11,21 +11,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // initializeUserMenu(); // Comentado - usando Alpine.js en su lugar
     initializeAlerts();
     
+    // Asegurar que el botón hamburguesa funcione
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMobileSidebar();
+        });
+    }
+    
     // Limpiar overlay en cambios de tamaño de pantalla
     window.addEventListener('resize', function() {
-        const overlay = document.querySelector('.sidebar-overlay');
-        if (overlay && window.innerWidth > 768) {
-            overlay.remove();
-            const sidebar = document.querySelector('.sidebar');
-            if (sidebar) {
-                sidebar.classList.remove('open');
-            }
+        if (window.innerWidth > 768) {
+            // Limpiar estado móvil cuando se cambie a desktop
+            closeMobileSidebar();
         }
     });
     
-    // Limpiar overlay del sidebar cuando se abren notificaciones
+    // Limpiar overlay del sidebar cuando se abre el dropdown de notificaciones (no el de usuario)
     document.addEventListener('click', function(e) {
-        if (e.target.closest('[x-data]') && e.target.closest('[x-data]').getAttribute('x-data').includes('open')) {
+        const notificationsButton = document.querySelector('.notifications-button');
+        if (notificationsButton && e.target.closest('.notifications-button')) {
             const overlay = document.querySelector('.sidebar-overlay');
             if (overlay) {
                 overlay.remove();
@@ -64,13 +71,16 @@ function initializeSidebar() {
     
     if (!sidebar || !toggleButton) return;
     
-    // Estado del sidebar (colapsado/expandido)
+    // Estado del sidebar (colapsado/expandido) - Por defecto expandido en pantallas grandes
     let sidebarCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
     
     // Función para alternar sidebar
     function toggleSidebar() {
         sidebarCollapsed = !sidebarCollapsed;
         sidebar.classList.toggle('collapsed', sidebarCollapsed);
+        
+        // Actualizar aria-expanded del botón hamburger
+        toggleButton.setAttribute('aria-expanded', !sidebarCollapsed);
         
         // Actualizar ancho del sidebar
         if (sidebarCollapsed) {
@@ -84,17 +94,20 @@ function initializeSidebar() {
             const userInfo = sidebar.querySelector('.user-info');
             const userInfoCollapsed = sidebar.querySelector('.user-info-collapsed');
             const userContainer = sidebar.querySelector('.sidebar-user-container');
+            const userDetails = sidebar.querySelector('.user-details');
             const navTexts = sidebar.querySelectorAll('.nav-text');
-            const expandIcon = sidebar.querySelector('.toggle-icon-expand');
-            const collapseIcon = sidebar.querySelector('.toggle-icon-collapse');
+            const submenus = sidebar.querySelectorAll('.submenu');
+            const submenuIcons = sidebar.querySelectorAll('[id^="icon-"]');
             
             if (sidebarContent) sidebarContent.style.display = 'none';
             if (userInfo) userInfo.style.display = 'none';
             if (userInfoCollapsed) userInfoCollapsed.style.display = 'flex';
-            if (userContainer) userContainer.style.padding = '1rem 0.5rem';
+            if (userDetails) userDetails.style.display = 'none'; // Ocultar nombre del usuario
+            if (userContainer) userContainer.style.padding = '0.75rem 0.5rem';
             navTexts.forEach(text => text.style.display = 'none');
-            if (expandIcon) expandIcon.style.display = 'none';
-            if (collapseIcon) collapseIcon.style.display = 'block';
+            // Ocultar todos los submenús cuando el sidebar está colapsado
+            submenus.forEach(submenu => submenu.classList.add('hidden'));
+            submenuIcons.forEach(icon => icon.style.transform = 'rotate(0deg)');
         } else {
             sidebar.style.width = '16rem';
             if (mainContent) {
@@ -106,20 +119,26 @@ function initializeSidebar() {
             const userInfo = sidebar.querySelector('.user-info');
             const userInfoCollapsed = sidebar.querySelector('.user-info-collapsed');
             const userContainer = sidebar.querySelector('.sidebar-user-container');
+            const userDetails = sidebar.querySelector('.user-details');
             const navTexts = sidebar.querySelectorAll('.nav-text');
-            const expandIcon = sidebar.querySelector('.toggle-icon-expand');
-            const collapseIcon = sidebar.querySelector('.toggle-icon-collapse');
             
             if (sidebarContent) sidebarContent.style.display = 'flex';
             if (userInfo) userInfo.style.display = 'flex';
             if (userInfoCollapsed) userInfoCollapsed.style.display = 'none';
+            if (userDetails) userDetails.style.display = 'block'; // Mostrar nombre del usuario
             if (userContainer) userContainer.style.padding = '1rem';
             navTexts.forEach(text => text.style.display = 'block');
-            if (expandIcon) expandIcon.style.display = 'block';
-            if (collapseIcon) collapseIcon.style.display = 'none';
         }
         
         localStorage.setItem('sidebar-collapsed', sidebarCollapsed);
+        
+        // Ocultar/mostrar submenús según el estado del sidebar
+        const submenus = sidebar.querySelectorAll('.submenu');
+        const submenuIcons = sidebar.querySelectorAll('[id^="icon-"]');
+        if (sidebarCollapsed) {
+            submenus.forEach(submenu => submenu.classList.add('hidden'));
+            submenuIcons.forEach(icon => icon.style.transform = 'rotate(0deg)');
+        }
         
         // Disparar evento personalizado
         window.dispatchEvent(new CustomEvent('sidebar-toggled', {
@@ -140,18 +159,24 @@ function initializeSidebar() {
         const userInfo = sidebar.querySelector('.user-info');
         const userInfoCollapsed = sidebar.querySelector('.user-info-collapsed');
         const userContainer = sidebar.querySelector('.sidebar-user-container');
+        const userDetails = sidebar.querySelector('.user-details');
         const navTexts = sidebar.querySelectorAll('.nav-text');
-        const expandIcon = sidebar.querySelector('.toggle-icon-expand');
-        const collapseIcon = sidebar.querySelector('.toggle-icon-collapse');
+        const submenus = sidebar.querySelectorAll('.submenu');
+        const submenuIcons = sidebar.querySelectorAll('[id^="icon-"]');
         
         if (sidebarContent) sidebarContent.style.display = 'none';
         if (userInfo) userInfo.style.display = 'none';
         if (userInfoCollapsed) userInfoCollapsed.style.display = 'flex';
-        if (userContainer) userContainer.style.padding = '1rem 0.5rem';
+        if (userDetails) userDetails.style.display = 'none'; // Ocultar nombre del usuario
+        if (userContainer) userContainer.style.padding = '0.75rem 0.5rem';
         navTexts.forEach(text => text.style.display = 'none');
-        if (expandIcon) expandIcon.style.display = 'none';
-        if (collapseIcon) collapseIcon.style.display = 'block';
+        // Ocultar todos los submenús cuando el sidebar está colapsado
+        submenus.forEach(submenu => submenu.classList.add('hidden'));
+        submenuIcons.forEach(icon => icon.style.transform = 'rotate(0deg)');
     }
+    
+    // Configurar aria-expanded inicial
+    toggleButton.setAttribute('aria-expanded', !sidebarCollapsed);
     
     // Event listener para el botón de toggle
     toggleButton.addEventListener('click', toggleSidebar);
@@ -160,13 +185,24 @@ function initializeSidebar() {
     document.addEventListener('click', function(e) {
         if (window.innerWidth <= 768) {
             const sidebar = document.querySelector('.sidebar');
-            const toggleButton = document.querySelector('.sidebar-toggle');
+            const mobileToggleButton = document.getElementById('mobileMenuToggle');
             
-            if (sidebar && !sidebar.contains(e.target) && !toggleButton.contains(e.target)) {
-                sidebar.classList.remove('open');
+            if (sidebar && sidebar.classList.contains('open')) {
+                // Si el clic no es en el sidebar ni en el botón hamburguesa
+                if (!sidebar.contains(e.target) && !mobileToggleButton.contains(e.target)) {
+                    closeMobileSidebar();
+                }
             }
         }
     });
+    
+    // Event listener para el botón de cerrar móvil
+    const closeMobileButton = document.querySelector('.sidebar-close-mobile');
+    if (closeMobileButton) {
+        closeMobileButton.addEventListener('click', function() {
+            closeMobileSidebar();
+        });
+    }
     
     // Responsive sidebar
     function handleResize() {
@@ -394,6 +430,7 @@ function toggleSidebar() {
  */
 function toggleMobileSidebar() {
     const sidebar = document.querySelector('.sidebar');
+    const menuToggle = document.getElementById('mobileMenuToggle');
     
     // Solo funcionar en móvil (ancho menor a 768px)
     if (window.innerWidth > 768) {
@@ -401,10 +438,17 @@ function toggleMobileSidebar() {
     }
     
     if (sidebar) {
-        sidebar.classList.toggle('open');
+        const isOpen = sidebar.classList.contains('open');
         
-        // Añadir overlay solo para móvil
-        if (sidebar.classList.contains('open')) {
+        if (!isOpen) {
+            // Abrir sidebar
+            sidebar.classList.add('open');
+            
+            // Animar el botón hamburguesa
+            if (menuToggle) {
+                menuToggle.classList.add('active');
+            }
+            
             // Limpiar overlays existentes primero
             const existingOverlays = document.querySelectorAll('.sidebar-overlay');
             existingOverlays.forEach(overlay => overlay.remove());
@@ -421,17 +465,48 @@ function toggleMobileSidebar() {
                 background-color: rgba(0, 0, 0, 0.5);
                 z-index: 35;
                 transition: opacity 0.3s ease;
+                opacity: 1;
+                visibility: visible;
             `;
             overlay.onclick = () => {
-                sidebar.classList.remove('open');
-                overlay.remove();
+                closeMobileSidebar();
             };
             document.body.appendChild(overlay);
-        } else {
-            const overlay = document.querySelector('.sidebar-overlay');
-            if (overlay) {
-                overlay.remove();
+            
+            // Cerrar dropdown del usuario si está abierto
+            const userDropdown = document.querySelector('[x-data] [x-show]');
+            if (userDropdown && userDropdown.style.display !== 'none') {
+                // Disparar evento para cerrar dropdown
+                const dropdownButton = document.querySelector('[x-data] button');
+                if (dropdownButton) {
+                    dropdownButton.click();
+                }
             }
+        } else {
+            closeMobileSidebar();
+        }
+    }
+}
+
+/**
+ * Función para cerrar el sidebar móvil
+ */
+function closeMobileSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const menuToggle = document.getElementById('mobileMenuToggle');
+    
+    if (sidebar) {
+        sidebar.classList.remove('open');
+        
+        // Resetear el botón hamburguesa
+        if (menuToggle) {
+            menuToggle.classList.remove('active');
+        }
+        
+        // Remover overlay
+        const overlay = document.querySelector('.sidebar-overlay');
+        if (overlay) {
+            overlay.remove();
         }
     }
 }

@@ -11,7 +11,10 @@
  * Confirma el logout del usuario con SweetAlert2
  */
 window.confirmLogout = function() {
+    console.log('🔴 confirmLogout llamada - SweetAlert2 disponible:', typeof Swal !== 'undefined');
+    
     if (typeof Swal !== 'undefined') {
+        console.log('✅ Mostrando confirmación con SweetAlert2');
         Swal.fire({
             title: '¿Cerrar sesión?',
             text: '¿Estás seguro de que quieres cerrar tu sesión?',
@@ -25,6 +28,7 @@ window.confirmLogout = function() {
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
+                console.log('✅ Usuario confirmó logout');
                 // Marcar que se está haciendo logout real
                 localStorage.setItem('legitimate_logout', 'true');
                 
@@ -38,16 +42,24 @@ window.confirmLogout = function() {
                 const desktopForm = document.getElementById('logout-form');
                 const mobileForm = document.getElementById('logout-form-mobile');
                 
+                console.log('🔍 Formularios encontrados - Desktop:', !!desktopForm, 'Mobile:', !!mobileForm);
+                
                 if (desktopForm) {
+                    console.log('📤 Enviando formulario desktop');
                     desktopForm.submit();
                 } else if (mobileForm) {
+                    console.log('📤 Enviando formulario mobile');
                     mobileForm.submit();
                 }
+            } else {
+                console.log('❌ Usuario canceló logout');
             }
         });
     } else {
+        console.log('⚠️ SweetAlert2 no disponible, usando confirmación nativa');
         // Fallback: confirmación nativa del navegador
         if (confirm('¿Estás seguro de que quieres cerrar tu sesión?')) {
+            console.log('✅ Usuario confirmó logout (nativo)');
             // Marcar que se está haciendo logout real
             localStorage.setItem('legitimate_logout', 'true');
             
@@ -60,11 +72,17 @@ window.confirmLogout = function() {
             const desktopForm = document.getElementById('logout-form');
             const mobileForm = document.getElementById('logout-form-mobile');
             
+            console.log('🔍 Formularios encontrados (nativo) - Desktop:', !!desktopForm, 'Mobile:', !!mobileForm);
+            
             if (desktopForm) {
+                console.log('📤 Enviando formulario desktop (nativo)');
                 desktopForm.submit();
             } else if (mobileForm) {
+                console.log('📤 Enviando formulario mobile (nativo)');
                 mobileForm.submit();
             }
+        } else {
+            console.log('❌ Usuario canceló logout (nativo)');
         }
     }
 };

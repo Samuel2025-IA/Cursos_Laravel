@@ -164,7 +164,7 @@ class RegisteredUserController extends Controller
             
             // Redirigir al dashboard con mensaje de bienvenida para nuevo usuario
             return redirect()->route('dashboard')
-                           ->with('welcome_message', '¡Bienvenido a la Diócesis de Apartadó, ' . $user->primer_nombre . '! Tu cuenta ha sido creada exitosamente.');
+                           ->with('welcome_message', '¡Gracias por registrarte en nuestra plataforma de cursos Diocesanos, ' . $user->primer_nombre . '!');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Si hay errores de validación, redirigir de vuelta con los errores

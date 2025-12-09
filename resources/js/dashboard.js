@@ -220,17 +220,8 @@ function initializeDashboardSystem() {
             console.log('Mostrando alerta flash...');
             showSimpleFlashAlert();
         } else {
-            // Verificar si ya se mostró la alerta en esta sesión
-            const welcomeShown = sessionStorage.getItem('welcome_shown');
-            if (!welcomeShown) {
-                console.log('No se encontraron meta tags, mostrando alerta de bienvenida por defecto');
-                showDefaultWelcomeMessage();
-                // Marcar como mostrado en esta sesión con timestamp
-                sessionStorage.setItem('welcome_shown', 'true');
-                sessionStorage.setItem('last_welcome_time', Date.now().toString());
-            } else {
-                console.log('Alerta de bienvenida ya mostrada en esta sesión, omitiendo');
-            }
+            console.log('No se encontraron meta tags, no mostrando alerta de bienvenida por defecto');
+            console.log('El sistema de bienvenida se maneja desde welcome-goodbye-alerts.js');
         }
     }, 1000); // 1 segundo para asegurar que todo esté cargado
 }

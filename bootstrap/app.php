@@ -11,6 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Configurar TrustProxies para ngrok y otros proxies
+        $middleware->trustProxies(at: '*');
+        
         $middleware->alias([
             'auth.custom' => \App\Http\Middleware\HandleUnauthorizedAccess::class,
             'invitation.verified' => \App\Http\Middleware\EnsureInvitationVerified::class,

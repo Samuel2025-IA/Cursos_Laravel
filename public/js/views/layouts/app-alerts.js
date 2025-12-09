@@ -112,32 +112,4 @@ function showSuccessAlert(message) {
     });
 }
 
-/**
- * Confirmar cierre de sesión
- */
-function confirmLogout() {
-    if (typeof Swal === 'undefined') {
-        console.error('SweetAlert2 no está cargado');
-        // Fallback: enviar el formulario directamente
-        document.getElementById('logout-form').submit();
-        return;
-    }
-
-    Swal.fire({
-        title: '¿Cerrar sesión?',
-        text: '¿Estás seguro de que quieres cerrar tu sesión?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#dc2626',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Cerrar sesión',
-        cancelButtonText: 'Cancelar',
-        background: '#ffffff',
-        reverseButtons: true
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Enviar el formulario de logout
-            document.getElementById('logout-form').submit();
-        }
-    });
-}
+// La función confirmLogout se maneja en navigation.js para evitar conflictos

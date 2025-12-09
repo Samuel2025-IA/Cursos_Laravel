@@ -5,6 +5,7 @@ namespace App\Http\Requests\Auth;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -80,6 +81,15 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Verificar si el usuario ya tiene una sesión activa
+        if ($this->hasActiveSession($user->id)) {
+            RateLimiter::hit($this->throttleKey());
+            
+            throw ValidationException::withMessages([
+                'email' => 'Ya hay una sesión iniciada con esta cuenta en otro navegador o pestaña. Por favor, cierra la sesión anterior antes de iniciar una nueva.',
+            ]);
+        }
+
         // Si el usuario existe, intentar autenticar
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             // Si la autenticación falla (contraseña incorrecta), mostrar error en el campo password
@@ -122,5 +132,71 @@ class LoginRequest extends FormRequest
     public function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+    }
+
+    /**
+     * Verificar si el usuario tiene una sesión activa
+     */
+    protected function hasActiveSession($userId): bool
+    {
+        try {
+            $sessionsTable = config('session.table', 'sessions');
+            $sessionLifetime = config('session.lifetime', 120);
+            
+            // Verificar si existe la columna user_id en la tabla de sesiones
+            $hasUserIdColumn = DB::getSchemaBuilder()->hasColumn($sessionsTable, 'user_id');
+            
+            if ($hasUserIdColumn) {
+                // Buscar sesiones activas del usuario
+                // Una sesión se considera activa si:
+                // 1. Tiene user_id asignado
+                // 2. Su last_activity es reciente (dentro del tiempo de vida de la sesión)
+                $activeSessions = DB::table($sessionsTable)
+                    ->where('user_id', $userId)
+                    ->whereNotNull('user_id')
+                    ->where('last_activity', '>', now()->subMinutes($sessionLifetime)->timestamp)
+                    ->count();
+                
+                return $activeSessions > 0;
+            } else {
+                // Si no hay columna user_id, buscar sesiones por el payload
+                $sessions = DB::table($sessionsTable)
+                    ->where('last_activity', '>', now()->subMinutes($sessionLifetime)->timestamp)
+                    ->get();
+                
+                foreach ($sessions as $session) {
+                    try {
+                        $payload = unserialize(base64_decode($session->payload));
+                        
+                        // Buscar el ID del usuario en el payload
+                        $userFound = false;
+                        
+                        // Buscar en login_web_*
+                        foreach ($payload as $key => $value) {
+                            if (is_string($key) && strpos($key, 'login_web_') !== false) {
+                                // Verificar si el valor contiene el user_id
+                                if ($value == $userId || (is_array($value) && isset($value['id']) && $value['id'] == $userId)) {
+                                    $userFound = true;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if ($userFound) {
+                            return true;
+                        }
+                    } catch (\Exception $e) {
+                        // Si hay error al decodificar, continuar con la siguiente
+                        continue;
+                    }
+                }
+            }
+            
+            return false;
+        } catch (\Exception $e) {
+            // Si hay algún error, permitir el login (no bloquear por error técnico)
+            \Log::warning('Error al verificar sesiones activas: ' . $e->getMessage());
+            return false;
+        }
     }
 }

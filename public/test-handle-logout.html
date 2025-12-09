@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Handle Logout</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <h1>Test Handle Logout</h1>
+    
+    <button onclick="handleLogout()">Probar Handle Logout</button>
+    <button onclick="testDirect()">Probar Directo</button>
+    
+    <div id="debug-info"></div>
+    
+    <script>
+        // Función global para manejar logout
+        window.handleLogout = function() {
+            console.log('🔴 handleLogout ejecutado');
+            
+            // Verificar si SweetAlert2 está disponible
+            if (typeof Swal !== 'undefined') {
+                console.log('✅ Usando SweetAlert2');
+                Swal.fire({
+                    title: '¿Cerrar sesión?',
+                    text: '¿Estás seguro de que quieres cerrar tu sesión?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc2626',
+                    cancelButtonColor: '#6b7280',
+                    confirmButtonText: 'Cerrar sesión',
+                    cancelButtonText: 'Cancelar',
+                    background: '#ffffff',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log('✅ Usuario confirmó logout');
+                        alert('Logout confirmado con SweetAlert2!');
+                    } else {
+                        console.log('❌ Usuario canceló logout');
+                    }
+                });
+            } else {
+                console.log('⚠️ SweetAlert2 no disponible, usando confirmación nativa');
+                if (confirm('¿Estás seguro de que quieres cerrar tu sesión?')) {
+                    console.log('✅ Usuario confirmó logout (nativo)');
+                    alert('Logout confirmado con confirm nativo!');
+                } else {
+                    console.log('❌ Usuario canceló logout (nativo)');
+                }
+            }
+        };
+        
+        function testDirect() {
+            console.log('🧪 Test directo');
+            handleLogout();
+        }
+        
+        console.log('✅ Función handleLogout cargada');
+        document.getElementById('debug-info').innerHTML = '<p style="color: green;">✅ Función handleLogout cargada correctamente</p>';
+    </script>
+</body>
+</html>

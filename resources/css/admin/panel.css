@@ -80,7 +80,7 @@
     }
 }
 
-/* Tabla responsive */
+    /* Tabla responsive */
 @media (max-width: 1024px) {
     .admin-table {
         font-size: 0.875rem;
@@ -89,6 +89,135 @@
     .admin-table th,
     .admin-table td {
         padding: 0.75rem 0.5rem;
+    }
+}
+
+/* Mejoras para tablas en pantallas medianas */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .overflow-x-auto {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+    
+    .overflow-x-auto table {
+        min-width: 100%;
+        width: 100%;
+    }
+    
+    /* Reducir padding en pantallas medianas */
+    .overflow-x-auto table th,
+    .overflow-x-auto table td {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}
+
+/* Ajustes para pantallas entre 768px y 1024px (tablets) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Reducir padding general */
+    .bg-white.rounded-xl.shadow-md > div {
+        padding: 1rem !important;
+    }
+    
+    /* Títulos más pequeños */
+    h2.text-xl {
+        font-size: 1.125rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Grid de emails con 2 columnas */
+    .grid.grid-cols-1.sm\:grid-cols-2.md\:grid-cols-2 {
+        gap: 0.75rem;
+    }
+}
+
+/* Mejoras para pantallas medianas (tablets) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Grid de emails para tablets - permitir que Tailwind controle */
+    .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+    }
+    
+    /* Botón más proporcionado en tablets */
+    #submitBtn {
+        max-width: 240px;
+        min-height: 44px;
+        font-size: 0.875rem;
+        padding: 0.625rem 1.25rem;
+        align-self: flex-start;
+    }
+    
+    /* Headers más compactos en tablets */
+    .admin-header,
+    .user-management-header,
+    .active-codes-header,
+    .history-header {
+        padding: 1.25rem;
+    }
+    
+    /* Títulos más apropiados para tablets */
+    .admin-header h1,
+    .user-management-header h3,
+    .active-codes-header h3,
+    .history-header h3 {
+        font-size: 1.125rem;
+    }
+    
+    /* Contenedor del formulario más compacto en tablets */
+    .admin-container {
+        padding: 1rem;
+    }
+    
+    /* Cards más compactas en tablets */
+    .admin-card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Mejoras para pantallas medianas-pequeñas */
+@media (min-width: 640px) and (max-width: 767px) {
+    /* Grid de emails para tablets pequeñas - una columna */
+    .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    /* Botón más pequeño en tablets pequeñas */
+    #submitBtn {
+        max-width: 100%;
+        min-height: 42px;
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+        width: 100%;
+    }
+    
+    /* Layout del botón y texto en tablets pequeñas */
+    .flex.flex-col.md\:flex-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+}
+
+/* Mejoras adicionales para responsive */
+@media (max-width: 640px) {
+    /* Buscadores más compactos */
+    .flex.flex-col.sm\\:flex-row.gap-2 {
+        gap: 0.5rem !important;
+    }
+    
+    /* Inputs de búsqueda más pequeños */
+    .flex-1.px-3.py-2 {
+        padding: 0.5rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    /* Botones de búsqueda más pequeños */
+    .px-4.py-2.bg-gray-500 {
+        padding: 0.375rem 0.75rem !important;
+        font-size: 0.75rem !important;
     }
 }
 
@@ -146,9 +275,114 @@
  * Estilos específicos para el panel de administración
  */
 
+/* Botón de enviar invitaciones - Estilo sticky permanente y más pequeño */
+#submitBtn {
+    position: sticky;
+    bottom: 20px;
+    left: 0;
+    z-index: 40; /* Menor que el header (z-index: 50) para evitar superposición */
+    overflow: hidden;
+    background: linear-gradient(135deg, #2f9f37 0%, #27842f 100%);
+    border: 2px solid transparent;
+    box-shadow: 0 3px 10px rgba(47, 159, 55, 0.3);
+    min-height: 40px;
+    font-weight: 500;
+    letter-spacing: 0.25px;
+    max-width: 280px;
+    align-self: flex-start;
+}
+
+#submitBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+#submitBtn:hover::before {
+    left: 100%;
+}
+
+#submitBtn:hover {
+    background: linear-gradient(135deg, #27842f 0%, #2f9f37 100%);
+    box-shadow: 0 6px 20px rgba(47, 159, 55, 0.4);
+    transform: translateY(-1px) scale(1.02);
+}
+
+#submitBtn:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 3px 10px rgba(47, 159, 55, 0.3);
+}
+
+#submitBtn svg {
+    transition: transform 0.3s ease;
+}
+
+#submitBtn:hover svg {
+    transform: scale(1.05) rotate(2deg);
+}
+
+/* Animación de pulso sutil para focus */
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(47, 159, 55, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 15px rgba(47, 159, 55, 0.4);
+    }
+}
+
+#submitBtn:focus {
+    animation: pulse-glow 1.5s infinite;
+}
+
 /* Contenedor del admin - Sin transiciones */
 .admin-container {
-    /* Sin transiciones para mejor rendimiento */
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Asegurar que todos los contenedores sean responsive */
+.admin-container * {
+    box-sizing: border-box;
+}
+
+/* Evitar overflow horizontal en todas las pantallas */
+@media (max-width: 1024px) {
+    .admin-container {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-container {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+}
+
+/* Contenedor del formulario para botón sticky */
+#invitationForm {
+    position: relative;
+    padding-bottom: 80px; /* Espacio para el botón sticky */
+}
+
+/* Asegurar que el botón sticky permanezca siempre visible */
+.sticky-button {
+    position: sticky !important;
+    bottom: 20px !important;
+    z-index: 40 !important; /* Menor que el header (z-index: 50) para evitar superposición */
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: inline-flex !important;
 }
 
 /* Efectos de hover en las tarjetas del admin - Simplificado */
@@ -179,18 +413,432 @@
 
 /* Iconos de sección - Sin animaciones */
 .section-icon {
-    /* Sin transiciones para mejor rendimiento */
+    transition: transform 0.2s ease;
 }
 
 /* Clase fade-in sin animación */
 .fade-in {
-    /* Sin animación para mejor rendimiento */
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .admin-card:hover {
         transform: none;
+    }
+    
+    /* Mejorar el contenedor del admin en móviles */
+    .admin-container {
+        padding: 0.5rem;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Grid de emails más responsive */
+    .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    /* Inputs de email más compactos en móvil */
+    .email-input {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Headers de secciones más compactos */
+    .admin-header,
+    .user-management-header,
+    .active-codes-header,
+    .history-header {
+        padding: 1rem;
+    }
+    
+    /* Títulos de secciones más pequeños */
+    .admin-header h1,
+    .user-management-header h3,
+    .active-codes-header h3,
+    .history-header h3 {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+    
+    /* Botón de enviar invitaciones en móviles */
+    #submitBtn {
+        min-height: 36px;
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 0.5rem;
+        bottom: 15px;
+        align-self: stretch;
+        box-sizing: border-box;
+    }
+    
+    #submitBtn svg {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.375rem;
+    }
+    
+    /* Contenido principal del admin */
+    .admin-container .w-full {
+        padding: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Tarjetas del admin más compactas */
+    .admin-card {
+        margin-bottom: 1rem;
+        border-radius: 0.75rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Headers del admin más pequeños */
+    .admin-header,
+    .user-management-header,
+    .active-codes-header,
+    .history-header {
+        padding: 0.75rem 1rem;
+    }
+    
+    /* Títulos más pequeños en móviles */
+    .admin-header h1,
+    .user-management-header h3,
+    .active-codes-header h3,
+    .history-header h3 {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+    
+    /* Contenido de las tarjetas más compacto */
+    .admin-card > div:last-child {
+        padding: 1rem;
+    }
+    
+    /* Formularios más compactos */
+    .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-3 {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    /* Inputs más pequeños */
+    .email-input {
+        font-size: 0.875rem;
+        padding: 0.5rem;
+    }
+    
+    /* Botones más compactos */
+    .inline-flex.items-center.justify-center.px-4.py-2 {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.875rem !important;
+    }
+    
+    /* Estadísticas del admin más compactas */
+    .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-4 {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Tarjetas de estadísticas más pequeñas */
+    .bg-white.rounded-xl.shadow-md {
+        padding: 1rem !important;
+    }
+    
+    /* Iconos de estadísticas más pequeños */
+    .w-6.h-6.sm\\:w-8.sm\\:h-8 {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+    }
+    
+    /* Números de estadísticas más pequeños */
+    .text-2xl.sm\\:text-3xl {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Texto de estadísticas más pequeño */
+    .text-xs.sm\\:text-sm {
+        font-size: 0.75rem !important;
+    }
+    
+    /* Espaciado entre elementos más compacto */
+    .space-y-6 > * + * {
+        margin-top: 1rem !important;
+    }
+    
+    /* Paginación más compacta */
+    .pagination {
+        padding: 0.5rem !important;
+        gap: 0.25rem !important;
+    }
+    
+    .pagination .page-link {
+        min-width: 1.75rem !important;
+        height: 1.75rem !important;
+        font-size: 0.7rem !important;
+        padding: 0.25rem !important;
+    }
+    
+    /* Mensaje de bienvenida más compacto */
+    .bg-gradient-to-r {
+        padding: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Buscadores más compactos */
+    .flex.flex-col.sm\\:flex-row.gap-2 {
+        gap: 0.5rem !important;
+    }
+    
+    /* Inputs de búsqueda más pequeños */
+    .flex-1.px-3.py-2 {
+        padding: 0.5rem !important;
+        font-size: 0.875rem !important;
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    /* Contenedor aún más compacto */
+    .admin-container {
+        padding: 0.25rem !important;
+    }
+    
+    /* Grid de emails en una sola columna */
+    .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3 {
+        gap: 0.75rem !important;
+    }
+    
+    /* Inputs de email más pequeños */
+    .email-input {
+        padding: 0.625rem 0.875rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    /* Headers aún más compactos */
+    .admin-header,
+    .user-management-header,
+    .active-codes-header,
+    .history-header {
+        padding: 0.75rem !important;
+    }
+    
+    /* Títulos aún más pequeños */
+    .admin-header h1,
+    .user-management-header h3,
+    .active-codes-header h3,
+    .history-header h3 {
+        font-size: 0.875rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Iconos más pequeños */
+    .admin-header svg,
+    .user-management-header svg,
+    .active-codes-header svg,
+    .history-header svg {
+        width: 1rem !important;
+        height: 1rem !important;
+    }
+    
+    /* Botón de enviar invitaciones en pantallas muy pequeñas */
+    #submitBtn {
+        min-height: 32px !important;
+        font-size: 0.75rem !important;
+        padding: 0.375rem 0.875rem !important;
+        letter-spacing: 0.125px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        bottom: 10px !important;
+        align-self: stretch !important;
+    }
+    
+    #submitBtn svg {
+        width: 0.875rem !important;
+        height: 0.875rem !important;
+        margin-right: 0.25rem !important;
+    }
+    
+    /* Headers aún más pequeños */
+    .admin-header,
+    .user-management-header,
+    .active-codes-header,
+    .history-header {
+        padding: 0.5rem 0.75rem !important;
+    }
+    
+    /* Títulos aún más pequeños */
+    .admin-header h1,
+    .user-management-header h3,
+    .active-codes-header h3,
+    .history-header h3 {
+        font-size: 0.875rem !important;
+    }
+    
+    /* Contenido aún más compacto */
+    .admin-card > div:last-child {
+        padding: 0.75rem !important;
+    }
+    
+    /* Estadísticas en una sola columna con menos espacio */
+    .grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-4 {
+        gap: 0.5rem !important;
+    }
+    
+    /* Tarjetas de estadísticas más pequeñas */
+    .bg-white.rounded-xl.shadow-md {
+        padding: 0.75rem !important;
+    }
+    
+    /* Iconos aún más pequeños */
+    .w-6.h-6.sm\\:w-8.sm\\:h-8 {
+        width: 1.25rem !important;
+        height: 1.25rem !important;
+    }
+    
+    /* Números aún más pequeños */
+    .text-2xl.sm\\:text-3xl {
+        font-size: 1.25rem !important;
+    }
+    
+    /* Texto aún más pequeño */
+    .text-xs.sm\\:text-sm {
+        font-size: 0.6875rem !important;
+    }
+}
+
+/* ========================================
+ * RESPONSIVE ADJUSTMENTS FOR MEDIUM SCREENS
+ * ========================================
+ * Ajustes específicos para pantallas medianas (800px - 1024px)
+ */
+
+/* Ajustar el contenido principal cuando el sidebar está visible */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Reducir padding del main */
+    main {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    /* Asegurar que las tablas no causen overflow */
+    .overflow-x-auto {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+    
+    /* Reducir padding de las cards */
+    .bg-white.rounded-xl.shadow-md > div {
+        padding: 1rem;
+    }
+    
+    /* Títulos más compactos */
+    h2.text-xl,
+    h2.text-lg {
+        font-size: 1.125rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Espaciado entre secciones */
+    .space-y-6 > * + * {
+        margin-top: 1rem;
+    }
+    
+    /* Ajustar inputs de búsqueda */
+    input[type="text"] {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    /* Grid de emails optimizado */
+    .grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 {
+        gap: 0.75rem;
+    }
+}
+
+/* Ajustes adicionales para pantallas entre 800px y 900px */
+@media (min-width: 800px) and (max-width: 900px) {
+    /* Reducir tamaño del texto del sidebar */
+    .sidebar-content h1 {
+        font-size: 0.875rem;
+    }
+    
+    /* Ajustar padding de las cards aún más */
+    .bg-white.rounded-xl.shadow-md > div {
+        padding: 0.875rem;
+    }
+    
+    /* Reducir espaciado de títulos */
+    .mb-6 {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Asegurar que no haya overflow horizontal */
+@media (max-width: 1024px) {
+    body {
+        overflow-x: hidden;
+    }
+    
+    .admin-container {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    /* Tablas con scroll interno */
+    .overflow-x-auto {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+    
+    /* Espaciado general reducido */
+    .space-y-6 {
+        gap: 1rem;
+    }
+    
+    /* Reducir padding en formularios */
+    form.space-y-4,
+    form.space-y-5,
+    form.space-y-6 {
+        gap: 1rem;
+    }
+}
+
+/* Ajustes para móviles pequeños */
+@media (max-width: 640px) {
+    /* Grid de una columna en móvil */
+    .grid.grid-cols-1.sm\:grid-cols-2.lg\:grid-cols-3 {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    /* Campo 5 ocupa toda la fila en móvil */
+    .sm\:col-span-2 {
+        grid-column: span 1;
+    }
+    
+    /* Padding más compacto */
+    .bg-white.rounded-xl.shadow-md > div {
+        padding: 0.875rem;
+    }
+    
+    /* Títulos más pequeños */
+    h1.text-2xl.sm\:text-3xl {
+        font-size: 1.5rem;
+    }
+    
+    h2.text-lg.sm\:text-xl {
+        font-size: 1.125rem;
     }
 }
 

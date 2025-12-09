@@ -1,6 +1,48 @@
 // JavaScript para la vista de login
 
+function resetLoginLoading() {
+    const overlay = document.getElementById('login-loading');
+
+    if (!overlay) {
+        return;
+    }
+
+    overlay.style.display = 'none';
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+
+    const textElement = overlay.querySelector('.loading-text');
+    if (textElement) {
+        textElement.textContent = 'Iniciando sesión...';
+    }
+
+    if (typeof hideLoading === 'function') {
+        hideLoading('login-loading');
+    }
+}
+
+function isBackOrForwardNavigation(event) {
+    if (event && event.persisted) {
+        return true;
+    }
+
+    if (window.performance) {
+        const [navigationEntry] = window.performance.getEntriesByType?.('navigation') || [];
+        if (navigationEntry && navigationEntry.type === 'back_forward') {
+            return true;
+        }
+
+        const legacyNavigation = window.performance.navigation;
+        if (legacyNavigation && legacyNavigation.type === legacyNavigation.TYPE_BACK_FORWARD) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    resetLoginLoading();
+
     const form = document.getElementById('login-form');
     
     if (form) {
@@ -41,5 +83,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+window.addEventListener('pageshow', () => {
+    resetLoginLoading();
+});
+
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        resetLoginLoading();
+    }
+});
+
+window.addEventListener('focus', resetLoginLoading);
 
 // Función togglePassword() ahora está centralizada en toggle-password-unified.js
